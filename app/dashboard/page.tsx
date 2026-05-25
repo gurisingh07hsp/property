@@ -6,7 +6,7 @@ import DashboardChat from "@/components/sections/DashboardChat";
 export default function Home() {
     return (
         <>
-            <Layout headerStyle={5}>
+            {/* <Layout> */}
                 <InnerHeader title="Dashboard" currentpage="Dashboard" />
                 <DashboardArea />
                 <div className="space30"></div>
@@ -14,7 +14,7 @@ export default function Home() {
                 <div className="space30"></div>
                 <DashboardChat />
                 <div className="space30"></div>
-            </Layout>
+            {/* </Layout> */}
         </>
     );
 }

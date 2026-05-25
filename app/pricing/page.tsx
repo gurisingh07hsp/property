@@ -5,7 +5,7 @@ import Faq1 from "@/components/sections/Faq1";
 export default function Home() {
     return (
         <>
-            <Layout>
+            <Layout headerStyle={4} footerStyle={4}>
                 <InnerHeader title="Pricing Plan" currentpage="Pricing Plan" />
                 <Pricing1 />
                 <div className="space30"></div>

@@ -10,7 +10,7 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                             <div className="col-lg-2 col-md-6 col-6">
                                 <div className="vl-logo">
                                     <Link href="/">
-                                        <img src="/assets/img/logo/logo1.png" alt="housa" />
+                                        <img src="/assets/img/logo/logo6.png" alt="housa" />
                                     </Link>
                                 </div>
                             </div>
@@ -19,13 +19,13 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                                     <nav className="vl-mobile-menu-active">
                                         <ul>
                                             <li className="has-dropdown">
-                                                <Link href="#">
+                                                <Link href="/">
                                                     Home
-                                                    <span>
+                                                    {/* <span>
                                                         <i className="fa-solid fa-angle-down d-lg-inline d-none" />
-                                                    </span>
+                                                    </span> */}
                                                 </Link>
-                                                <div className="vl-mega-menu">
+                                                {/* <div className="vl-mega-menu">
                                                     <div className="vl-home-menu">
                                                         <div className="row gx-3 row-cols-1 row-cols-md-1 row-cols-lg-4">
                                                             <div className="col">
@@ -110,7 +110,7 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> */}
                                             </li>
                                             <li className="has-dropdown">
                                                 <Link href="#">
@@ -141,13 +141,13 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                 </ul>
                                             </li>
                                             <li>
-                                                <Link href="#">
+                                                <Link href="/sidebar-grid">
                                                     Listing
-                                                    <span>
+                                                    {/* <span>
                                                         <i className="fa-solid fa-angle-down d-lg-inline d-none" />
-                                                    </span>
+                                                    </span> */}
                                                 </Link>
-                                                <ul className="sub-menu">
+                                                {/* <ul className="sub-menu">
                                                     <li>
                                                         <Link href="/property-halfmap-grid">Property Half Grid</Link>
                                                     </li>
@@ -166,16 +166,16 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                     <li>
                                                         <Link href="/sidebar-list">Find Sidebar List</Link>
                                                     </li>
-                                                </ul>
+                                                </ul> */}
                                             </li>
                                             <li>
-                                                <Link href="#">
+                                                <Link href="/property-details-v1">
                                                     Properties
-                                                    <span>
+                                                    {/* <span>
                                                         <i className="fa-solid fa-angle-down d-lg-inline d-none" />
-                                                    </span>
+                                                    </span> */}
                                                 </Link>
-                                                <ul className="sub-menu">
+                                                {/* <ul className="sub-menu">
                                                     <li>
                                                         <Link href="/property-details-v1">Property Details 01</Link>
                                                     </li>
@@ -188,16 +188,16 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                     <li>
                                                         <Link href="/property-details-v4">Property Details 04</Link>
                                                     </li>
-                                                </ul>
+                                                </ul> */}
                                             </li>
                                             <li>
-                                                <Link href="#">
+                                                <Link href="/dashboard">
                                                     Dashboard
-                                                    <span>
+                                                    {/* <span>
                                                         <i className="fa-solid fa-angle-down d-lg-inline d-none" />
-                                                    </span>
+                                                    </span> */}
                                                 </Link>
-                                                <ul className="sub-menu">
+                                                {/* <ul className="sub-menu">
                                                     <li>
                                                         <Link href="/dashboard">Dashboard</Link>
                                                     </li>
@@ -219,16 +219,16 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                     <li>
                                                         <Link href="/add-property">Add Property</Link>
                                                     </li>
-                                                </ul>
+                                                </ul> */}
                                             </li>
                                             <li>
-                                                <Link href="#">
+                                                <Link href="/blog">
                                                     Blogs
-                                                    <span>
+                                                    {/* <span>
                                                         <i className="fa-solid fa-angle-down d-lg-inline d-none" />
-                                                    </span>
+                                                    </span> */}
                                                 </Link>
-                                                <ul className="sub-menu">
+                                                {/* <ul className="sub-menu">
                                                     <li>
                                                         <Link href="/blog">Blog Default</Link>
                                                     </li>
@@ -241,7 +241,7 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                     <li>
                                                         <Link href="/blog-detail-2">Blog Post Details 2</Link>
                                                     </li>
-                                                </ul>
+                                                </ul> */}
                                             </li>
                                         </ul>
                                     </nav>

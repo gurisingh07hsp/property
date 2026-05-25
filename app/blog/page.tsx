@@ -4,7 +4,7 @@ import Blog from "@/components/sections/Blog";
 export default function Home() {
     return (
         <>
-            <Layout>
+            <Layout headerStyle={4} footerStyle={4}>
                 <InnerHeader title="Our Blog" currentpage="Our Blog" />
                 <Blog />
                 <div className="space30"></div>

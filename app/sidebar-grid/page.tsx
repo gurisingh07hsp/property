@@ -465,7 +465,7 @@ export default function SidebarGrid() {
     );
     return (
         <>
-            <Layout>
+            <Layout headerStyle={4} footerStyle={4}>
                 <InnerHeader title="Find Sidebar Grid" currentpage="Find Sidebar Grid" />
                 <>
                     <div className="space30" />

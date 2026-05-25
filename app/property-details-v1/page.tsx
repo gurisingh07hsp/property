@@ -6,7 +6,7 @@ import PropertyBottom from "@/components/sections/PropertyBottom";
 export default function Home() {
     return (
         <>
-            <Layout>
+            <Layout headerStyle={4} footerStyle={4}>
                 <InnerHeader title="Luxury Villa" currentpage="Luxury Villa (Los Angeles - California)" />
                 <Properties1Details />
                 <PropertyInner block_extend="d-none" />

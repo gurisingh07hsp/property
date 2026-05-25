@@ -9,11 +9,13 @@ import Team1 from "@/components/sections/Team1";
 import Testimonial1 from "@/components/sections/Testimonial1";
 import Property1 from "@/components/sections/property1";
 import Blog1 from "@/components/sections/Blog1";
+import Hero4 from "@/components/sections/Hero4";
+import Home2 from "./index4/page";
 export default function Home() {
     return (
         <>
-            <Layout>
-                <Hero1 />
+            <Layout headerStyle={4} footerStyle={4}>
+                {/* <Hero4 />
                 <SearchBox />
                 <About1 />
                 <Property1 />
@@ -22,7 +24,8 @@ export default function Home() {
                 <PropertyLocation1 />
                 <Team1 />
                 <Testimonial1 />
-                <Blog1 />
+                <Blog1 /> */}
+                <Home2/>
             </Layout>
         </>
     );

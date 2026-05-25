@@ -9,7 +9,7 @@ import Property1 from "@/components/sections/property1";
 export default function Home() {
     return (
         <>
-            <Layout>
+            <Layout headerStyle={4} footerStyle={4}>
                 <InnerHeader title="About Us" currentpage="About Us" />
                 <About1 />
                 <Others3 />

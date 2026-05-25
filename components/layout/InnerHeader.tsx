@@ -2,9 +2,9 @@ import Link from "next/link";
 export default function InnerHeader({ title, currentpage }: any) {
     return (
         <>
-            <div className="space30" />
+            {/* <div className="space30" /> */}
             {/*===== HERO AREA STARTS =======*/}
-            <div className="inner-header-area">
+            {/* <div className="border">
                 <div className="containe-fluid">
                     <div className="row">
                         <div className="col-lg-6">
@@ -27,7 +27,7 @@ export default function InnerHeader({ title, currentpage }: any) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
             {/*===== HERO AREA ENDS =======*/}
             <div className="space30" />
         </>

@@ -6,7 +6,7 @@ import Faq1 from "@/components/sections/Faq1";
 export default function Home() {
     return (
         <>
-            <Layout>
+            <Layout headerStyle={4} footerStyle={4}>
                 <InnerHeader title="Our Service" currentpage="Our Service" />
                 <Service1 />
                 <Testimonial1 />

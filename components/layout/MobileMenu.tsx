@@ -15,7 +15,7 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                         <div className="vl-offcanvas-header d-flex justify-content-between align-items-center mb-90">
                             <div className="vl-offcanvas-logo">
                                 <Link href="/">
-                                    <img src="/assets/img/logo/logo1.png" alt="housa" />
+                                    <img src="/assets/img/logo/logo6.png" alt="housa" />
                                 </Link>
                             </div>
                             <div className="vl-offcanvas-close">
@@ -28,13 +28,13 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                             <nav>
                                 <ul>
                                     <li className={`has-dropdown ${isAccordion == 1 ? "active" : ""}`} onClick={() => handleAccordion(1)}>
-                                        <Link href="#">
+                                        <Link href="/">
                                             Home
-                                            <span>
+                                            {/* <span>
                                                 <i className="fa-solid fa-angle-down d-lg-inline d-none" />
-                                            </span>
+                                            </span> */}
                                         </Link>
-                                        <ul className="sub-menu" style={{ display: `${isAccordion == 1 ? "block" : "none"}` }}>
+                                        {/* <ul className="sub-menu" style={{ display: `${isAccordion == 1 ? "block" : "none"}` }}>
                                             <li>
                                                 <Link href="/">Home 1</Link>
                                             </li>
@@ -48,10 +48,10 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                                                 <Link href="/index4">Home 4</Link>
                                             </li>
 
-                                        </ul>
-                                        <button className="vl-menu-close">
+                                        </ul> */}
+                                        {/* <button className="vl-menu-close">
                                             <i className="fas fa-chevron-right" />
-                                        </button>
+                                        </button> */}
                                     </li>
                                     <li className={`has-dropdown ${isAccordion == 2 ? "active" : ""}`} onClick={() => handleAccordion(2)}>
                                         <Link href="#">
@@ -85,13 +85,13 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                                         </button>
                                     </li>
                                     <li className={`has-dropdown ${isAccordion == 3 ? "active" : ""}`} onClick={() => handleAccordion(3)}>
-                                        <Link href="#">
+                                        <Link href="/sidebar-grid">
                                             Listing
-                                            <span>
+                                            {/* <span>
                                                 <i className="fa-solid fa-angle-down d-lg-inline d-none" />
-                                            </span>
+                                            </span> */}
                                         </Link>
-                                        <ul className="sub-menu" style={{ display: `${isAccordion == 3 ? "block" : "none"}` }}>
+                                        {/* <ul className="sub-menu" style={{ display: `${isAccordion == 3 ? "block" : "none"}` }}>
                                             <li>
                                                 <Link href="/property-halfmap-grid">Property Half Grid</Link>
                                             </li>
@@ -110,19 +110,17 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                                             <li>
                                                 <Link href="/sidebar-list">Find Sidebar List</Link>
                                             </li>
-                                        </ul>
-                                        <button className="vl-menu-close">
+                                        </ul> */}
+                                        {/* <button className="vl-menu-close">
                                             <i className="fas fa-chevron-right" />
-                                        </button>
+                                        </button> */}
                                     </li>
                                     <li className={`has-dropdown ${isAccordion == 4 ? "active" : ""}`} onClick={() => handleAccordion(4)}>
-                                        <Link href="#">
+                                        <Link href="/property-details-v1">
                                             Properties
-                                            <span>
-                                                <i className="fa-solid fa-angle-down d-lg-inline d-none" />
-                                            </span>
+                                         
                                         </Link>
-                                        <ul className="sub-menu" style={{ display: `${isAccordion == 4 ? "block" : "none"}` }}>
+                                        {/* <ul className="sub-menu" style={{ display: `${isAccordion == 4 ? "block" : "none"}` }}>
                                             <li>
                                                 <Link href="/property-details-v1">Property Details 01</Link>
                                             </li>
@@ -135,19 +133,19 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                                             <li>
                                                 <Link href="/property-details-v4">Property Details 04</Link>
                                             </li>
-                                        </ul>
-                                        <button className="vl-menu-close">
+                                        </ul> */}
+                                        {/* <button className="vl-menu-close">
                                             <i className="fas fa-chevron-right" />
-                                        </button>
+                                        </button> */}
                                     </li>
                                     <li className={`has-dropdown ${isAccordion == 5 ? "active" : ""}`} onClick={() => handleAccordion(5)}>
-                                        <Link href="#">
+                                        <Link href="/dashboard">
                                             Dashboard
-                                            <span>
+                                            {/* <span>
                                                 <i className="fa-solid fa-angle-down d-lg-inline d-none" />
-                                            </span>
+                                            </span> */}
                                         </Link>
-                                        <ul className="sub-menu" style={{ display: `${isAccordion == 5 ? "block" : "none"}` }}>
+                                        {/* <ul className="sub-menu" style={{ display: `${isAccordion == 5 ? "block" : "none"}` }}>
                                             <li>
                                                 <Link href="/dashboard">Dashboard</Link>
                                             </li>
@@ -169,19 +167,19 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                                             <li>
                                                 <Link href="/add-property">Add Property</Link>
                                             </li>
-                                        </ul>
-                                        <button className="vl-menu-close">
+                                        </ul> */}
+                                        {/* <button className="vl-menu-close">
                                             <i className="fas fa-chevron-right" />
-                                        </button>
+                                        </button> */}
                                     </li>
                                     <li className={`has-dropdown ${isAccordion == 6 ? "active" : ""}`} onClick={() => handleAccordion(6)}>
-                                        <Link href="#">
+                                        <Link href="/blog">
                                             Blogs
-                                            <span>
+                                            {/* <span>
                                                 <i className="fa-solid fa-angle-down d-lg-inline d-none" />
-                                            </span>
+                                            </span> */}
                                         </Link>
-                                        <ul className="sub-menu" style={{ display: `${isAccordion == 6 ? "block" : "none"}` }}>
+                                        {/* <ul className="sub-menu" style={{ display: `${isAccordion == 6 ? "block" : "none"}` }}>
                                             <li>
                                                 <Link href="/blog">Blog Default</Link>
                                             </li>
@@ -194,10 +192,10 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                                             <li>
                                                 <Link href="/blog-detail-2">Blog Post Details 2</Link>
                                             </li>
-                                        </ul>
-                                        <button className="vl-menu-close">
+                                        </ul> */}
+                                        {/* <button className="vl-menu-close">
                                             <i className="fas fa-chevron-right" />
-                                        </button>
+                                        </button> */}
                                     </li>
                                 </ul>
                             </nav>

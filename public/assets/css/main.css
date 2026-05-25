@@ -480,10 +480,10 @@ img {
     --ztc-text-text-1: #fff;
     --ztc-text-text-2: #1b1b1b;
     --ztc-text-text-3: #5c5d62;
-    --ztc-text-text-4: #ed8438;
+    --ztc-text-text-4: #1800ad;
     --ztc-bg-bg-1: #fff;
     --ztc-bg-bg-2: #1b1b1b;
-    --ztc-bg-bg-3: #ed8438;
+    --ztc-bg-bg-3: #1800ad;
     --ztc-border-border-1: #e5e7eb;
     --ztc-border-border-2: #dfdcdc;
     --ztc-font-size-font-s10: 10px;
@@ -689,7 +689,7 @@ Location:
     font-weight: var(--ztc-weight-semibold);
     line-height: 16px;
     border-radius: 8px;
-    background: rgba(237, 132, 56, 0.1);
+    background: rgba(59, 56, 237, 0.1);
     display: inline-block;
     padding: 8px 12px;
 }

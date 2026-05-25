@@ -11,7 +11,7 @@ import Testimonial4 from "@/components/sections/Testimonial4";
 export default function Home2() {
     return (
         <>
-            <Layout headerStyle={4} footerStyle={4}>
+            {/* <Layout headerStyle={4} footerStyle={4}> */}
                 <Hero4 />
                 <PropertyLocation3 />
                 <Properties5 />
@@ -21,7 +21,7 @@ export default function Home2() {
                 <Testimonial4 />
                 <Blog3 />
                 <Cta2 />
-            </Layout>
+            {/* </Layout> */}
         </>
     );
 }
