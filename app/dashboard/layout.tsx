@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-// import { useUser } from "@/context/UserContext";
+import { useUser } from "@/context/UserContext";
 import {
   LayoutDashboard,
   CalendarCheck,
@@ -18,6 +18,7 @@ import {
   StarIcon,
   User,
 } from "lucide-react";
+import axios from "axios";
 // import axios from "axios";
 
 const navItems = [
@@ -44,24 +45,24 @@ export default function UserLayout({
   const [loading, setLoading] = useState(true);
   const pathname = usePathname();
   const router = useRouter();
-//   const { user } = useUser();
+  const { user } = useUser();
 
-//   useEffect(()=> {
-//     const isLogin = async() => {
-//       const response = await axios.get('/api/auth/me', {withCredentials: true});
-//       if(response.status === 200){
-//         if(!response?.data?.user){
-//           router.push('/');
-//         }
-//         else{
-//           setLoading(false);
-//         }
-//       }else{
-//           router.push('/');
-//         }
-//     }
-//     isLogin();
-//   },[])
+  useEffect(()=> {
+    const isLogin = async() => {
+      const response = await axios.get('/api/auth/me', {withCredentials: true});
+      if(response.status === 200){
+        if(!response?.data?.user){
+          router.push('/');
+        }
+        else{
+          setLoading(false);
+        }
+      }else{
+          router.push('/');
+        }
+    }
+    isLogin();
+  },[])
 
   // Detect mobile vs desktop
   useEffect(() => {
@@ -105,13 +106,13 @@ export default function UserLayout({
   // Whether to show text labels
   const showLabels = isMobile || !desktopCollapsed;
 
-//   if(loading){
-//     return (
-//       <div>
-//         <p className="text-center mt-20 text-gray-500">Checking User access...</p>
-//       </div>
-//     )
-//   }
+  if(loading){
+    return (
+      <div>
+        <p className="text-center mt-20 text-gray-500">Checking User access...</p>
+      </div>
+    )
+  }
 
   return (
     <div style={{ display: "flex", height: "100vh", overflow: "hidden" }}>

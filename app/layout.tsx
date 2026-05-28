@@ -14,6 +14,7 @@ import "/public/assets/css/main.css";
 import StoreProvider from "@/features/StoreProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { UserProvider } from "@/context/UserContext";
 
 const inter = Inter({
     weight: ["300", "400", "500", "600", "700", "800", "900"],
@@ -48,7 +49,11 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${inter.className} homepage1-body body1`}>
-                <StoreProvider>{children}</StoreProvider>
+                <StoreProvider>
+                    <UserProvider>
+                        {children}
+                    </UserProvider>
+                </StoreProvider>
             </body>
         </html>
     );

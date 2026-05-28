@@ -1,5 +1,11 @@
+'use client'
 import Link from "next/link";
+import AuthModal from "@/components/elements/authModal";
+import { useUser } from "@/context/UserContext";
+import { useState } from "react";
 export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any) {
+    const { user, logout } = useUser();
+    const [isOpen, setIsOpen] = useState(false);
     return (
         <>
             {/*=====HEADER START=======*/}
@@ -190,37 +196,39 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                     </li>
                                                 </ul> */}
                                             </li>
-                                            <li>
-                                                <Link href="/dashboard">
-                                                    Dashboard
-                                                    {/* <span>
-                                                        <i className="fa-solid fa-angle-down d-lg-inline d-none" />
-                                                    </span> */}
-                                                </Link>
-                                                {/* <ul className="sub-menu">
-                                                    <li>
-                                                        <Link href="/dashboard">Dashboard</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/my-property">My Properties</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/message">Message</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/my-favorites">My Favourites</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/reviews">Reviews</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/my-profile">My Propfile</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/add-property">Add Property</Link>
-                                                    </li>
-                                                </ul> */}
-                                            </li>
+                                            {user && user.email && (
+                                                <li>
+                                                    <Link href="/dashboard">
+                                                        Dashboard
+                                                        {/* <span>
+                                                            <i className="fa-solid fa-angle-down d-lg-inline d-none" />
+                                                        </span> */}
+                                                    </Link>
+                                                    {/* <ul className="sub-menu">
+                                                        <li>
+                                                            <Link href="/dashboard">Dashboard</Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link href="/my-property">My Properties</Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link href="/message">Message</Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link href="/my-favorites">My Favourites</Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link href="/reviews">Reviews</Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link href="/my-profile">My Propfile</Link>
+                                                        </li>
+                                                        <li>
+                                                            <Link href="/add-property">Add Property</Link>
+                                                        </li>
+                                                    </ul> */}
+                                                </li>
+                                            )}
                                             <li>
                                                 <Link href="/blog">
                                                     Blogs
@@ -256,17 +264,30 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                                             </svg>
                                         </Link>
                                     </div>
-                                    <div className="btn-area1">
-                                        <Link href="/add-property" className="vl-btn1">
-                                            Add Listing
-                                            <span className="arrow1 ms-2">
-                                                <i className="fa-solid fa-arrow-right" />
-                                            </span>
-                                            <span className="arrow2 ms-2">
-                                                <i className="fa-solid fa-arrow-right" />
-                                            </span>
-                                        </Link>
+                                    {user && user.email ? (
+                                        <>
+                                        <div className="btn-area1">
+                                            <Link href="/add-property" className="vl-btn1">
+                                                Add Listing
+                                                <span className="arrow1 ms-2">
+                                                    <i className="fa-solid fa-arrow-right" />
+                                                </span>
+                                                <span className="arrow2 ms-2">
+                                                    <i className="fa-solid fa-arrow-right" />
+                                                </span>
+                                            </Link>
+                                        </div>
+                                        <button onClick={()=> logout()} className="mx-2" style={{color: 'red', border: 'none', background: 'none'}}>
+                                                Logout
+                                        </button>
+                                        </>
+                                    ) : (
+                                    <div className="">
+                                        <button onClick={()=> setIsOpen(true)} className="px-4 py-2 text-white" style={{borderRadius: '20px', border: 'none', background: '#1800ad'}}>
+                                            Login
+                                        </button>
                                     </div>
+                                    )}
                                 </div>
                                 <div className="vl-header-action-item d-block d-lg-none">
                                     <button type="button" className="vl-offcanvas-toggle px-1">
@@ -297,6 +318,9 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
             </div>
             <div className="body-overlay" />
             {/*===== SEARCH ENDS STARTS=======*/}
+                {isOpen && (
+                <AuthModal isOpen={isOpen} setIsOpen={setIsOpen} />
+            )}
         </>
     );
 }
