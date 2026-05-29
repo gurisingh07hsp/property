@@ -197,6 +197,7 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                 </ul> */}
                                             </li>
                                             {user && user.email && (
+                                                <>
                                                 <li>
                                                     <Link href="/dashboard">
                                                         Dashboard
@@ -228,6 +229,40 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                         </li>
                                                     </ul> */}
                                                 </li>
+                                                {user.role === 'admin' && (
+                                                    <li>
+                                                        <Link href="/admin">
+                                                            Admin
+                                                            {/* <span>
+                                                                <i className="fa-solid fa-angle-down d-lg-inline d-none" />
+                                                            </span> */}
+                                                        </Link>
+                                                        {/* <ul className="sub-menu">
+                                                            <li>
+                                                                <Link href="/dashboard">Dashboard</Link>
+                                                            </li>
+                                                            <li>
+                                                                <Link href="/my-property">My Properties</Link>
+                                                            </li>
+                                                            <li>
+                                                                <Link href="/message">Message</Link>
+                                                            </li>
+                                                            <li>
+                                                                <Link href="/my-favorites">My Favourites</Link>
+                                                            </li>
+                                                            <li>
+                                                                <Link href="/reviews">Reviews</Link>
+                                                            </li>
+                                                            <li>
+                                                                <Link href="/my-profile">My Propfile</Link>
+                                                            </li>
+                                                            <li>
+                                                                <Link href="/add-property">Add Property</Link>
+                                                            </li>
+                                                        </ul> */}
+                                                    </li>
+                                                )}
+                                                </>
                                             )}
                                             <li>
                                                 <Link href="/blog">

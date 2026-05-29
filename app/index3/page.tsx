@@ -19,7 +19,7 @@ export default function Home2() {
         <>
             <Layout headerStyle={3} footerStyle={3}>
                 <Hero3 />
-                <div className="search-box-3">
+                <div className="search-box-3 ">
                     <SearchBox />
                 </div>
                 <About3 />

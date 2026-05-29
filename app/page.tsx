@@ -15,16 +15,6 @@ export default function Home() {
     return (
         <>
             <Layout headerStyle={4} footerStyle={4}>
-                {/* <Hero4 />
-                <SearchBox />
-                <About1 />
-                <Property1 />
-                <Category1 />
-                <Properties1 />
-                <PropertyLocation1 />
-                <Team1 />
-                <Testimonial1 />
-                <Blog1 /> */}
                 <Home2/>
             </Layout>
         </>

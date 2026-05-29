@@ -10,6 +10,7 @@ import "/public/assets/css/plugins/sidebar.css";
 import "/public/assets/css/plugins/slick-slider.css";
 import "/public/assets/css/plugins/swiper-slider.css";
 import "/public/assets/css/main.css";
+import './globals.css'
 
 import StoreProvider from "@/features/StoreProvider";
 import type { Metadata } from "next";

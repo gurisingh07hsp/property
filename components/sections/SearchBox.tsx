@@ -2,8 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import propertyData from "@/data/property.json";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { ChevronDown, MapPin } from 'lucide-react';
 import Link from "next/link";
+import axios from "axios";
 
 interface Property {
     id: number;
@@ -16,10 +18,46 @@ interface Property {
     // ... other properties
 }
 
+
+interface place_data {
+  class: string;
+  type: string;
+  display_place: string;
+}
+
 export default function SearchBox() {
     const router = useRouter();
     const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
     const [showAdvanced, setShowAdvanced] = useState(false);
+    const [location, setLocation] = useState('');
+	const [showLocationDropdown, setShowLocationDropdown] = useState(false);
+  	const [filteredCities, setFilteredCities] = useState<string[]>([]);
+	const [showFrom, setShowForm] = useState(false);
+	const locationRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (locationRef.current && !locationRef.current.contains(event.target as Node)) {
+        setShowLocationDropdown(false);
+		setShowForm(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleLocationSelect = (selectedCity: string) => {
+    setLocation(selectedCity);
+	setShowForm(true);
+    setShowLocationDropdown(false);
+  };
+
+  const handleLocationFocus = () => {
+    setShowLocationDropdown(true);
+  };
 
     // Filter properties based on search criteria
     const filterProperties = (criteria: {
@@ -90,12 +128,6 @@ export default function SearchBox() {
     // Get unique property types from property data
     const propertyTypes = Array.from(new Set(propertyData.map(property => property.type))).sort();
 
-    // Get unique states from property data
-    const states = Array.from(new Set(propertyData.map(property => property.state))).sort();
-
-    // Get unique cities from property data
-    const cities = Array.from(new Set(propertyData.map(property => property.city))).sort();
-
     // Handle form submission
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -131,6 +163,22 @@ export default function SearchBox() {
         // Navigate to search results page with query parameters
         router.push(`/search-results?${params.toString()}`);
     };
+
+
+    const handleLocationChange = async(e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocation(e.target.value);
+    if(e.target.value !== ' ' && e.target.value !== ''){ 
+      const response = await axios.get(`/api/places?input=${e.target.value}`);
+      console.log(response.data);
+      setFilteredCities(
+        response.data.predictions
+          ?.filter((place: place_data) => (place.class === "place" || place.class === 'boundary'))
+          .map((place: place_data) => place.display_place)
+      );
+    }
+
+    setShowLocationDropdown(true);
+  };
 
     return (
         <>
@@ -325,7 +373,7 @@ export default function SearchBox() {
                                             <h2 className="fw-bold">Find your dream property</h2>
                                         </div>
                                         <div className="filters z-1 position-relative">
-                                            <div className="d-flex flex-lg-nowrap flex-wrap gap-2 justify-content-between w-100">
+                                            <div className="d-flex flex-lg-nowrap flex-wrap gap-2 w-100">
                                                 <div className="filter-group">
                                                     {/* <label>Keyword</label> */}
                                                     <input type="text" name="keyword" placeholder="Keyword" />
@@ -352,8 +400,8 @@ export default function SearchBox() {
                                                     </select>
                                                 </div>
 
-                                                <div className="filter-group">
-                                                    {/* <label>City</label> */}
+                                                {/* <div className="filter-group">
+                                                   
                                                     <select name="city">
                                                         <option value="">All Cities</option>
                                                         {cities.map((city, index) => (
@@ -362,10 +410,10 @@ export default function SearchBox() {
                                                             </option>
                                                         ))}
                                                     </select>
-                                                </div>
+                                                </div> */}
 
-                                                <div className="filter-group">
-                                                    {/* <label>State</label> */}
+                                                {/* <div className="filter-group">
+                                                  
                                                     <select name="state">
                                                         <option value="">All States</option>
                                                         {states.map((state, index) => (
@@ -374,9 +422,60 @@ export default function SearchBox() {
                                                             </option>
                                                         ))}
                                                     </select>
-                                                </div>
+                                                </div> */}
                                             </div>
                                         </div>
+            	<div className="btn-are1 flex md:flex-row flex-col gap-1 mx-4" data-aos="fade-left" data-aos-duration={1000}>
+            <div className="relative flex-1 min-w-0" ref={locationRef}>
+              <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder={"Enter your location"}
+                value={location}
+                onChange={handleLocationChange}
+                onFocus={handleLocationFocus}
+                className="w-full px-5 py-3 border border-gray-300 rounded-4xl bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
+              />
+              <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              
+              {/* Location Dropdown */}
+              {showLocationDropdown && (
+                <div className="absolute actions top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto">
+                  {filteredCities.length > 0 ? (
+                    filteredCities.filter((city, index, arr) => arr.indexOf(city) === index).map((city, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleLocationSelect(city)}
+                        className="w-full filter-button show-form px-4 py-3 text-left hover:bg-gray-50 focus:bg-gray-50 focus:outline-none border-b border-gray-100 last:border-b-0"
+                      >
+                        <div className="flex items-center filter-button show-form">
+                          <MapPin className="w-4 h-4 text-gray-400 mr-2" />
+                          <span className="text-gray-800">{city}</span>
+                        </div>
+                      </button>
+                    ))
+                  ) : (
+                    <div className="px-4 py-3 text-gray-500 text-sm">
+                      No cities found
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+                 <div className="search-button lg:mt-3 d-flex align-items-center">
+                    <button type="submit" >
+                        Search Property
+                        <span className="arrow1 ms-2">
+                            <i className="fa-solid fa-arrow-right" />
+                        </span>
+                        <span className="arrow2 ms-2">
+                            <i className="fa-solid fa-arrow-right" />
+                        </span>
+                    </button>
+                </div>  
+
+            </div>
 
                                         <div className={`amenities-section ${showAdvanced ? 'show' : ''}`}>
                                             <div className="filters mb-4">
@@ -399,7 +498,7 @@ export default function SearchBox() {
                                             </div>
                                         </div>
 
-                                        <div className="filters pt-2">
+                                        {/* <div className="filters pt-2">
                                             <div className="d-flex justify-content-between w-100">
                                                 <div className="d-flex flex-wrap gap-2 align-items-center">
                                                     <div className="search-button d-flex align-items-center">
@@ -427,7 +526,7 @@ export default function SearchBox() {
                                                     </Link>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </form>
 
