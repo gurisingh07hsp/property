@@ -29,7 +29,12 @@ export default function Layout({ headerStyle, footerStyle, children }: LayoutPro
             <AnimatedText />
             <BootstrapComponents />
 
-            <HeaderSelector headerStyle={headerStyle} scroll={scroll} />
+            <HeaderSelector
+                headerStyle={headerStyle}
+                scroll={scroll}
+                isMobileMenu={isMobileMenu}
+                handleMobileMenu={handleMobileMenu}
+            />
             <Search />
             <MobileMenu isMobileMenu={isMobileMenu} handleMobileMenu={handleMobileMenu} />
 

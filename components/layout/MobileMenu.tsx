@@ -1,250 +1,143 @@
 "use client";
+
 import Link from "next/link";
-import { useState } from "react";
-export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
-    const [isAccordion, setIsAccordion] = useState(0);
-    const handleAccordion = (key: any) => {
-        setIsAccordion((prevState) => (prevState === key ? null : key));
+import { useEffect, useState } from "react";
+
+type MobileMenuProps = {
+    isMobileMenu: boolean;
+    handleMobileMenu: () => void;
+};
+
+export default function MobileMenu({ isMobileMenu, handleMobileMenu }: MobileMenuProps) {
+    const [openSection, setOpenSection] = useState<number | null>(null);
+
+    const closeMenu = () => {
+        if (isMobileMenu) handleMobileMenu();
     };
+
+    const toggleSection = (key: number) => {
+        setOpenSection((prev) => (prev === key ? null : key));
+    };
+
+    useEffect(() => {
+        document.body.style.overflow = isMobileMenu ? "hidden" : "";
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, [isMobileMenu]);
+
+    const navLink = (href: string, label: string) => (
+        <Link href={href} onClick={closeMenu}>
+            {label}
+        </Link>
+    );
+
     return (
         <>
-            {/*===== MOBILE HEADER STARTS =======*/}
-            <div className="homepage4-body">
-                <div className={`vl-offcanvas ${isMobileMenu ? "vl-offcanvas-open" : ""}`}>
-                    <div className="vl-offcanvas-wrapper">
-                        <div className="vl-offcanvas-header d-flex justify-content-between align-items-center mb-40">
-                            <div className="vl-offcanvas-logo">
-                                <Link href="/">
-                                    <img src="/assets/img/logo/proputy-logo.png" alt="Proputy" />
-                                </Link>
-                            </div>
-                            <div className="vl-offcanvas-close">
-                                <button type="button" className="vl-offcanvas-close-toggle" onClick={handleMobileMenu}>
-                                    <i className="fa-solid fa-xmark" />
-                                </button>
-                            </div>
+            <div className={`vl-offcanvas ${isMobileMenu ? "vl-offcanvas-open" : ""}`} aria-hidden={!isMobileMenu}>
+                <div className="vl-offcanvas-wrapper">
+                    <div className="vl-offcanvas-header d-flex justify-content-between align-items-center">
+                        <div className="vl-offcanvas-logo">
+                            <Link href="/" onClick={closeMenu}>
+                                <img src="/assets/img/logo/proputy-logo.png" alt="Proputy" />
+                            </Link>
                         </div>
-                        <div className="vl-offcanvas-menu d-lg-none mb-40">
-                            <nav>
-                                <ul>
-                                    <li className={`has-dropdown ${isAccordion == 1 ? "active" : ""}`} onClick={() => handleAccordion(1)}>
-                                        <Link href="/">
-                                            Home
-                                            {/* <span>
-                                                <i className="fa-solid fa-angle-down d-lg-inline d-none" />
-                                            </span> */}
-                                        </Link>
-                                        {/* <ul className="sub-menu" style={{ display: `${isAccordion == 1 ? "block" : "none"}` }}>
-                                            <li>
-                                                <Link href="/">Home 1</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/index2">Home 2</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/index3">Home 3</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/index4">Home 4</Link>
-                                            </li>
-
-                                        </ul> */}
-                                        {/* <button className="vl-menu-close">
-                                            <i className="fas fa-chevron-right" />
-                                        </button> */}
-                                    </li>
-                                    <li className={`has-dropdown ${isAccordion == 2 ? "active" : ""}`} onClick={() => handleAccordion(2)}>
-                                        <Link href="#">
-                                            Pages
-                                            <span>
-                                                <i className="fa-solid fa-angle-down d-lg-inline d-none" />
-                                            </span>
-                                        </Link>
-                                        <ul className="sub-menu" style={{ display: `${isAccordion == 2 ? "block" : "none"}` }}>
-                                            <li>
-                                                <Link href="/about-us">About Us</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/our-service">Our Services</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/pricing">Pricing</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/contact">Contact Us</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/faq">FAQ's</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/privacy-policy">Privacy Policy</Link>
-                                            </li>
-                                        </ul>
-                                        <button className="vl-menu-close">
-                                            <i className="fas fa-chevron-right" />
-                                        </button>
-                                    </li>
-                                    <li className={`has-dropdown ${isAccordion == 3 ? "active" : ""}`} onClick={() => handleAccordion(3)}>
-                                        <Link href="/sidebar-grid">
-                                            Listing
-                                            {/* <span>
-                                                <i className="fa-solid fa-angle-down d-lg-inline d-none" />
-                                            </span> */}
-                                        </Link>
-                                        {/* <ul className="sub-menu" style={{ display: `${isAccordion == 3 ? "block" : "none"}` }}>
-                                            <li>
-                                                <Link href="/property-halfmap-grid">Property Half Grid</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/property-halfmap-list">Property Half Map List</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/topmap-grid">Property Top Map Grid</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/topmap-list">Property Top Map List</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/sidebar-grid">Find Sidebar Grid</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/sidebar-list">Find Sidebar List</Link>
-                                            </li>
-                                        </ul> */}
-                                        {/* <button className="vl-menu-close">
-                                            <i className="fas fa-chevron-right" />
-                                        </button> */}
-                                    </li>
-                                    <li className={`has-dropdown ${isAccordion == 4 ? "active" : ""}`} onClick={() => handleAccordion(4)}>
-                                        <Link href="/property-details-v1">
-                                            Properties
-                                         
-                                        </Link>
-                                        {/* <ul className="sub-menu" style={{ display: `${isAccordion == 4 ? "block" : "none"}` }}>
-                                            <li>
-                                                <Link href="/property-details-v1">Property Details 01</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/property-details-v2">Property Details 02</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/property-details-v3">Property Details 03</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/property-details-v4">Property Details 04</Link>
-                                            </li>
-                                        </ul> */}
-                                        {/* <button className="vl-menu-close">
-                                            <i className="fas fa-chevron-right" />
-                                        </button> */}
-                                    </li>
-                                    <li className={`has-dropdown ${isAccordion == 5 ? "active" : ""}`} onClick={() => handleAccordion(5)}>
-                                        <Link href="/dashboard">
-                                            Dashboard
-                                            {/* <span>
-                                                <i className="fa-solid fa-angle-down d-lg-inline d-none" />
-                                            </span> */}
-                                        </Link>
-                                        {/* <ul className="sub-menu" style={{ display: `${isAccordion == 5 ? "block" : "none"}` }}>
-                                            <li>
-                                                <Link href="/dashboard">Dashboard</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/my-property">My Properties</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/message">Message</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/my-favorites">My Favourites</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/reviews">Reviews</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/my-profile">My Propfile</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/add-property">Add Property</Link>
-                                            </li>
-                                        </ul> */}
-                                        {/* <button className="vl-menu-close">
-                                            <i className="fas fa-chevron-right" />
-                                        </button> */}
-                                    </li>
-                                    <li className={`has-dropdown ${isAccordion == 6 ? "active" : ""}`} onClick={() => handleAccordion(6)}>
-                                        <Link href="/blog">
-                                            Blogs
-                                            {/* <span>
-                                                <i className="fa-solid fa-angle-down d-lg-inline d-none" />
-                                            </span> */}
-                                        </Link>
-                                        {/* <ul className="sub-menu" style={{ display: `${isAccordion == 6 ? "block" : "none"}` }}>
-                                            <li>
-                                                <Link href="/blog">Blog Default</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/blog-grid">Blog Grid</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/blog-detail">Blog Post Details</Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/blog-detail-2">Blog Post Details 2</Link>
-                                            </li>
-                                        </ul> */}
-                                        {/* <button className="vl-menu-close">
-                                            <i className="fas fa-chevron-right" />
-                                        </button> */}
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <div className="space20" />
-                        <div className="vl-offcanvas-info">
-                            <h3 className="vl-offcanvas-sm-title">Contact Us</h3>
-                            <div className="space20" />
-                            <span>
-                                <Link href="#">
-                                    <i className="fa-regular fa-envelope" /> +57 9954 6476
-                                </Link>
-                            </span>
-                            <span>
-                                <Link href="#">
-                                    <i className="fa-solid fa-phone" /> hello@exdos.com
-                                </Link>
-                            </span>
-                            <span>
-                                <Link href="#">
-                                    <i className="fa-solid fa-location-dot" /> Bhemeara,Kushtia
-                                </Link>
-                            </span>
-                        </div>
-                        <div className="space20" />
-                        <div className="vl-offcanvas-social">
-                            <h3 className="vl-offcanvas-sm-title">Follow Us</h3>
-                            <div className="space20" />
-                            <Link href="#">
-                                <i className="fab fa-facebook-f" />
-                            </Link>
-                            <Link href="#">
-                                <i className="fab fa-twitter" />
-                            </Link>
-                            <Link href="#">
-                                <i className="fab fa-linkedin-in" />
-                            </Link>
-                            <Link href="#">
-                                <i className="fab fa-instagram" />
-                            </Link>
+                        <div className="vl-offcanvas-close">
+                            <button
+                                type="button"
+                                className="vl-offcanvas-close-toggle"
+                                aria-label="Close menu"
+                                onClick={handleMobileMenu}
+                            >
+                                <i className="fa-solid fa-xmark" />
+                            </button>
                         </div>
                     </div>
+
+                    <div className="homepage4-offcanvas-cta">
+                        <Link href="/add-property" className="homepage4-offcanvas-list-btn" onClick={closeMenu}>
+                            <i className="fa-solid fa-plus" aria-hidden />
+                            List your property
+                            <span className="homepage4-free-badge">FREE</span>
+                        </Link>
+                    </div>
+
+                    <div className="vl-offcanvas-menu">
+                        <nav>
+                            <ul>
+                                <li>{navLink("/", "Home")}</li>
+                                <li className={`has-dropdown ${openSection === 2 ? "active" : ""}`}>
+                                    <div className="homepage4-menu-row">
+                                        <span className="homepage4-menu-label">Pages</span>
+                                        <button
+                                            type="button"
+                                            className="vl-menu-close homepage4-submenu-toggle"
+                                            aria-label="Toggle pages submenu"
+                                            aria-expanded={openSection === 2}
+                                            onClick={() => toggleSection(2)}
+                                        >
+                                            <i className={`fas fa-chevron-${openSection === 2 ? "down" : "right"}`} />
+                                        </button>
+                                    </div>
+                                    <ul className="sub-menu" style={{ display: openSection === 2 ? "block" : "none" }}>
+                                        <li>{navLink("/about-us", "About Us")}</li>
+                                        <li>{navLink("/our-service", "Our Services")}</li>
+                                        <li>{navLink("/pricing", "Pricing")}</li>
+                                        <li>{navLink("/contact", "Contact Us")}</li>
+                                        <li>{navLink("/faq", "FAQ's")}</li>
+                                        <li>{navLink("/privacy-policy", "Privacy Policy")}</li>
+                                    </ul>
+                                </li>
+                                <li>{navLink("/sidebar-grid", "Listing")}</li>
+                                <li>{navLink("/property-details-v1", "Properties")}</li>
+                                <li>{navLink("/dashboard", "Dashboard")}</li>
+                                <li>{navLink("/blog", "Blogs")}</li>
+                                <li>{navLink("/add-property", "Add Property")}</li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <div className="vl-offcanvas-info">
+                        <h3 className="vl-offcanvas-sm-title">Contact Us</h3>
+                        <span>
+                            <Link href="tel:+5799546476" onClick={closeMenu}>
+                                <i className="fa-solid fa-phone" /> +57 9954 6476
+                            </Link>
+                        </span>
+                        <span>
+                            <Link href="mailto:hello@exdos.com" onClick={closeMenu}>
+                                <i className="fa-regular fa-envelope" /> hello@exdos.com
+                            </Link>
+                        </span>
+                        <span>
+                            <Link href="/contact" onClick={closeMenu}>
+                                <i className="fa-solid fa-location-dot" /> Bhemeara, Kushtia
+                            </Link>
+                        </span>
+                    </div>
+
+                    <div className="vl-offcanvas-social">
+                        <h3 className="vl-offcanvas-sm-title">Follow Us</h3>
+                        <Link href="#" aria-label="Facebook">
+                            <i className="fab fa-facebook-f" />
+                        </Link>
+                        <Link href="#" aria-label="Twitter">
+                            <i className="fab fa-twitter" />
+                        </Link>
+                        <Link href="#" aria-label="LinkedIn">
+                            <i className="fab fa-linkedin-in" />
+                        </Link>
+                        <Link href="#" aria-label="Instagram">
+                            <i className="fab fa-instagram" />
+                        </Link>
+                    </div>
                 </div>
-                <div
-                    className={`vl-offcanvas-overlay ${isMobileMenu ? "vl-offcanvas-overlay-open" : ""}`}
-                    onClick={handleMobileMenu}
-                />
             </div>
-            {/*===== MOBILE HEADER STARTS =======*/}
+            <div
+                className={`vl-offcanvas-overlay ${isMobileMenu ? "vl-offcanvas-overlay-open" : ""}`}
+                onClick={handleMobileMenu}
+                aria-hidden={!isMobileMenu}
+            />
         </>
     );
 }

@@ -117,7 +117,79 @@ header.homepage4-site-header .vl-transparent-header .vl-logo img {
     body.homepage4-body .vl-transparent-header:not(.header-sticky),
     header.homepage4-site-header .vl-transparent-header:not(.header-sticky) {
         max-width: 100%;
-        padding: 16px;
+        padding: 10px 12px !important;
+        background: #1800ad !important;
+        border-radius: 0 !important;
+    }
+
+    body.homepage4-body header.homepage4-site-header,
+    header.homepage4-site-header {
+        background: #1800ad;
+    }
+
+    body.homepage4-body .vl-transparent-header.header-sticky,
+    header.homepage4-site-header .vl-transparent-header.header-sticky {
+        background: #1800ad !important;
+        padding: 10px 0 !important;
+    }
+
+    .homepage4-body .vl-transparent-header .vl-logo img,
+    header.homepage4-site-header .vl-transparent-header .vl-logo img {
+        max-width: 108px;
+        max-height: 26px;
+        filter: brightness(0) invert(1);
+    }
+
+    .homepage4-mobile-header-actions {
+        gap: 8px;
+        min-height: 40px;
+    }
+
+    .homepage4-post-property-btn {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        color: #fff !important;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.2;
+        white-space: nowrap;
+        text-decoration: none;
+    }
+
+    .homepage4-free-badge {
+        position: absolute;
+        top: -7px;
+        right: 2px;
+        padding: 2px 5px;
+        border-radius: 3px;
+        background: #fff;
+        color: #111;
+        font-size: 8px;
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: 0.02em;
+    }
+
+    .homepage4-mobile-menu-btn {
+        flex-shrink: 0;
+        width: 38px;
+        height: 38px;
+        border: none;
+        border-radius: 10px;
+        background: #fff;
+        color: #1800ad;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 17px;
+        cursor: pointer;
+        padding: 0;
     }
 
     .homepage4-hero-shell {
@@ -553,28 +625,136 @@ header.homepage4-site-header .vl-transparent-header .vl-logo img {
 }
 
 /* --------------------------------------------------------------------------
+   Mobile offcanvas menu (homepage 4)
+   -------------------------------------------------------------------------- */
+.homepage4-body .vl-offcanvas {
+    z-index: 9999;
+}
+
+.homepage4-body .vl-offcanvas-overlay {
+    z-index: 9998;
+}
+
+.homepage4-offcanvas-cta {
+    margin-bottom: 20px;
+}
+
+.homepage4-offcanvas-list-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: #fff;
+    color: #1800ad !important;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.homepage4-offcanvas-list-btn .homepage4-free-badge {
+    position: static;
+    margin-left: 4px;
+    background: #1800ad;
+    color: #fff;
+    font-size: 9px;
+    padding: 3px 6px;
+    border-radius: 4px;
+}
+
+.homepage4-menu-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+}
+
+.homepage4-menu-row > a,
+.homepage4-menu-label {
+    flex: 1;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.homepage4-submenu-toggle {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+}
+
+.homepage4-body .vl-offcanvas-menu ul li .sub-menu {
+    padding-left: 12px;
+}
+
+.homepage4-body .vl-offcanvas-menu ul li .sub-menu li a {
+    font-size: 15px;
+    opacity: 0.9;
+}
+
+/* --------------------------------------------------------------------------
    Mobile fixes: offcanvas menu, cities grid, featured cards
    -------------------------------------------------------------------------- */
 @media (max-width: 767px) {
     .homepage4-body .vl-offcanvas {
-        width: 100%;
-        padding: 24px 18px;
+        width: min(100%, 360px);
+        padding: 20px 16px;
     }
 
     .homepage4-body .vl-offcanvas-header {
-        margin-bottom: 18px !important;
+        margin-bottom: 14px !important;
     }
 
     .homepage4-body .vl-offcanvas .vl-offcanvas-logo img {
-        width: 170px;
+        width: auto;
+        max-width: 120px;
+        max-height: 30px;
         height: auto;
         display: block;
+        filter: brightness(0) invert(1);
+    }
+
+    .homepage4-body .vl-offcanvas-close-toggle {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.12);
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .homepage4-body .vl-offcanvas-menu ul li a {
         font-size: 16px;
         line-height: 1.25;
         padding: 10px 0;
+        display: block;
+    }
+
+    .homepage4-post-property-btn {
+        font-size: 11px;
+        padding: 7px 10px;
+    }
+
+    .homepage4-mobile-menu-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+
+    .homepage4-body .vl-transparent-header .vl-logo img,
+    header.homepage4-site-header .vl-transparent-header .vl-logo img {
+        max-width: 96px;
+        max-height: 24px;
     }
 
     .location4-grid > [class*="col-6"] {

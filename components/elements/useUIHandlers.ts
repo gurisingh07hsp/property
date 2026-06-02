@@ -115,17 +115,19 @@ function setupHamburgerMenu(): void {
 
 // New function: Mobile sidebar functionality
 function setupMobileSidebar(): void {
-    const mobileNavOpen = document.querySelector(".vl-offcanvas-toggle");
+    const mobileNavOpen = document.querySelector(".vl-offcanvas-toggle:not([data-react-menu])");
     const mobileSidebar = document.querySelector(".vl-offcanvas");
     const mobileNavClose = document.querySelector(".vl-offcanvas-close-toggle");
 
     if (mobileNavOpen && mobileSidebar && mobileNavClose) {
         mobileNavOpen.addEventListener("click", () => {
             mobileSidebar.classList.add("vl-offcanvas-open");
+            document.querySelector(".vl-offcanvas-overlay")?.classList.add("vl-offcanvas-overlay-open");
         });
 
         mobileNavClose.addEventListener("click", () => {
             mobileSidebar.classList.remove("vl-offcanvas-open");
+            document.querySelector(".vl-offcanvas-overlay")?.classList.remove("vl-offcanvas-overlay-open");
         });
     }
 }

@@ -13,7 +13,7 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                 <div id="vl-header-sticky" className={`vl-header-area vl-transparent-header ${scroll ? "header-sticky" : ""}`}>
                     <div className="container homepage4-header-container">
                         <div className="row align-items-center">
-                            <div className="col-lg-2 col-md-6 col-6">
+                            <div className="col-lg-2 col-5">
                                 <div className="vl-logo">
                                     <Link href="/">
                                         <img src="/assets/img/logo/proputy-logo.png" alt="Proputy" />
@@ -290,8 +290,8 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                                     </nav>
                                 </div>
                             </div>
-                            <div className="col-lg-3 col-md-6 col-6">
-                                <div className="vl-hero-btn text-end">
+                            <div className="col-lg-3 col-7">
+                                <div className="vl-hero-btn text-end d-none d-lg-flex align-items-center justify-content-end">
                                     <div className="search-icon header__search header-search-btn">
                                         <Link href="#">
                                             <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32} viewBox="0 0 32 32" fill="none">
@@ -301,32 +301,51 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                                     </div>
                                     {user && user.email ? (
                                         <>
-                                        <div className="btn-area1">
-                                            <Link href="/add-property" className="vl-btn1">
-                                                Add Listing
-                                                <span className="arrow1 ms-2">
-                                                    <i className="fa-solid fa-arrow-right" />
-                                                </span>
-                                                <span className="arrow2 ms-2">
-                                                    <i className="fa-solid fa-arrow-right" />
-                                                </span>
-                                            </Link>
-                                        </div>
-                                        <button onClick={()=> logout()} className="mx-2" style={{color: 'red', border: 'none', background: 'none'}}>
+                                            <div className="btn-area1">
+                                                <Link href="/add-property" className="vl-btn1">
+                                                    Add Listing
+                                                    <span className="arrow1 ms-2">
+                                                        <i className="fa-solid fa-arrow-right" />
+                                                    </span>
+                                                    <span className="arrow2 ms-2">
+                                                        <i className="fa-solid fa-arrow-right" />
+                                                    </span>
+                                                </Link>
+                                            </div>
+                                            <button
+                                                onClick={() => logout()}
+                                                className="mx-2"
+                                                style={{ color: "red", border: "none", background: "none" }}
+                                            >
                                                 Logout
-                                        </button>
+                                            </button>
                                         </>
                                     ) : (
-                                    <div className="">
-                                        <button onClick={()=> setIsOpen(true)} className="px-4 py-2 text-white" style={{borderRadius: '20px', border: 'none', background: '#1800ad'}}>
-                                            Login
-                                        </button>
-                                    </div>
+                                        <div>
+                                            <button
+                                                onClick={() => setIsOpen(true)}
+                                                className="px-4 py-2 text-white"
+                                                style={{ borderRadius: "20px", border: "none", background: "#1800ad" }}
+                                            >
+                                                Login
+                                            </button>
+                                        </div>
                                     )}
                                 </div>
-                                <div className="vl-header-action-item d-block d-lg-none">
-                                    <button type="button" className="vl-offcanvas-toggle px-1">
-                                        <i className="fa-solid fa-bars-staggered" />
+                                <div className="homepage4-mobile-header-actions d-flex d-lg-none align-items-center justify-content-end">
+                                    <Link href="/add-property" className="homepage4-post-property-btn">
+                                        Post Property
+                                        <span className="homepage4-free-badge">FREE</span>
+                                    </Link>
+                                    <button
+                                        type="button"
+                                        className="homepage4-mobile-menu-btn vl-offcanvas-toggle"
+                                        data-react-menu="true"
+                                        aria-label={isMobileMenu ? "Close menu" : "Open menu"}
+                                        aria-expanded={isMobileMenu}
+                                        onClick={() => handleMobileMenu?.()}
+                                    >
+                                        <i className={`fa-solid ${isMobileMenu ? "fa-xmark" : "fa-bars"}`} />
                                     </button>
                                 </div>
                             </div>
