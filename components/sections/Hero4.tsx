@@ -2,9 +2,6 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation, Pagination, Thumbs } from "swiper/modules";
-import SwiperCore from "swiper";
 
 const houseIcon = (
     <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none">
@@ -17,25 +14,6 @@ const houseIcon = (
         />
     </svg>
 );
-
-const slides = [
-    {
-        image: "/assets/img/all-images/hero/hero-img6.png",
-        description:
-            "Begin your real estate journey with Housa — where finding, buying, or renting your dream property is simpler, smarter, and more rewarding than ever.",
-        showSearch: true,
-    },
-    {
-        image: "/assets/img/all-images/hero/hero-img7.png",
-        description:
-            "Step into a world of seamless property discovery — Housa helps you explore top listings, connect with trusted agents, and make confident decisions with ease.",
-    },
-    {
-        image: "/assets/img/all-images/hero/hero-img8.png",
-        description:
-            "Whether you're buying your first home, investing in property, or searching for a rental, Housa guides you every step of the way.",
-    },
-];
 
 type HeroTab = "buy" | "rent" | "commercial" | "plots";
 
@@ -104,74 +82,34 @@ function HeroSearchPanel() {
 }
 
 export default function Hero4() {
-    const [thumbsSwiper, setThumbsSwiper] = useState<SwiperCore | null>(null);
-
     return (
-        <>
-            <Swiper
-                modules={[Autoplay, Pagination, Navigation, Thumbs]}
-                spaceBetween={10}
-                loop
-                watchSlidesProgress
-                autoplay={{
-                    delay: 4500,
-                    disableOnInteraction: false,
+        <div className="hero4-slider-sectionarea">
+            <div
+                className="hero4-slider-area swiper-slide-active"
+                style={{
+                    backgroundImage: "url(/assets/img/all-images/hero/hero-img6.png)",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
                 }}
-                navigation={{
-                    nextEl: ".swiper-button-next",
-                    prevEl: ".swiper-button-prev",
-                }}
-                thumbs={{ swiper: thumbsSwiper }}
-                className="main-swiper hero4-slider-sectionarea"
             >
-                {slides.map((slide) => (
-                    <SwiperSlide
-                        key={slide.image + slide.description.slice(0, 24)}
-                        className="hero4-slider-area"
-                        style={{
-                            backgroundImage: `url(${slide.image})`,
-                            backgroundPosition: "center",
-                            backgroundRepeat: "no-repeat",
-                            backgroundSize: "cover",
-                        }}
-                    >
-                        <img src="/assets/img/all-images/bg/h-bg1.png" alt="" className="h-bg1" aria-hidden />
-                        <img src="/assets/img/elements/elements5.png" alt="" className="elements5" aria-hidden />
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-lg-7 col-md-10">
-                                    <div className="hero2-header heading2 hero-content-visible">
-                                        <h5>
-                                            {houseIcon}
-                                            Your Trusted Real Estate Partner
-                                        </h5>
-                                        <h1>Start Your Property Journey With Housa</h1>
-                                        <p className="text-white">{slide.description}</p>
-                                        {slide.showSearch ? <HeroSearchPanel /> : null}
-                                    </div>
-                                </div>
+                <img src="/assets/img/all-images/bg/h-bg1.png" alt="" className="h-bg1" aria-hidden />
+                <img src="/assets/img/elements/elements5.png" alt="" className="elements5" aria-hidden />
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-7 col-md-10">
+                            <div className="hero2-header heading2 hero-content-visible">
+                                <h5>
+                                    {houseIcon}
+                                    Your Trusted Real Estate Partner
+                                </h5>
+                                <h1>Start Your Property Journey With Housa</h1>
+                                <HeroSearchPanel />
                             </div>
                         </div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
-            <Swiper
-                modules={[Thumbs]}
-                onSwiper={setThumbsSwiper}
-                direction="vertical"
-                spaceBetween={0}
-                slidesPerView={3}
-                loop
-                watchSlidesProgress
-                style={{ height: "270px" }}
-                className="gallery-thumbs hero4-small-img"
-            >
-                {slides.map((slide) => (
-                    <SwiperSlide key={`thumb-${slide.image}`} className="img1">
-                        <img src={slide.image} alt="" />
-                    </SwiperSlide>
-                ))}
-            </Swiper>
-        </>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }

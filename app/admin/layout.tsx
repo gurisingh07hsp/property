@@ -168,7 +168,7 @@ export default function AdminLayout({
        
             {showLabels && (
                      <img
-              src="/assets/img/logo/logo6.png"
+              src="/assets/img/logo/proputy-logo.png"
               style={{ height: 40, width: 130, flexShrink: 0 }}
               alt="logo"
             />

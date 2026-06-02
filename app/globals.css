@@ -54,6 +54,25 @@ header.homepage4-site-header .vl-transparent-header.header-sticky .homepage4-hea
     padding-right: 12px;
 }
 
+/* Proputy logo sizing */
+.homepage4-body .vl-transparent-header .vl-logo img,
+header.homepage4-site-header .vl-transparent-header .vl-logo img {
+    width: auto;
+    max-width: 180px;
+    height: auto;
+    max-height: 44px;
+    object-fit: contain;
+}
+
+.homepage4-body .vl-footer4-section-area .footer-time-area > img,
+.vl-footer4-section-area .footer-time-area > img {
+    width: auto;
+    max-width: 170px;
+    height: auto;
+    max-height: 42px;
+    object-fit: contain;
+}
+
 /* --------------------------------------------------------------------------
    Home page — hero card below header
    -------------------------------------------------------------------------- */
@@ -69,6 +88,10 @@ header.homepage4-site-header .vl-transparent-header.header-sticky .homepage4-hea
 
 .homepage4-hero-shell .hero4-slider-sectionarea {
     margin: 0 !important;
+}
+
+.homepage4-hero-shell .hero4-small-img {
+    display: none !important;
 }
 
 .homepage4-hero-shell .hero4-slider-area .hero2-header {
@@ -630,6 +653,7 @@ header.homepage4-site-header .vl-transparent-header.header-sticky .homepage4-hea
    Hero 4 — visible content + responsive layout
    -------------------------------------------------------------------------- */
 .homepage4-hero-shell .hero4-slider-sectionarea {
+    margin: 20px auto 0 auto !important;
     border-radius: 28px;
     overflow: hidden;
     box-shadow: 0 16px 48px rgba(17, 17, 17, 0.14);
@@ -637,8 +661,8 @@ header.homepage4-site-header .vl-transparent-header.header-sticky .homepage4-hea
 
 .homepage4-hero-shell .hero4-slider-sectionarea .hero4-slider-area {
     position: relative;
-    min-height: 620px;
-    padding: 180px 64px 160px;
+    min-height: 0;
+    padding: 48px 48px 44px;
 }
 
 /* Dark overlay for text readability */
@@ -708,30 +732,19 @@ header.homepage4-site-header .vl-transparent-header.header-sticky .homepage4-hea
 }
 
 .homepage4-hero-shell .hero4-slider-sectionarea .hero4-slider-area .hero2-header h1 {
-    font-size: clamp(38px, 5vw, 64px);
-    line-height: 1.1;
-    margin-top: 16px;
+    font-size: clamp(28px, 4.2vw, 48px);
+    line-height: 1.12;
+    margin-top: 12px;
+    margin-bottom: 0;
     font-weight: 700;
-    color: #fff;
-}
-
-.homepage4-hero-shell .hero4-slider-sectionarea .hero4-slider-area .hero2-header p {
-    margin-top: 14px;
-    max-width: 560px;
-    font-size: 18px;
-    line-height: 1.55;
-    color: rgba(255, 255, 255, 0.95);
-}
-
-.homepage4-hero-shell .hero4-slider-sectionarea .hero4-slider-area .hero2-header .text-white {
     color: #fff;
 }
 
 /* Search / CTA panel in hero */
 .homepage4-hero-shell .hero4-search-panel {
-    margin-top: 28px;
+    margin-top: 18px;
     max-width: 520px;
-    padding: 14px;
+    padding: 12px;
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.14);
     backdrop-filter: blur(8px);
@@ -823,9 +836,12 @@ header.homepage4-site-header .vl-transparent-header.header-sticky .homepage4-hea
 }
 
 @media (max-width: 1199px) {
+    .homepage4-hero-shell .hero4-slider-sectionarea {
+        margin-top: 16px !important;
+    }
+
     .homepage4-hero-shell .hero4-slider-sectionarea .hero4-slider-area {
-        min-height: 520px;
-        padding: 130px 40px 110px;
+        padding: 40px 32px 36px;
     }
 }
 
@@ -835,13 +851,13 @@ header.homepage4-site-header .vl-transparent-header.header-sticky .homepage4-hea
     }
 
     .homepage4-hero-shell .hero4-slider-sectionarea {
+        margin-top: 0 !important;
         border-radius: 0;
         box-shadow: none;
     }
 
     .homepage4-hero-shell .hero4-slider-sectionarea .hero4-slider-area {
-        min-height: 520px;
-        padding: 96px 16px 88px;
+        padding: 28px 16px 24px;
         border-radius: 0;
     }
 
@@ -853,26 +869,74 @@ header.homepage4-site-header .vl-transparent-header.header-sticky .homepage4-hea
         );
     }
 
+    .homepage4-hero-shell .hero4-slider-sectionarea .hero4-slider-area .elements5 {
+        display: none;
+    }
+
     .homepage4-hero-shell .hero4-slider-sectionarea .hero4-slider-area .hero2-header {
         max-width: 100%;
     }
 
-    .homepage4-hero-shell .hero4-slider-sectionarea .hero4-slider-area .hero2-header h1 {
-        font-size: 34px;
+    .homepage4-hero-shell .hero4-slider-sectionarea .hero4-slider-area .hero2-header h5 {
+        font-size: 12px;
+        padding: 6px 10px;
+        gap: 6px;
     }
 
-    .homepage4-hero-shell .hero4-slider-sectionarea .hero4-slider-area .hero2-header p {
-        font-size: 15px;
+    .homepage4-hero-shell .hero4-slider-sectionarea .hero4-slider-area .hero2-header h5 svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .homepage4-hero-shell .hero4-slider-sectionarea .hero4-slider-area .hero2-header h1 {
+        font-size: clamp(24px, 6.5vw, 32px);
+        margin-top: 10px;
     }
 
     .homepage4-hero-shell .hero4-search-panel {
         max-width: 100%;
-        margin-top: 20px;
-        padding: 12px;
+        margin-top: 14px;
+        padding: 10px;
+    }
+
+    .homepage4-hero-shell .hero4-search-tabs {
+        gap: 6px;
+        margin-bottom: 10px;
     }
 
     .homepage4-hero-shell .hero4-search-tabs .hero-tab {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    .homepage4-hero-shell .hero4-search-row {
+        flex-wrap: nowrap;
+        gap: 6px;
+    }
+
+    .homepage4-hero-shell .hero4-search-row input {
+        min-width: 0;
+        padding: 10px 12px;
         font-size: 13px;
-        padding: 7px 12px;
+    }
+
+    .homepage4-hero-shell .hero4-search-btn {
+        flex-shrink: 0;
+        width: 44px;
+        height: 44px;
+    }
+
+    .homepage4-hero-shell .hero4-owner-cta {
+        margin-top: 10px;
+        padding-top: 10px;
+        font-size: 12px;
+        line-height: 1.4;
+    }
+}
+
+@media (max-width: 380px) {
+    .homepage4-hero-shell .hero4-search-tabs .hero-tab {
+        font-size: 11px;
+        padding: 5px 8px;
     }
 }

@@ -15,7 +15,7 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                         <div className="vl-offcanvas-header d-flex justify-content-between align-items-center mb-40">
                             <div className="vl-offcanvas-logo">
                                 <Link href="/">
-                                    <img src="/assets/img/logo/logo6.png" alt="housa" />
+                                    <img src="/assets/img/logo/proputy-logo.png" alt="Proputy" />
                                 </Link>
                             </div>
                             <div className="vl-offcanvas-close">

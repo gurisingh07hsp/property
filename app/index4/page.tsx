@@ -8,16 +8,12 @@ import Cta2 from "@/components/sections/Cta2";
 import PropertyLocation3 from "@/components/sections/PropertyLocation3";
 import Others2 from "@/components/sections/Others2";
 import Testimonial4 from "@/components/sections/Testimonial4";
-import SearchBox from "@/components/sections/SearchBox";
 export default function Home2() {
     return (
         <>
             {/* <Layout headerStyle={4} footerStyle={4}> */}
                 <div className="homepage4-hero-shell">
                     <Hero4 />
-                </div>
-                <div className="search-box-3">
-                    <SearchBox />
                 </div>
                 <PropertyLocation3 />
                 <Properties5 />

@@ -35,7 +35,7 @@ export default function Footer1() {
                         <div className="row">
                             <div className="col-lg-3 col-md-6">
                                 <div className="footer-time-area">
-                                    <img src="/assets/img/logo/logo1.png" alt="housa" />
+                                    <img src="/assets/img/logo/proputy-logo.png" alt="Proputy" />
                                     <div className="space24" />
                                     <p>We are committed to making your real estate journey seamless and stress-free. Whether you’re buying, selling, or renting every step the way.</p>
                                     <div className="space32" />

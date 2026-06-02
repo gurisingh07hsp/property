@@ -5,7 +5,7 @@ export default function Loading() {
                 <div className="loading-container">
                     <div className="loading" />
                     <div id="loading-icon">
-                        <img src="/assets/img/logo/logo6.png" alt="housa" />
+                        <img src="/assets/img/logo/proputy-logo.png" alt="Proputy" />
                     </div>
                 </div>
             </div>
