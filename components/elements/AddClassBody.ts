@@ -18,10 +18,13 @@ export default function AddClassBody() {
                 bodyElement.classList.add("homepage2-body");
             } else if (pathname === "/index3") {
                 bodyElement.classList.add("homepage3-body");
-            } else if (pathname === "/index4") {
-                bodyElement.classList.add("homepage4-body");
             } else {
-                bodyElement.classList.add("homepage1-body", "b-bg1");
+                // Default: site uses Header4 / homepage4 layout on all other routes
+                bodyElement.classList.add("homepage4-body");
+            }
+
+            if (!bodyElement.classList.contains("b-bg1")) {
+                bodyElement.classList.add("b-bg1");
             }
         }
     }, [pathname]);

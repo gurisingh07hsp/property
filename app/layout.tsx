@@ -49,7 +49,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${inter.className} homepage1-body body1`}>
+            <body className={`${inter.className} homepage4-body body1 b-bg1`}>
                 <StoreProvider>
                     <UserProvider>
                         {children}

@@ -1,1 +1,531 @@
 @import "tailwindcss";
+
+/* --------------------------------------------------------------------------
+   Homepage 4 header — in document flow (no overlap on inner pages)
+   -------------------------------------------------------------------------- */
+
+body.homepage4-body .vl-transparent-header:not(.header-sticky),
+header.homepage4-site-header .vl-transparent-header:not(.header-sticky) {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: 100%;
+    max-width: 1376px;
+    margin: 0 auto !important;
+    padding: 20px 12px;
+    background: #f1f2f3 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+body.homepage4-body header.homepage4-site-header,
+header.homepage4-site-header {
+    position: relative;
+    width: 100%;
+    z-index: 100;
+    margin: 0;
+    padding: 0;
+    background: #f1f2f3;
+}
+
+body.homepage4-body .vl-transparent-header.header-sticky,
+header.homepage4-site-header .vl-transparent-header.header-sticky {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 16px 0;
+    background: var(--ztc-bg-bg-1, #fff) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.09) !important;
+}
+
+body.homepage4-body .vl-transparent-header.header-sticky .container,
+header.homepage4-site-header .vl-transparent-header.header-sticky .homepage4-header-container {
+    max-width: 1376px;
+}
+
+.homepage4-header-container {
+    max-width: 1376px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   Home page — hero card below header
+   -------------------------------------------------------------------------- */
+
+.homepage4-hero-shell {
+    position: relative;
+    max-width: 1376px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 12px;
+    box-sizing: border-box;
+}
+
+.homepage4-hero-shell .hero4-slider-sectionarea {
+    margin: 0 !important;
+}
+
+.homepage4-hero-shell .hero4-slider-area .hero2-header {
+    overflow: visible;
+}
+
+/* --------------------------------------------------------------------------
+   Inner pages — main content stays below header
+   -------------------------------------------------------------------------- */
+
+.vl-page-main {
+    position: relative;
+    z-index: 1;
+}
+
+/* Sections designed for a breadcrumb hero need room when InnerHeader is minimal */
+.vl-page-main > .pricing1:first-child,
+.vl-page-main > .space30:first-child + .pricing1 {
+    margin-top: 0;
+}
+
+@media (max-width: 991px) {
+    body.homepage4-body .vl-transparent-header:not(.header-sticky),
+    header.homepage4-site-header .vl-transparent-header:not(.header-sticky) {
+        max-width: 100%;
+        padding: 16px;
+    }
+
+    .homepage4-hero-shell {
+        padding: 0;
+        max-width: 100%;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Listing grid — compact property cards (3 or 4 per row)
+   -------------------------------------------------------------------------- */
+
+.property-listing-grid > [class*="col-"] {
+    display: flex;
+}
+
+.property-listing-grid > [class*="col-"] > .property-card-grid {
+    width: 100%;
+}
+
+.property-card-grid {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    height: 100%;
+}
+
+.property-card-grid__media {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.property-card-grid__image {
+    height: 170px;
+    overflow: hidden;
+    border-radius: 16px 16px 0 0;
+    background: #e8e9ea;
+}
+
+.property-card-grid__image img,
+.property-card-grid__image .swiper,
+.property-card-grid__image .swiper-slide {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    display: block;
+}
+
+.property-card-grid__badges {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 52px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    z-index: 2;
+}
+
+.property-card-grid__badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: #fff;
+    color: #1b1b1b;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.property-card-grid__badge--status {
+    background: #1800ad;
+    color: #fff;
+}
+
+.property-card-grid__photos {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 8px;
+    border-radius: 20px;
+    background: #fff;
+    color: #1b1b1b;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+.property-card-grid__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 12px;
+    gap: 10px;
+}
+
+.property-card-grid__info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.property-card-grid__title {
+    color: #1b1b1b;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.3;
+    text-decoration: none;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.property-card-grid__title:hover {
+    color: #1800ad;
+}
+
+.property-card-grid__address {
+    margin: 0;
+    color: #666;
+    font-size: 12px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.property-card-grid__price {
+    align-self: flex-start;
+    padding: 7px 12px;
+    border: 1px solid #1800ad;
+    border-radius: 24px;
+    color: #1800ad;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.property-card-grid__price:hover {
+    background: #1800ad;
+    color: #fff;
+}
+
+.property-card-grid__specs {
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+    background: #f1f2f3;
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+}
+
+.property-card-grid__specs li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #555;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.2;
+    min-width: 0;
+}
+
+.property-card-grid__specs li svg {
+    flex-shrink: 0;
+    color: #1b1b1b;
+}
+
+.property-card-grid__specs li span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media (min-width: 1200px) {
+    .property-card-grid__specs {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 4px;
+    }
+
+    .property-card-grid__specs li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+        font-size: 10px;
+    }
+
+    .property-card-grid__specs li span {
+        white-space: normal;
+        line-height: 1.2;
+    }
+}
+
+.property-card-grid__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 4px;
+}
+
+.property-card-grid__agent {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    flex: 1;
+}
+
+.property-card-grid__agent-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.property-card-grid__agent-name {
+    color: #1b1b1b;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.property-card-grid__actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.property-card-grid__action {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: #f1e7e0;
+    color: #ed8438;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.property-card-grid__action:hover {
+    background: #edd9cc;
+}
+
+.property-card-grid__action img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+.property-card-grid__action svg {
+    display: block;
+}
+
+.property-card-grid__image .swiper-pagination {
+    bottom: 8px !important;
+}
+
+/* --------------------------------------------------------------------------
+   Homepage featured properties (Properties5) — 4 per row
+   -------------------------------------------------------------------------- */
+
+.property4-featured-grid > [class*="col-"] {
+    display: flex;
+}
+
+.property4-featured-grid > [class*="col-"] > .property-single-boxarea {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.property4 .property4-featured-grid .property-single-boxarea .img1 {
+    height: 180px;
+}
+
+.property4 .property4-featured-grid .property-single-boxarea .img1 img {
+    height: 180px;
+    min-height: 180px;
+}
+
+.property4 .property4-featured-grid .property-single-boxarea .img1 .react-list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    right: 10px;
+    bottom: 10px;
+}
+
+.property4 .property4-featured-grid .property-single-boxarea .img1 .react-list li {
+    display: block;
+    margin: 0;
+}
+
+.property4 .property4-featured-grid .property-single-boxarea .img1 .react-list li a {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.property4 .property4-featured-grid .property-single-boxarea .img1 .react-list li a svg {
+    width: 16px;
+    height: 16px;
+}
+
+.property4 .property4-featured-grid .property-single-boxarea .img1 ul.rent-sale {
+    top: 10px;
+    left: 10px;
+}
+
+.property4 .property4-featured-grid .property-single-boxarea .img1 ul.rent-sale li a {
+    font-size: 11px;
+    padding: 5px 8px;
+}
+
+.property4 .property4-featured-grid .property-single-boxarea .content-area {
+    padding: 14px 12px 16px;
+}
+
+.property4 .property4-featured-grid .property-single-boxarea .content-area .title {
+    font-size: 15px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.property4 .property4-featured-grid .property-single-boxarea .content-area p {
+    font-size: 12px;
+    line-height: 1.35;
+    padding-bottom: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.property4 .property4-featured-grid .property-single-boxarea .content-area p svg {
+    width: 14px;
+    height: 14px;
+}
+
+.property4 .property4-featured-grid .property-single-boxarea .content-area .space18,
+.property4 .property4-featured-grid .property-single-boxarea .content-area .space20 {
+    display: none;
+}
+
+.property4 .property4-featured-grid .property-single-boxarea .content-area .btn-area1 {
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.property4 .property4-featured-grid .property-single-boxarea .content-area .btn-area1 .nm-btn {
+    font-size: 12px;
+    padding: 7px 10px;
+    white-space: nowrap;
+}
+
+.property4 .property4-featured-grid .property-single-boxarea .content-area .btn-area1 ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    flex: 1;
+    min-width: 0;
+}
+
+.property4 .property4-featured-grid .property-single-boxarea .content-area .btn-area1 ul li {
+    display: inline-flex;
+    align-items: center;
+}
+
+.property4 .property4-featured-grid .property-single-boxarea .content-area .btn-area1 ul li a {
+    font-size: 10px;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.property4 .property4-featured-grid .property-single-boxarea .content-area .btn-area1 ul li a svg {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+}
+
+.property4 .property4-featured-grid .property-single-boxarea .content-area .btn-area1 ul li a span {
+    display: none;
+}
+
+@media (min-width: 1200px) and (max-width: 1399px) {
+    .property4 .property4-featured-grid .property-single-boxarea .content-area .btn-area1 {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .property4 .property4-featured-grid .property-single-boxarea .content-area .btn-area1 ul {
+        justify-content: flex-start;
+    }
+}

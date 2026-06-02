@@ -7,7 +7,7 @@ export default function Properties5() {
             <div
                 className="property4 sp2"
                 style={{
-                    backgroundImage: "url(assets/img/all-images/bg/team-bg1.png)",
+                    backgroundImage: "url(/assets/img/all-images/bg/team-bg1.png)",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
@@ -31,7 +31,7 @@ export default function Properties5() {
                         <div className="col-lg-3">
                             <div className="btn-area1 text-end">
                                 <div className="space20 d-lg-none d-block" />
-                                <Link href="/add-property" className="vl-btn1">
+                                <Link href="/sidebar-grid" className="vl-btn1">
                                     Explore Our Listings
                                     <span className="arrow1 ms-2">
                                         <i className="fa-solid fa-arrow-right" />
@@ -43,8 +43,8 @@ export default function Properties5() {
                             </div>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-lg-4 col-md-6">
+                    <div className="row g-3 property4-featured-grid">
+                        <div className="col-lg-3 col-md-6 col-6">
                             <div className="property-single-boxarea">
                                 <div className="img1">
                                     <Link href="/property-details-v1">
@@ -151,7 +151,7 @@ export default function Properties5() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6">
+                        <div className="col-lg-3 col-md-6 col-6">
                             <div className="property-single-boxarea">
                                 <div className="img1">
                                     <Link href="/property-details-v1">
@@ -258,7 +258,7 @@ export default function Properties5() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6">
+                        <div className="col-lg-3 col-md-6 col-6">
                             <div className="property-single-boxarea">
                                 <div className="img1">
                                     <Link href="/property-details-v1">
@@ -365,7 +365,7 @@ export default function Properties5() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6">
+                        <div className="col-lg-3 col-md-6 col-6">
                             <div className="property-single-boxarea">
                                 <div className="img1">
                                     <Link href="/property-details-v1">
@@ -472,7 +472,7 @@ export default function Properties5() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6">
+                        <div className="col-lg-3 col-md-6 col-6">
                             <div className="property-single-boxarea">
                                 <div className="img1">
                                     <Link href="/property-details-v1">
@@ -579,7 +579,7 @@ export default function Properties5() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6">
+                        <div className="col-lg-3 col-md-6 col-6">
                             <div className="property-single-boxarea">
                                 <div className="img1">
                                     <Link href="/property-details-v1">

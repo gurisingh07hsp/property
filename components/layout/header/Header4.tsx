@@ -9,10 +9,10 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
     return (
         <>
             {/*=====HEADER START=======*/}
-            <header className="homepage4-body">
+            <header className="homepage4-body homepage4-site-header">
                 <div id="vl-header-sticky" className={`vl-header-area vl-transparent-header ${scroll ? "header-sticky" : ""}`}>
-                    <div className="container">
-                        <div className="row align-items-center row-bg1">
+                    <div className="container homepage4-header-container">
+                        <div className="row align-items-center">
                             <div className="col-lg-2 col-md-6 col-6">
                                 <div className="vl-logo">
                                     <Link href="/">

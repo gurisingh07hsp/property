@@ -13,8 +13,10 @@ export default function Home2() {
     return (
         <>
             {/* <Layout headerStyle={4} footerStyle={4}> */}
-                <Hero4 />
-                 <div className="search-box-3">
+                <div className="homepage4-hero-shell">
+                    <Hero4 />
+                </div>
+                <div className="search-box-3">
                     <SearchBox />
                 </div>
                 <PropertyLocation3 />

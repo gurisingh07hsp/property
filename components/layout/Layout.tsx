@@ -33,7 +33,7 @@ export default function Layout({ headerStyle, footerStyle, children }: LayoutPro
             <Search />
             <MobileMenu isMobileMenu={isMobileMenu} handleMobileMenu={handleMobileMenu} />
 
-            {children}
+            <main className="vl-page-main">{children}</main>
 
             <FooterSelector footerStyle={footerStyle} />
             <BackToTop target="#top" />

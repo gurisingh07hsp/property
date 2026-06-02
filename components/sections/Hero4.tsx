@@ -27,7 +27,7 @@ export default function Hero4() {
                 <SwiperSlide
                     className="hero4-slider-area"
                     style={{
-                        backgroundImage: "url(assets/img/all-images/hero/hero-img6.png)",
+                        backgroundImage: "url(/assets/img/all-images/hero/hero-img6.png)",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
                         backgroundSize: "cover",
@@ -59,7 +59,7 @@ export default function Hero4() {
                 <SwiperSlide
                     className="hero4-slider-area"
                     style={{
-                        backgroundImage: "url(assets/img/all-images/hero/hero-img7.png)",
+                        backgroundImage: "url(/assets/img/all-images/hero/hero-img7.png)",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
                         backgroundSize: "cover",
@@ -91,7 +91,7 @@ export default function Hero4() {
                 <SwiperSlide
                     className="hero4-slider-area"
                     style={{
-                        backgroundImage: "url(assets/img/all-images/hero/hero-img8.png)",
+                        backgroundImage: "url(/assets/img/all-images/hero/hero-img8.png)",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
                         backgroundSize: "cover",
@@ -123,7 +123,7 @@ export default function Hero4() {
                 <SwiperSlide
                     className="hero4-slider-area"
                     style={{
-                        backgroundImage: "url(assets/img/all-images/hero/hero-img7.png)",
+                        backgroundImage: "url(/assets/img/all-images/hero/hero-img7.png)",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
                         backgroundSize: "cover",
