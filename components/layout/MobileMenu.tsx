@@ -9,17 +9,17 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
     return (
         <>
             {/*===== MOBILE HEADER STARTS =======*/}
-            <div className="homepage1-body">
-                <div className="vl-offcanvas">
+            <div className="homepage4-body">
+                <div className={`vl-offcanvas ${isMobileMenu ? "vl-offcanvas-open" : ""}`}>
                     <div className="vl-offcanvas-wrapper">
-                        <div className="vl-offcanvas-header d-flex justify-content-between align-items-center mb-90">
+                        <div className="vl-offcanvas-header d-flex justify-content-between align-items-center mb-40">
                             <div className="vl-offcanvas-logo">
                                 <Link href="/">
                                     <img src="/assets/img/logo/logo6.png" alt="housa" />
                                 </Link>
                             </div>
                             <div className="vl-offcanvas-close">
-                                <button className="vl-offcanvas-close-toggle">
+                                <button type="button" className="vl-offcanvas-close-toggle" onClick={handleMobileMenu}>
                                     <i className="fa-solid fa-xmark" />
                                 </button>
                             </div>
@@ -239,7 +239,10 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: any) {
                         </div>
                     </div>
                 </div>
-                <div className="vl-offcanvas-overlay" />
+                <div
+                    className={`vl-offcanvas-overlay ${isMobileMenu ? "vl-offcanvas-overlay-open" : ""}`}
+                    onClick={handleMobileMenu}
+                />
             </div>
             {/*===== MOBILE HEADER STARTS =======*/}
         </>

@@ -20,8 +20,8 @@ export default function PropertyLocation3() {
                             </div>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-lg col-md-6">
+                    <div className="row g-3 location4-grid">
+                        <div className="col-lg col-md-6 col-6">
                             <div className="propety-loaction">
                                 <div className="img1">
                                     <img src="/assets/img/all-images/p-location/p-loaction-img13.png" alt="housa" />
@@ -32,7 +32,7 @@ export default function PropertyLocation3() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg col-md-6">
+                        <div className="col-lg col-md-6 col-6">
                             <div className="propety-loaction">
                                 <div className="img1">
                                     <img src="/assets/img/all-images/p-location/p-loaction-img14.png" alt="housa" />
@@ -43,7 +43,7 @@ export default function PropertyLocation3() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg col-md-6">
+                        <div className="col-lg col-md-6 col-6">
                             <div className="propety-loaction">
                                 <div className="img1">
                                     <img src="/assets/img/all-images/p-location/p-loaction-img15.png" alt="housa" />
@@ -54,7 +54,7 @@ export default function PropertyLocation3() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg col-md-6">
+                        <div className="col-lg col-md-6 col-6">
                             <div className="propety-loaction">
                                 <div className="img1">
                                     <img src="/assets/img/all-images/p-location/p-loaction-img16.png" alt="housa" />
@@ -65,7 +65,7 @@ export default function PropertyLocation3() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg col-md-6">
+                        <div className="col-lg col-md-6 col-6">
                             <div className="propety-loaction">
                                 <div className="img1">
                                     <img src="/assets/img/all-images/p-location/p-loaction-img17.png" alt="housa" />
