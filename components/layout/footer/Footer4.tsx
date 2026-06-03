@@ -16,7 +16,7 @@ export default function Footer4() {
                     <div className="row">
                         <div className="col-lg-3 col-md-6">
                             <div className="footer-time-area">
-                                <img src="/assets/img/logo/proputy-logo.png" alt="Proputy" />
+                                <img src="/assets/img/logo/proputy-logo.jpeg" alt="Proputy" />
                                 <div className="space24" />
                                 <p>Your trusted partner for buying an, selling, and renting properties with seamless, personalized solutions.</p>
                                 <div className="space32" />

@@ -16,7 +16,7 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                             <div className="col-lg-2 col-5">
                                 <div className="vl-logo">
                                     <Link href="/">
-                                        <img src="/assets/img/logo/proputy-logo.png" alt="Proputy" />
+                                        <img src="/assets/img/logo/proputy-logo.jpeg" alt="Proputy" />
                                     </Link>
                                 </div>
                             </div>
@@ -327,7 +327,7 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                 className="px-4 py-2 text-white"
                                                 style={{ borderRadius: "20px", border: "none", background: "#1800ad" }}
                                             >
-                                                Login
+                                                Post Property
                                             </button>
                                         </div>
                                     )}
