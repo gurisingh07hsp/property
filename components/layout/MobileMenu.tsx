@@ -37,9 +37,9 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: MobileMen
             <div className={`vl-offcanvas ${isMobileMenu ? "vl-offcanvas-open" : ""}`} aria-hidden={!isMobileMenu}>
                 <div className="vl-offcanvas-wrapper">
                     <div className="vl-offcanvas-header d-flex justify-content-between align-items-center">
-                        <div className="vl-offcanvas-logo">
+                        <div className="">
                             <Link href="/" onClick={closeMenu}>
-                                <img src="/assets/img/logo/proputy-logo.jpeg" alt="Proputy" />
+                                <img className="w-28" src="/assets/img/logo/proputy-logo.jpeg" alt="Proputy" />
                             </Link>
                         </div>
                         <div className="vl-offcanvas-close">
@@ -53,7 +53,6 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: MobileMen
                             </button>
                         </div>
                     </div>
-
                     <div className="homepage4-offcanvas-cta">
                         <Link href="/add-property" className="homepage4-offcanvas-list-btn" onClick={closeMenu}>
                             <i className="fa-solid fa-plus" aria-hidden />

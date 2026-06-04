@@ -31,9 +31,11 @@ const BlogManagement = () => {
   },[]);
 
   const postData = async(data: any)=>{
+    console.log("data to post : ",data);
     try{
       if(mode == 'create'){
         const response = await axios.post('/api/blogs',data);
+        getBlogs();
         console.log("data : ",response);
       }
       else{
@@ -66,13 +68,6 @@ const deleteBlog = async (id: string) => {
 
   return (
     <div className="space-y-6">
-    <BlogFormModal
-      isOpen={isOpen}
-      onClose={() => setIsOpen(false)}
-      onSubmit={(data) => postData(data)}   // connect to your API here
-      mode={mode}
-      initialData={existingBlog}  // for edit mode
-    />
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
         <h4 className="text-2xl font-bold text-foreground">Blog Management</h4>
@@ -82,6 +77,14 @@ const deleteBlog = async (id: string) => {
         <Plus className="h-4 w-4 mr-2" /> Add Blog
       </button>
     </div>
+
+    <BlogFormModal
+      isOpen={isOpen}
+      onClose={() => setIsOpen(false)}
+      onSubmit={(data) => postData(data)}   // connect to your API here
+      mode={mode}
+      initialData={existingBlog}  // for edit mode
+    />
 
     <div style={{padding: 20}} className="border border-gray-300 mt-2 rounded-lg">
       <div className="pb-3">
@@ -102,15 +105,12 @@ const deleteBlog = async (id: string) => {
                 <div className="flex items-start justify-between">
                   <div>
                     <h5 className="font-semibold text-foreground text-sm">{pkg.title}</h5>
-                    <p className="text-xs text-muted-foreground">{pkg.description}</p>
+                    <p className="text-xs text-muted-foreground">{pkg.excerpt}</p>
                   </div>
                   <div
-                    className={`text-xs capitalize px-2 py-1 rounded-2xl ${
-                      pkg.isPublished ? "bg-emerald-500/10 text-emerald-600 border-emerald-200" :
-                      "bg-amber-500/10 text-amber-600 border-amber-200"
-                    }`}
+                    className={`text-xs capitalize px-2 py-1 rounded-2xl bg-emerald-500/10 text-emerald-600 border-emerald-200`}
                   >
-                    {pkg.isPublished ? 'Active' : 'Draft'}
+                    {pkg.category}
                   </div>
                 </div>
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
@@ -130,7 +130,7 @@ const deleteBlog = async (id: string) => {
                   <button onClick={()=> {setIsOpen(true); setMode('edit'); setExistingBlog({...existingBlog, ...pkg})}} className="h-8 cursor-pointer text-xs">
                     <Edit className="h-3 w-3" />
                   </button>
-                  <button onClick={()=> deleteBlog(pkg._id)} className="h-8 text-xs cursor-pointer text-destructive hover:text-destructive">
+                  <button onClick={()=> deleteBlog(pkg._id || "")} className="h-8 text-xs cursor-pointer text-destructive hover:text-destructive">
                     <Trash2 className="h-3 w-3" />
                   </button>
                 </div>

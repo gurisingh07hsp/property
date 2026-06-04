@@ -621,7 +621,7 @@ export default function PropertyFormModal({initialForm , mode, open, setOpen}:{i
                         </div>
                     </div> */}
 
-                    <AddProperty />
+                    <AddProperty propertyForm={propertyForm} setPropertyForm={setPropertyForm} />
           </div>
         </div>
       )}

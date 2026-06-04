@@ -20,14 +20,16 @@ interface PropertyForm {
     zipCode: string;
     country: string;
     state: string;
+    category: string;
     city: string;
     sold: boolean;
+    listedIn: string;
     status: string;
     agent: string;
+    for: string;
     propertyPrices: {
         propertyPrice: number;
-        unitPrice: number;
-        beforePriceLabel: number;
+        yearlyTaxRate: number;
         afterPriceLabel: number;
     };
     additionalInformation: {
@@ -39,6 +41,10 @@ interface PropertyForm {
         garages: number;
         garageSize: string;
         yearBuilt: string;
+        basement: string;
+        roofing: string;
+        exteriorMaterial: string;
+        structureType: string;
     };
     amenities: string[];
     floors: {
@@ -75,13 +81,15 @@ const HouseManagement = () => {
             country: '',
             state: '',
             city: '',
+            category: '',
             sold: false,
             status: '',
+            listedIn: '',
             agent: '',
+            for: '',
             propertyPrices: {
                 propertyPrice: 0,
-                unitPrice: 0,
-                beforePriceLabel: 0,
+                yearlyTaxRate: 0,
                 afterPriceLabel: 0,
             },
             additionalInformation: {
@@ -92,7 +100,11 @@ const HouseManagement = () => {
                 bathrooms: 0,
                 garages: 0,
                 garageSize: '',
-                yearBuilt: ''
+                yearBuilt: '',
+                basement: '',
+                roofing: '',
+                exteriorMaterial: '',
+                structureType: '',
             },
             amenities: [],
             floors: [{
@@ -179,13 +191,15 @@ const HouseManagement = () => {
             country: '',
             state: '',
             city: '',
+            category: '',
             sold: false,
             status: '',
+            listedIn: '',
             agent: '',
+            for: '',
             propertyPrices: {
                 propertyPrice: 0,
-                unitPrice: 0,
-                beforePriceLabel: 0,
+                yearlyTaxRate: 0,
                 afterPriceLabel: 0,
             },
             additionalInformation: {
@@ -196,7 +210,11 @@ const HouseManagement = () => {
                 bathrooms: 0,
                 garages: 0,
                 garageSize: '',
-                yearBuilt: ''
+                yearBuilt: '',
+                basement: '',
+                roofing: '',
+                exteriorMaterial: '',
+                structureType: '',
             },
             amenities: [],
             floors: [{

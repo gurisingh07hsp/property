@@ -7,15 +7,17 @@ export interface PropertyListItem {
     address: string;
     zipCode: string;
     country: string;
+    category: string;
+    listedIn: string;
     state: string;
     city: string;
     sold: boolean;
     status: string;
     agent: string;
+    for: string;
     propertyPrices: {
         propertyPrice: number;
-        unitPrice: number;
-        beforePriceLabel: number;
+        yearlyTaxRate: number;
         afterPriceLabel: number;
     },
     additionalInformation: {
@@ -27,6 +29,10 @@ export interface PropertyListItem {
         garages: number;
         garageSize: string;
         yearBuilt: string;
+        basement: string;
+        roofing: string;
+        exteriorMaterial: string;
+        structureType: string;
     },
     amenities: string[],
     floors: {
@@ -40,13 +46,21 @@ export interface PropertyListItem {
 }
 
 export interface BlogType {
-  _id: string;
+  _id?: string;
   title: string;
-  image: string;
-  description: string;
+  excerpt: string;
   content: string;
+  author: string;
+  publishDate?: string;
   category: string;
-  isPublished: boolean;
-  slug: string;
-  createdAt: Date;
+  image: string;
+  featuredImage?: string;
+  readTime: number;
+  tags: string[];
+  // SEO Fields
+  metaTitle?: string;
+  metaDescription?: string;
+  focusKeyword?: string;
+  slug?: string;
+  canonicalUrl?: string;
 }

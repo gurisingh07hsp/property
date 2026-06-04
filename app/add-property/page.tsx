@@ -6,7 +6,7 @@ export default function Home() {
         <>
             <Layout headerStyle={5}>
                 <InnerHeader title="Add New Property" currentpage="Add New Property" />
-                <AddProperty />
+                {/* <AddProperty /> */}
                 <div className="space30"></div>
             </Layout>
         </>

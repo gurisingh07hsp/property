@@ -17,9 +17,9 @@ export default function Home2() {
                 </div>
                 <PropertyLocation3 />
                 <Properties5 />
-                <Properties6 />
-                <Team4 />
-                <Others2 />
+                {/* <Properties6 /> */}
+                {/* <Team4 /> */}
+                {/* <Others2 /> */}
                 <Testimonial4 />
                 <Blog3 />
                 <Cta2 />

@@ -14,7 +14,7 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                     <div className="container homepage4-header-container">
                         <div className="row align-items-center">
                             <div className="col-lg-2 col-5">
-                                <div className="vl-logo">
+                                <div className="">
                                     <Link href="/">
                                         <img src="/assets/img/logo/proputy-logo.jpeg" alt="Proputy" />
                                     </Link>
@@ -321,7 +321,7 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                                             </button>
                                         </>
                                     ) : (
-                                        <div>
+                                        <div className="relative py-2">
                                             <button
                                                 onClick={() => setIsOpen(true)}
                                                 className="px-4 py-2 text-white"
@@ -329,6 +329,7 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                                             >
                                                 Post Property
                                             </button>
+                                            <span className=" absolute top-0 right-5 bg-white px-1 border font-medium rounded-sm text-xs">FREE</span>
                                         </div>
                                     )}
                                 </div>
