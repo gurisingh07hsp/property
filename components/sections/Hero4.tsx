@@ -1,7 +1,9 @@
 "use client";
 
+import axios from "axios";
+import { Search } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const houseIcon = (
     <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none">
@@ -20,6 +22,23 @@ type HeroTab = "buy" | "rent" | "commercial" | "plots";
 function HeroSearchPanel() {
     const [activeTab, setActiveTab] = useState<HeroTab>("buy");
     const [query, setQuery] = useState("");
+     const [searchQuery, setSearchQuery] = useState('');
+     const locationRef = useRef<HTMLDivElement>(null);
+    const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (locationRef.current && !locationRef.current.contains(event.target as Node)) {
+        setShowSearchSuggestions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
     const tabs: { id: HeroTab; label: string; isNew?: boolean }[] = [
         { id: "buy", label: "Buy" },
@@ -27,6 +46,34 @@ function HeroSearchPanel() {
         { id: "commercial", label: "Commercial", isNew: true },
         { id: "plots", label: "Plots/Land" },
     ];
+
+    const [suggestions, setSuggestions] = useState<string[]>([]);
+
+
+  const handleSearchQueryChange = (value: string) => {
+    setSearchQuery(value);
+    setShowSearchSuggestions(false);
+  }
+
+
+    const fetchSuggestions = async(value: string) => {
+    try{
+      setSearchQuery(value);
+    //   const filteredSuggestions = Categories.filter((item) => item.toLowerCase().includes(value.toLowerCase()));
+        const response = await axios.get(`/api/places?q=${value}`);
+
+console.log(response.data);
+      if(value !== '')
+        {
+          setSuggestions(response.data);
+        }
+            else{
+        setSuggestions([]);
+      }
+    }catch(error){
+      console.error(error);
+    }
+  }
 
     return (
         <div className="hero4-search-panel">
@@ -54,14 +101,50 @@ function HeroSearchPanel() {
                     window.location.href = `/sidebar-grid?${params.toString()}`;
                 }}
             >
-                <input
+                {/* <input
                     type="search"
                     name="q"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search city, locality, project…"
                     aria-label="Search location"
-                />
+                /> */}
+
+               <div onClick={(e) => e.stopPropagation()} ref={locationRef} className="relative flex-1 min-w-0">
+              {/* <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" /> */}
+              <input
+                type="text"
+                placeholder="Search city, locality, project…"
+                onFocus={()=>setShowSearchSuggestions(true)}
+                // onBlur={() => setShowSearchSuggestions(false)}
+                value={searchQuery}
+                onChange={(e) => fetchSuggestions(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
+              />
+
+              {showSearchSuggestions && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto">
+                  {suggestions.length > 0 ? (
+                    suggestions.map((item, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleSearchQueryChange(item)}
+                        className="w-full px-4 py-3 text-left hover:bg-gray-50 focus:bg-gray-50 focus:outline-none border-b border-gray-100 last:border-b-0"
+                      >
+                        <div className="flex items-center">
+                          <span className="text-gray-800">{item}</span>
+                        </div>
+                      </button>
+                    ))
+                  ) : (
+                    <div className="px-4 py-3 text-gray-500 text-sm">
+                      No item found
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
                 <button type="submit" className="hero4-search-btn" aria-label="Search properties">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden>
                         <path

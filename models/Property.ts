@@ -31,6 +31,9 @@ const PropertySchema = new mongoose.Schema(
     sold: {
         type: Boolean
     },
+    category: {
+        type: String,
+    },
     status: {
         type: String,
 
@@ -39,10 +42,16 @@ const PropertySchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+     for: {
+        type: String,
+        enum: ['sale', 'rent'],
+     },
+    listedIn: {
+        type: String,
+    },
     propertyPrices: {
         propertyPrice: {type: Number, requried: true},
-        unitPrice: {type: Number},
-        beforePriceLabel: {type: Number},
+        yearlyTaxRate: {type: Number},
         afterPriceLabel: {type: Number},
     },
     additionalInformation: {
@@ -52,7 +61,6 @@ const PropertySchema = new mongoose.Schema(
         },
         landArea: {
             type: String,
-            required: true
         },
         rooms: {
             type: Number,
@@ -73,6 +81,18 @@ const PropertySchema = new mongoose.Schema(
             type: String
         },
         yearBuilt: {
+            type: String
+        },
+        basement: {
+            type: String
+        },
+        roofing: {
+            type: String
+        },
+        exteriorMaterial: {
+            type: String
+        },
+        structureType: {
             type: String
         }
     },

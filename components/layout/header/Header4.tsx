@@ -1,11 +1,11 @@
 'use client'
 import Link from "next/link";
-import AuthModal from "@/components/elements/authModal";
+// import AuthModal from "@/components/elements/authModal";
 import { useUser } from "@/context/UserContext";
 import { useState } from "react";
 export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any) {
     const { user, logout } = useUser();
-    const [isOpen, setIsOpen] = useState(false);
+    // const [isOpen, setIsOpen] = useState(false);
     return (
         <>
             {/*=====HEADER START=======*/}
@@ -321,23 +321,30 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                                             </button>
                                         </>
                                     ) : (
-                                        <div className="relative py-2">
-                                            <button
-                                                onClick={() => setIsOpen(true)}
+                                        <div className="relative py-3">
+                                            <Link
+                                                href='/login'
                                                 className="px-4 py-2 text-white"
                                                 style={{ borderRadius: "20px", border: "none", background: "#1800ad" }}
                                             >
                                                 Post Property
-                                            </button>
+                                            </Link>
                                             <span className=" absolute top-0 right-5 bg-white px-1 border font-medium rounded-sm text-xs">FREE</span>
                                         </div>
                                     )}
                                 </div>
                                 <div className="homepage4-mobile-header-actions d-flex d-lg-none align-items-center justify-content-end">
-                                    <Link href="/add-property" className="homepage4-post-property-btn">
-                                        Post Property
-                                        <span className="homepage4-free-badge">FREE</span>
-                                    </Link>
+                                    {user && user.email ? (
+                                        <Link href="/add-property" className="homepage4-post-property-btn">
+                                            Post Property
+                                            <span className="homepage4-free-badge">FREE</span>
+                                        </Link>
+                                    ) : (
+                                        <Link href="/login" className="homepage4-post-property-btn">
+                                            Post Property
+                                            <span className="homepage4-free-badge">FREE</span>
+                                        </Link>
+                                    )}
                                     <button
                                         type="button"
                                         className="homepage4-mobile-menu-btn vl-offcanvas-toggle"
@@ -372,10 +379,6 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                 </div>
             </div>
             <div className="body-overlay" />
-            {/*===== SEARCH ENDS STARTS=======*/}
-                {isOpen && (
-                <AuthModal isOpen={isOpen} setIsOpen={setIsOpen} />
-            )}
         </>
     );
 }
