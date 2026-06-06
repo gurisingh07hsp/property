@@ -1,6 +1,7 @@
 "use client";
 import InnerHeader from "@/components/layout/InnerHeader";
-import PropertyFilter from "@/components/elements/property-filter";
+import FeaturedProjectsSidebar from "@/components/elements/FeaturedProjectsSidebar";
+import HorizontalPropertyFilter from "@/components/elements/HorizontalPropertyFilter";
 import Layout from "@/components/layout/Layout";
 import Link from "next/link";
 import { addSort } from "@/features/filter/filterSlice";
@@ -445,18 +446,18 @@ export default function SidebarGrid() {
                                             </div>
                                         </div>
                                         <div className="space32" />
+                                        
+                                        <HorizontalPropertyFilter />
+
                                         <div className="row">
-                                            <div className="col-lg-3">
-                                                <PropertyFilter />
-                                            </div>
-                                            <div className="col-lg-9">
+                                            <div className="col-lg-9 order-lg-1 order-2">
                                                 <div className="tab-content">
                                                     <div className={`tab-pane fade ${viewMode === 'grid' ? 'show active' : ''}`}>
                                                         <div className="row g-3 property-listing-grid">
                                                             {paginatedProperties.map((property) => (
                                                                 <div
                                                                     key={property.id}
-                                                                    className="col-xxl-3 col-lg-4 col-md-6 col-6 property-listing-grid__item"
+                                                                    className="col-xxl-4 col-lg-6 col-md-6 col-6 property-listing-grid__item"
                                                                 >
                                                                     {renderGridItem(property)}
                                                                 </div>
@@ -475,6 +476,10 @@ export default function SidebarGrid() {
                                                 </div>
                                                 <div className="space32" />
                                                 {renderPagination()}
+                                            </div>
+
+                                            <div className="col-lg-3 order-lg-2 order-1 mb-4 mb-lg-0">
+                                                <FeaturedProjectsSidebar />
                                             </div>
                                         </div>
                                         <div className="space30"></div>

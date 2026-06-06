@@ -16,8 +16,8 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                             <div className="col-lg-2 col-5">
                                 <div className="">
                                     <Link href="/">
-                                        <img src="/assets/img/logo/proputy-logo.jpeg" alt="Proputy" />
-                                    </Link>
+                                    <img src="/assets/img/logo/proputy-logo.jpeg" alt="PROPUTY" />
+                                </Link>
                                 </div>
                             </div>
                             <div className="col-lg-7 d-none d-lg-block">

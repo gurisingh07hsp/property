@@ -9,6 +9,7 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@radix-ui/react-avatar": "^1.1.12",
         "@reduxjs/toolkit": "^2.6.0",
         "@tailwindcss/postcss": "^4.3.0",
         "@tiptap/extension-color": "^3.25.0",
@@ -28,6 +29,7 @@
         "bcryptjs": "^3.0.3",
         "bootstrap": "^5.3.3",
         "chart.js": "^4.4.8",
+        "clsx": "^2.1.1",
         "gsap": "^3.12.7",
         "jsonwebtoken": "^9.0.3",
         "lucide-react": "^0.477.0",
@@ -42,6 +44,7 @@
         "react-slick": "^0.30.3",
         "slick-carousel": "^1.8.1",
         "swiper": "^12.1.4",
+        "tailwind-merge": "^3.6.0",
         "tailwindcss": "^4.3.0"
     },
     "devDependencies": {

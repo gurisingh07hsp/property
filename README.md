@@ -1,6 +1,6 @@
-# Housa
+# PROPUTY - Real Esate Next.js Template
 
-Housa is a modern real estate web application built with Next.js, designed for property listing, searching, and management. Developed by AliThemes, this project provides a robust, scalable, and user-friendly platform for real estate agencies, agents, and property seekers.
+PROPUTY is a modern real estate web application built with Next.js, designed for property listing, searching, and management. Developed by AliThemes, this project provides a robust, scalable, and user-friendly platform for real estate agencies, agents, and property seekers.
 
 ## Features
 

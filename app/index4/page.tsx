@@ -8,6 +8,9 @@ import Cta2 from "@/components/sections/Cta2";
 import PropertyLocation3 from "@/components/sections/PropertyLocation3";
 import Others2 from "@/components/sections/Others2";
 import Testimonial4 from "@/components/sections/Testimonial4";
+import FeaturedProjects from "@/components/sections/FeaturedProjects";
+import FeaturedDevelopers from "@/components/sections/FeaturedDevelopers";
+import ModernTestimonial from "@/components/sections/ModernTestimonial";
 export default function Home2() {
     return (
         <>
@@ -17,10 +20,12 @@ export default function Home2() {
                 </div>
                 <PropertyLocation3 />
                 <Properties5 />
+                <FeaturedProjects />
+                <FeaturedDevelopers />
                 {/* <Properties6 /> */}
                 {/* <Team4 /> */}
                 {/* <Others2 /> */}
-                <Testimonial4 />
+                <ModernTestimonial />
                 <Blog3 />
                 <Cta2 />
             {/* </Layout> */}

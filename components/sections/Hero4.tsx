@@ -186,7 +186,7 @@ export default function Hero4() {
                                     {houseIcon}
                                     Your Trusted Real Estate Partner
                                 </h5>
-                                <h1>Start Your Property Journey With Housa</h1>
+                                <h1>Start Your Property Journey With PROPUTY</h1>
                                 <HeroSearchPanel />
                             </div>
                         </div>
