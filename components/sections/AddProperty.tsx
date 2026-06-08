@@ -149,10 +149,12 @@ export default function AddProperty({initialForm , mode, open, setOpen}:{initial
                                                                 <div className="space16" />
                                                                 <select value={propertyForm.category} onChange={(e) => setPropertyForm({...propertyForm, category: e.target.value})} className="nice-select">
                                                                     <option>Apartment</option>
-                                                                    <option>Bar</option>
-                                                                    <option>Cafe</option>
                                                                     <option>House</option>
-                                                                    <option>Farm</option>
+                                                                    <option>Kothi</option>
+                                                                    <option>Villa</option>
+                                                                    <option>Luxury Homes</option>
+                                                                    <option>Farm House</option>
+                                                                    <option>Single Family</option>
                                                                 </select>
                                                             </div>
                                                         </div>

@@ -660,14 +660,14 @@ Location:
 
 @media (max-width: 767px) {
     .heading1 h2 {
-        font-size: var(--ztc-font-size-font-s32);
+        font-size: var(--ztc-font-size-font-s24);
         line-height: 40px;
     }
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1399px) {
     .heading1 h2 {
-        font-size: var(--ztc-font-size-font-s30);
+        font-size: var(--ztc-font-size-font-s24);
         line-height: 40px;
     }
 }
@@ -717,7 +717,7 @@ Location:
 .heading2 h2 {
     color: var(--ztc-text-text-2);
     font-family: var(--ztc-family-font1);
-    font-size: var(--ztc-font-size-font-s44);
+    font-size: var(--ztc-font-size-font-s26);
     font-style: normal;
     font-weight: var(--ztc-weight-bold);
     line-height: 52px;
@@ -725,7 +725,7 @@ Location:
 
 @media (max-width: 767px) {
     .heading2 h2 {
-        font-size: var(--ztc-font-size-font-s32);
+        font-size: var(--ztc-font-size-font-s30);
         line-height: 40px;
     }
 }

@@ -1,9 +1,15 @@
 "use client";
 
 import axios from "axios";
-import { Search } from "lucide-react";
+import { ChevronDown, MapPin, Search } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+
+interface place_data {
+  class: string;
+  type: string;
+  display_place: string;
+}
 
 const houseIcon = (
     <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none">
@@ -22,14 +28,31 @@ type HeroTab = "buy" | "rent" | "commercial" | "plots";
 function HeroSearchPanel() {
     const [activeTab, setActiveTab] = useState<HeroTab>("buy");
     const [query, setQuery] = useState("");
-     const [searchQuery, setSearchQuery] = useState('');
-     const locationRef = useRef<HTMLDivElement>(null);
+    const [searchQuery, setSearchQuery] = useState('');
+    const locationRef = useRef<HTMLDivElement>(null);
+    const categoryRef = useRef<HTMLDivElement>(null);
     const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
+    const [filteredCities, setFilteredCities] = useState<string[]>([]);
+    const [location, setLocation] = useState('');
+    const [showLocationDropdown, setShowLocationDropdown] = useState(false);
 
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (locationRef.current && !locationRef.current.contains(event.target as Node)) {
+        setShowLocationDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (categoryRef.current && !categoryRef.current.contains(event.target as Node)) {
         setShowSearchSuggestions(false);
       }
     };
@@ -47,28 +70,61 @@ function HeroSearchPanel() {
         { id: "plots", label: "Plots/Land" },
     ];
 
-    const [suggestions, setSuggestions] = useState<string[]>([]);
+  const handleSearch = () => {
+    if (location && searchQuery !== 'All Categories' && searchQuery !== '') {
+      const locationPath = location.toLowerCase().replace(/\s+/g, '-');
+      const categoryPath = searchQuery.toLowerCase().replace(/\s+/g, '-').replace('/', '-');
+      // window.location.href = `/${locationPath}/${categoryPath}`;
+      window.location.href = `/sidebar-grid/${locationPath}-in-${categoryPath}`;
+    }
+  };
 
+  const handleLocationSelect = (selectedCity: string) => {
+    setLocation(selectedCity);
+    setShowLocationDropdown(false);
+  };
+
+  const handleLocationFocus = () => {
+    setShowLocationDropdown(true);
+  };
+
+  const handleLocationChange = async(e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocation(e.target.value);
+    if(e.target.value !== ' ' && e.target.value !== ''){ 
+      const response = await axios.get(`/api/places?input=${e.target.value}`);
+      console.log(response.data);
+      setFilteredCities(
+        response.data.predictions
+          ?.filter((place: place_data) => (place.class === "place" || place.class === 'boundary'))
+          .map((place: place_data) => place.display_place)
+      );
+    }
+
+    setShowLocationDropdown(true);
+  };
+
+  const [suggestions, setSuggestions] = useState<string[]>(['Kothi', 'Villa', 'Farm House']);
 
   const handleSearchQueryChange = (value: string) => {
+    console.log('category : ', value);
     setSearchQuery(value);
     setShowSearchSuggestions(false);
   }
 
+    const Categories = ['Kothi', 'Villa', 'Luxury Homes', 'Farm House', 'Single Family', 'House', 'Apartment']
 
     const fetchSuggestions = async(value: string) => {
     try{
       setSearchQuery(value);
-    //   const filteredSuggestions = Categories.filter((item) => item.toLowerCase().includes(value.toLowerCase()));
-        const response = await axios.get(`/api/places?q=${value}`);
+      const filteredSuggestions = Categories.filter((item) => item.toLowerCase().includes(value.toLowerCase()));
+        // const response = await axios.get(`/api/places?q=${value}`);
 
-console.log(response.data);
       if(value !== '')
         {
-          setSuggestions(response.data);
+          setSuggestions(filteredSuggestions);
         }
             else{
-        setSuggestions([]);
+        setSuggestions(['Kothi', 'Villa', 'Farm House']);
       }
     }catch(error){
       console.error(error);
@@ -95,28 +151,59 @@ console.log(response.data);
                 className="hero4-search-row"
                 onSubmit={(e) => {
                     e.preventDefault();
-                    const params = new URLSearchParams();
-                    if (query.trim()) params.set("q", query.trim());
-                    params.set("type", activeTab);
-                    window.location.href = `/sidebar-grid?${params.toString()}`;
+                    // const params = new URLSearchParams();
+                    // if (query.trim()) params.set("q", query.trim());
+                    // params.set("type", activeTab);
+                      if (location && searchQuery !== 'All Categories' && searchQuery !== '') {
+                      const locationPath = location.toLowerCase().replace(/\s+/g, '-');
+                      const categoryPath = searchQuery.toLowerCase().replace(/\s+/g, '-').replace('/', '-');
+                      // window.location.href = `/sidebar-grid?${params.toString()}`;
+                      window.location.href = `/sidebar-grid/${categoryPath}-in-${locationPath}?type=${activeTab}`;
+                      }
                 }}
+                // onSubmit={handleSearch}
             >
-                {/* <input
-                    type="search"
-                    name="q"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search city, locality, project…"
-                    aria-label="Search location"
-                /> */}
 
-               <div onClick={(e) => e.stopPropagation()} ref={locationRef} className="relative flex-1 min-w-0">
-              {/* <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" /> */}
+            <div className="relative flex-1 min-w-0" ref={locationRef}>
+              <input
+                type="text"
+                placeholder={"Enter Location"}
+                value={location}
+                onChange={handleLocationChange}
+                onFocus={handleLocationFocus}
+                className="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
+              />
+              
+              
+              {showLocationDropdown && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto">
+                  {filteredCities.length > 0 ? (
+                    filteredCities.filter((city, index, arr) => arr.indexOf(city) === index).map((city, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleLocationSelect(city)}
+                        className="w-full px-4 py-3 text-left hover:bg-gray-50 focus:bg-gray-50 focus:outline-none border-b border-gray-100 last:border-b-0"
+                      >
+                        <div className="flex items-center">
+                          <MapPin className="w-4 h-4 text-gray-400 mr-2" />
+                          <span className="text-gray-800">{city}</span>
+                        </div>
+                      </button>
+                    ))
+                  ) : (
+                    <div className="px-4 py-3 text-gray-500 text-sm">
+                      No cities found
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <div onClick={(e) => e.stopPropagation()} ref={categoryRef} className="relative flex-1 min-w-0">
               <input
                 type="text"
                 placeholder="Search city, locality, project…"
                 onFocus={()=>setShowSearchSuggestions(true)}
-                // onBlur={() => setShowSearchSuggestions(false)}
                 value={searchQuery}
                 onChange={(e) => fetchSuggestions(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
