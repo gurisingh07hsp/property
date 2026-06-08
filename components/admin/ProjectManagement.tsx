@@ -1,35 +1,33 @@
 'use client'
-import { Search, Plus, Edit, Trash2, Building, Calendar, MapPin, CheckCircle, X, Info, Tag, Layers, Home } from "lucide-react";
+import { Search, Plus, Edit, Trash2, Building, MapPin, Tag } from "lucide-react";
 import { useState } from "react";
+import ProjectForm from "./ProjectForm";
 
-interface ProjectForm {
+interface ProjectData {
+    id: number;
     title: string;
-    location: string;
+    developer: string;
     city: string;
     price: string;
-    tag: string;
-    developer: string;
-    description: string;
-    projectUnits: string;
-    areaUnit: string;
-    projectArea: string;
-    sizes: string;
-    projectSize: string;
-    launchDate: string;
-    avgPrice: string;
-    possessionStatus: string;
-    configuration: string;
     reraId: string;
-    locality: string;
-    noOfTowers: string;
+    tag: string;
+    location?: string;
+    locality?: string;
+    projectUnits?: string;
+    areaUnit?: string;
+    projectArea?: string;
+    noOfTowers?: string;
+    launchDate?: string;
+    possessionStatus?: string;
 }
 
 const ProjectManagement = () => {
-    const [open, setOpen] = useState(false);
+    const [view, setView] = useState<'list' | 'form'>('list');
+    const [mode, setMode] = useState<'create' | 'edit'>('create');
     const [searchTerm, setSearchTerm] = useState("");
+    const [selectedProject, setSelectedProject] = useState<Partial<ProjectData> | undefined>();
     
-    // Initial mock data for display
-    const [projects, setProjects] = useState([
+    const [projects, setProjects] = useState<ProjectData[]>([
         {
             id: 1,
             title: "Azure Heights Villa",
@@ -37,41 +35,58 @@ const ProjectManagement = () => {
             city: "Miami",
             price: "$1,250,000",
             reraId: "PBRERA-SAS81-PR0496",
-            tag: "Luxury"
+            tag: "Luxury",
+            location: "Florida",
+            locality: "Palm Coast",
+            projectUnits: "3084",
+            areaUnit: "sq.ft.",
+            projectArea: "25 Acres",
+            noOfTowers: "11",
+            launchDate: "Nov, 2021",
+            possessionStatus: "Ready to Move"
         }
     ]);
 
-    const [projectForm, setProjectForm] = useState<ProjectForm>({
-        title: '',
-        location: '',
-        city: '',
-        price: '',
-        tag: 'Luxury',
-        developer: '',
-        description: '',
-        projectUnits: '',
-        areaUnit: 'sq.ft.',
-        projectArea: '',
-        sizes: '',
-        projectSize: '',
-        launchDate: '',
-        avgPrice: '',
-        possessionStatus: 'Ready to Move',
-        configuration: '',
-        reraId: '',
-        locality: '',
-        noOfTowers: ''
-    });
-
-    const handleAddProject = (e: React.FormEvent) => {
-        e.preventDefault();
-        const newProject = {
-            id: projects.length + 1,
-            ...projectForm
-        };
-        setProjects([...projects, newProject]);
-        setOpen(false);
+    const handleEditClick = (project: ProjectData) => {
+        setMode('edit');
+        setSelectedProject(project);
+        setView('form');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
+
+    const handleAddClick = () => {
+        setMode('create');
+        setSelectedProject(undefined);
+        setView('form');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const handleSubmit = (data: any) => {
+        if (mode === 'create') {
+            const newProject = {
+                id: projects.length + 1,
+                ...data
+            };
+            setProjects([...projects, newProject]);
+        } else {
+            setProjects(projects.map(p => p.id === selectedProject?.id ? { ...p, ...data } : p));
+        }
+        setView('list');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    if (view === 'form') {
+        return (
+            <div className="p-4 md:p-8 bg-[#f8fafc] min-h-screen">
+                <ProjectForm 
+                    mode={mode}
+                    initialData={selectedProject}
+                    onSubmit={handleSubmit}
+                    onCancel={() => setView('list')}
+                />
+            </div>
+        );
+    }
 
     return (
         <div className="p-4 md:p-8 bg-[#f8fafc] min-h-screen">
@@ -82,7 +97,7 @@ const ProjectManagement = () => {
                     <p className="text-slate-500 mt-1 text-sm md:text-base font-medium">Create, edit and manage your real estate projects</p>
                 </div>
                 <button 
-                    onClick={() => setOpen(true)}
+                    onClick={handleAddClick}
                     className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#1800ad] text-white px-5 md:px-6 py-2.5 md:py-3 rounded-xl hover:bg-[#150091] transition-all shadow-lg shadow-blue-200 font-bold active:scale-95 text-sm md:text-base"
                 >
                     <Plus className="w-4 h-4 md:w-5 md:h-5" strokeWidth={3} />
@@ -193,7 +208,7 @@ const ProjectManagement = () => {
                                     </td>
                                     <td className="px-6 md:px-8 py-4 md:py-5 text-right">
                                         <div className="flex justify-end gap-1 md:gap-2 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
-                                            <button className="p-1.5 md:p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"><Edit className="w-4 h-4 md:w-[18px] md:h-[18px]" /></button>
+                                            <button onClick={() => handleEditClick(project)} className="p-1.5 md:p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"><Edit className="w-4 h-4 md:w-[18px] md:h-[18px]" /></button>
                                             <button className="p-1.5 md:p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"><Trash2 className="w-4 h-4 md:w-[18px] md:h-[18px]" /></button>
                                         </div>
                                     </td>
@@ -203,183 +218,6 @@ const ProjectManagement = () => {
                     </table>
                 </div>
             </div>
-
-            {/* Add Project Modal */}
-            {open && (
-                <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-3 md:p-4">
-                    <div className="bg-white rounded-[24px] md:rounded-[32px] w-full max-w-5xl h-fit max-h-[95vh] md:max-h-[90vh] overflow-hidden shadow-2xl flex flex-col animate-in fade-in zoom-in duration-300">
-                        {/* Modal Header */}
-                        <div className="px-6 md:px-8 py-4 md:py-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-                            <div>
-                                <h2 className="text-xl md:text-2xl font-extrabold text-slate-900">Add New Project</h2>
-                                <p className="text-slate-500 text-xs md:text-sm font-medium">Fill in the details to list a new property development</p>
-                            </div>
-                            <button onClick={() => setOpen(false)} className="p-1.5 md:p-2 hover:bg-slate-200 rounded-full transition-colors text-slate-400 hover:text-slate-600">
-                                <X className="w-5 h-5 md:w-6 md:h-6" strokeWidth={2.5} />
-                            </button>
-                        </div>
-                        
-                        {/* Modal Body */}
-                        <form onSubmit={handleAddProject} className="flex-1 overflow-y-auto p-5 md:p-8 custom-scrollbar">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 lg:gap-x-10 gap-y-6 md:gap-y-8">
-                                {/* Section 1: Basic Information */}
-                                <div className="space-y-4 md:space-y-6">
-                                    <div className="flex items-center gap-2 text-[#1800ad] border-b border-blue-50 pb-2">
-                                        <Info className="w-4 h-4 md:w-[18px] md:h-[18px]" strokeWidth={2.5} />
-                                        <h3 className="font-bold uppercase tracking-wider text-[10px] md:text-xs">Basic Information</h3>
-                                    </div>
-                                    <div className="space-y-3 md:space-y-4">
-                                        <div>
-                                            <label className="block text-xs md:text-sm font-bold text-slate-700 mb-1 ml-1">Project Title</label>
-                                            <input required type="text" placeholder="e.g. Azure Heights Villa" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 md:p-3 outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-400 transition-all font-medium text-sm md:text-base" 
-                                                value={projectForm.title} onChange={(e) => setProjectForm({...projectForm, title: e.target.value})} />
-                                        </div>
-                                        <div>
-                                            <label className="block text-xs md:text-sm font-bold text-slate-700 mb-1 ml-1">Developer Name</label>
-                                            <input required type="text" placeholder="e.g. Skyline Builders" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 md:p-3 outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-400 transition-all font-medium text-sm md:text-base"
-                                                value={projectForm.developer} onChange={(e) => setProjectForm({...projectForm, developer: e.target.value})} />
-                                        </div>
-                                        <div className="grid grid-cols-2 gap-3 md:gap-4">
-                                            <div>
-                                                <label className="block text-xs md:text-sm font-bold text-slate-700 mb-1 ml-1">Price Range</label>
-                                                <input required type="text" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 md:p-3 outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-400 transition-all font-medium text-sm md:text-base" placeholder="₹6.15 K/sq.ft"
-                                                    value={projectForm.price} onChange={(e) => setProjectForm({...projectForm, price: e.target.value})} />
-                                            </div>
-                                            <div>
-                                                <label className="block text-xs md:text-sm font-bold text-slate-700 mb-1 ml-1">Category Tag</label>
-                                                <select className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 md:p-3 outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-400 transition-all font-bold text-slate-600 appearance-none cursor-pointer text-sm md:text-base"
-                                                    value={projectForm.tag} onChange={(e) => setProjectForm({...projectForm, tag: e.target.value})}>
-                                                    <option>Luxury</option>
-                                                    <option>Premium</option>
-                                                    <option>Modern</option>
-                                                    <option>Affordable</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Section 2: Location Details */}
-                                <div className="space-y-4 md:space-y-6">
-                                    <div className="flex items-center gap-2 text-emerald-600 border-b border-emerald-50 pb-2">
-                                        <MapPin className="w-4 h-4 md:w-[18px] md:h-[18px]" strokeWidth={2.5} />
-                                        <h3 className="font-bold uppercase tracking-wider text-[10px] md:text-xs">Location Details</h3>
-                                    </div>
-                                    <div className="space-y-3 md:space-y-4">
-                                        <div>
-                                            <label className="block text-xs md:text-sm font-bold text-slate-700 mb-1 ml-1">Locality / Sector</label>
-                                            <input required type="text" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 md:p-3 outline-none focus:ring-4 focus:ring-emerald-100 focus:border-emerald-400 transition-all font-medium text-sm md:text-base" placeholder="e.g. Sector 121, Mohali"
-                                                value={projectForm.locality} onChange={(e) => setProjectForm({...projectForm, locality: e.target.value})} />
-                                        </div>
-                                        <div className="grid grid-cols-2 gap-3 md:gap-4">
-                                            <div>
-                                                <label className="block text-xs md:text-sm font-bold text-slate-700 mb-1 ml-1">City</label>
-                                                <input required type="text" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 md:p-3 outline-none focus:ring-4 focus:ring-emerald-100 focus:border-emerald-400 transition-all font-medium text-sm md:text-base"
-                                                    value={projectForm.city} onChange={(e) => setProjectForm({...projectForm, city: e.target.value})} />
-                                            </div>
-                                            <div>
-                                                <label className="block text-xs md:text-sm font-bold text-slate-700 mb-1 ml-1">State / Region</label>
-                                                <input required type="text" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 md:p-3 outline-none focus:ring-4 focus:ring-emerald-100 focus:border-emerald-400 transition-all font-medium text-sm md:text-base"
-                                                    value={projectForm.location} onChange={(e) => setProjectForm({...projectForm, location: e.target.value})} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Section 3: Technical Specifications */}
-                                <div className="space-y-4 md:space-y-6">
-                                    <div className="flex items-center gap-2 text-purple-600 border-b border-purple-50 pb-2">
-                                        <Layers className="w-4 h-4 md:w-[18px] md:h-[18px]" strokeWidth={2.5} />
-                                        <h3 className="font-bold uppercase tracking-wider text-[10px] md:text-xs">Project Specifications</h3>
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-3 md:gap-4">
-                                        <div>
-                                            <label className="block text-xs md:text-sm font-bold text-slate-700 mb-1 ml-1">Total Units</label>
-                                            <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 md:p-3 outline-none focus:ring-4 focus:ring-purple-100 focus:border-purple-400 transition-all font-medium text-sm md:text-base" placeholder="3084"
-                                                value={projectForm.projectUnits} onChange={(e) => setProjectForm({...projectForm, projectUnits: e.target.value})} />
-                                        </div>
-                                        <div>
-                                            <label className="block text-xs md:text-sm font-bold text-slate-700 mb-1 ml-1">Area Unit</label>
-                                            <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 md:p-3 outline-none focus:ring-4 focus:ring-purple-100 focus:border-purple-400 transition-all font-medium text-sm md:text-base" placeholder="sq.ft."
-                                                value={projectForm.areaUnit} onChange={(e) => setProjectForm({...projectForm, areaUnit: e.target.value})} />
-                                        </div>
-                                        <div>
-                                            <label className="block text-xs md:text-sm font-bold text-slate-700 mb-1 ml-1">Project Area</label>
-                                            <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 md:p-3 outline-none focus:ring-4 focus:ring-purple-100 focus:border-purple-400 transition-all font-medium text-sm md:text-base" placeholder="25 Acres"
-                                                value={projectForm.projectArea} onChange={(e) => setProjectForm({...projectForm, projectArea: e.target.value})} />
-                                        </div>
-                                        <div>
-                                            <label className="block text-xs md:text-sm font-bold text-slate-700 mb-1 ml-1">No. of Towers</label>
-                                            <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 md:p-3 outline-none focus:ring-4 focus:ring-purple-100 focus:border-purple-400 transition-all font-medium text-sm md:text-base" placeholder="11"
-                                                value={projectForm.noOfTowers} onChange={(e) => setProjectForm({...projectForm, noOfTowers: e.target.value})} />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Section 4: Status & Identity */}
-                                <div className="space-y-4 md:space-y-6">
-                                    <div className="flex items-center gap-2 text-rose-600 border-b border-rose-50 pb-2">
-                                        <Calendar className="w-4 h-4 md:w-[18px] md:h-[18px]" strokeWidth={2.5} />
-                                        <h3 className="font-bold uppercase tracking-wider text-[10px] md:text-xs">Status & Identity</h3>
-                                    </div>
-                                    <div className="space-y-3 md:space-y-4">
-                                        <div className="grid grid-cols-2 gap-3 md:gap-4">
-                                            <div>
-                                                <label className="block text-xs md:text-sm font-bold text-slate-700 mb-1 ml-1">Launch Date</label>
-                                                <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 md:p-3 outline-none focus:ring-4 focus:ring-rose-100 focus:border-rose-400 transition-all font-medium text-sm md:text-base" placeholder="Nov, 2021"
-                                                    value={projectForm.launchDate} onChange={(e) => setProjectForm({...projectForm, launchDate: e.target.value})} />
-                                            </div>
-                                            <div>
-                                                <label className="block text-xs md:text-sm font-bold text-slate-700 mb-1 ml-1">Possession</label>
-                                                <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 md:p-3 outline-none focus:ring-4 focus:ring-rose-100 focus:border-rose-400 transition-all font-medium text-sm md:text-base" placeholder="Ready to Move"
-                                                    value={projectForm.possessionStatus} onChange={(e) => setProjectForm({...projectForm, possessionStatus: e.target.value})} />
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label className="block text-xs md:text-sm font-bold text-slate-700 mb-1 ml-1">RERA Identification ID</label>
-                                            <input required type="text" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 md:p-3 outline-none focus:ring-4 focus:ring-rose-100 focus:border-rose-400 transition-all font-mono font-bold text-slate-600 text-sm md:text-base" placeholder="PBRERA-XXXXX-XXXX"
-                                                value={projectForm.reraId} onChange={(e) => setProjectForm({...projectForm, reraId: e.target.value})} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-
-                        {/* Modal Footer */}
-                        <div className="px-6 md:px-8 py-4 md:py-6 border-t border-slate-100 flex justify-end gap-3 md:gap-4 bg-slate-50/50">
-                            <button 
-                                type="button" 
-                                onClick={() => setOpen(false)} 
-                                className="px-5 md:px-8 py-2 md:py-3 rounded-xl font-bold text-slate-600 hover:bg-slate-200 transition-all active:scale-95 text-sm md:text-base"
-                            >
-                                Cancel
-                            </button>
-                            <button 
-                                onClick={handleAddProject}
-                                className="px-6 md:px-10 py-2 md:py-3 bg-[#1800ad] text-white rounded-xl font-bold hover:bg-[#150091] shadow-lg shadow-blue-200 transition-all active:scale-95 text-sm md:text-base"
-                            >
-                                Save Project
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-            
-            <style jsx>{`
-                .custom-scrollbar::-webkit-scrollbar {
-                    width: 6px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-track {
-                    background: transparent;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb {
-                    background: #e2e8f0;
-                    border-radius: 10px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                    background: #cbd5e1;
-                }
-            `}</style>
         </div>
     );
 };
