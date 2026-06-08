@@ -1,5 +1,5 @@
 'use client'
-import { Search, Plus, Edit, Trash2, Building, Calendar, MapPin, IndianRupeeIcon, CheckCircle, FileText, X } from "lucide-react";
+import { Search, Plus, Edit, Trash2, Building, Calendar, MapPin, CheckCircle, X } from "lucide-react";
 import { useState } from "react";
 
 interface ProjectForm {

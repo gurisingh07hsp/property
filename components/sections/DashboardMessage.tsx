@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 
 interface MessageBoxProps {
@@ -5,7 +6,6 @@ interface MessageBoxProps {
     name: string;
     message: string;
     daysAgo: number;
-    isLast?: boolean;
 }
 
 const MessageBox = ({ avatar, name, message, daysAgo }: MessageBoxProps) => {
@@ -127,14 +127,13 @@ export default function DashboardMessage() {
                             <div className="dashboard-info-sider-deatils">
                                 <div className="dashboard-info-sider bg-white">
                                     <div className="row">
-                                        {messageData.map((message, index) => (
+                                        {messageData.map((message) => (
                                             <MessageBox
                                                 key={message.id}
                                                 avatar={message.avatar}
                                                 name={message.name}
                                                 message={message.message}
                                                 daysAgo={message.daysAgo}
-                                                isLast={index === messageData.length - 1}
                                             />
                                         ))}
                                     </div>
