@@ -118,18 +118,18 @@ header.homepage4-site-header .vl-transparent-header .vl-logo img {
     header.homepage4-site-header .vl-transparent-header:not(.header-sticky) {
         max-width: 100%;
         padding: 10px 12px !important;
-        background: #1800ad !important;
+        background: #f1f2f3 !important;
         border-radius: 0 !important;
     }
 
     body.homepage4-body header.homepage4-site-header,
     header.homepage4-site-header {
-        background: #1800ad;
+        background: #f1f2f3;
     }
 
     body.homepage4-body .vl-transparent-header.header-sticky,
     header.homepage4-site-header .vl-transparent-header.header-sticky {
-        background: #1800ad !important;
+        background: #f1f2f3 !important;
         padding: 10px 0 !important;
     }
 
@@ -137,7 +137,7 @@ header.homepage4-site-header .vl-transparent-header .vl-logo img {
     header.homepage4-site-header .vl-transparent-header .vl-logo img {
         max-width: 108px;
         max-height: 26px;
-        filter: brightness(0) invert(1);
+        filter: none;
     }
 
     .homepage4-mobile-header-actions {
@@ -152,8 +152,8 @@ header.homepage4-site-header .vl-transparent-header .vl-logo img {
         justify-content: center;
         padding: 8px 12px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.18);
-        border: 1px solid rgba(255, 255, 255, 0.28);
+        background: #1800ad;
+        border: 1px solid #1800ad;
         color: #fff !important;
         font-size: 12px;
         font-weight: 600;
@@ -174,6 +174,7 @@ header.homepage4-site-header .vl-transparent-header .vl-logo img {
         font-weight: 800;
         line-height: 1;
         letter-spacing: 0.02em;
+        border: 1px solid #ddd;
     }
 
     .homepage4-mobile-menu-btn {
@@ -182,8 +183,8 @@ header.homepage4-site-header .vl-transparent-header .vl-logo img {
         height: 38px;
         border: none;
         border-radius: 10px;
-        background: #fff;
-        color: #1800ad;
+        background: #1800ad;
+        color: #fff;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -707,6 +708,8 @@ header.homepage4-site-header .vl-transparent-header .vl-logo img {
     .homepage4-body .vl-offcanvas {
         width: min(100%, 360px);
         padding: 20px 16px;
+        background: #fff;
+        color: #111;
     }
 
     .homepage4-body .vl-offcanvas-header {
@@ -719,14 +722,15 @@ header.homepage4-site-header .vl-transparent-header .vl-logo img {
         max-height: 30px;
         height: auto;
         display: block;
-        filter: brightness(0) invert(1);
+        filter: none;
     }
 
     .homepage4-body .vl-offcanvas-close-toggle {
         width: 36px;
         height: 36px;
         border-radius: 8px;
-        background: rgba(255, 255, 255, 0.12);
+        background: #f1f2f3;
+        color: #1800ad;
         border: none;
         display: inline-flex;
         align-items: center;
@@ -738,6 +742,36 @@ header.homepage4-site-header .vl-transparent-header .vl-logo img {
         line-height: 1.25;
         padding: 10px 0;
         display: block;
+        color: #111;
+    }
+
+    .homepage4-body .vl-offcanvas-menu ul li .homepage4-menu-label {
+        color: #111;
+    }
+
+    .homepage4-body .vl-offcanvas-menu ul li .homepage4-submenu-toggle {
+        border-color: #ddd;
+        color: #111;
+    }
+
+    .homepage4-offcanvas-list-btn {
+        background: #1800ad;
+        color: #fff !important;
+    }
+
+    .homepage4-offcanvas-list-btn .homepage4-free-badge {
+        background: #fff;
+        color: #1800ad;
+    }
+
+    .homepage4-body .vl-offcanvas-info span a,
+    .homepage4-body .vl-offcanvas-sm-title,
+    .homepage4-body .vl-offcanvas-social a {
+        color: #111 !important;
+    }
+
+    .homepage4-body .vl-offcanvas-social a {
+        border-color: #111 !important;
     }
 
     .homepage4-post-property-btn {
