@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import BlogManagement from "@/components/admin/BlogManagement";
+import ProjectManagement from "@/components/admin/ProjectManagement";
 export default function Page() {
     const {pagename} = useParams();
 
@@ -15,6 +16,7 @@ export default function Page() {
       {pagename == 'houses' && <HouseManagement/>}
       {pagename == 'bookings' && <div>Bookings</div>}
       {pagename == 'blogs' && <BlogManagement/>}
+      {pagename == 'projects' && <ProjectManagement/>}
       {/* {pagename == 'houses' && <div>House Management</div>} */}
     </>
   );

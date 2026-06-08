@@ -32,8 +32,6 @@ export default function Property1() {
                     <div className="row">
                         <div className="col-lg-9 m-auto">
                             <div className="heading1 text-center">
-                                <h5>Our Properties</h5>
-                                <div className="space16" />
                                 <h2 className="text-anime-style-2">Browse Our Exclusive Properties Listing</h2>
                             </div>
                             <div className="space40" />

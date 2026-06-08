@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 interface Project {
     id: number;
@@ -13,6 +14,17 @@ interface Project {
     image: string;
     tag: string;
     developer: string;
+    // New fields
+    projectUnits?: string;
+    areaUnit?: string;
+    projectArea?: string;
+    sizes?: string;
+    projectSize?: string;
+    launchDate?: string;
+    avgPrice?: string;
+    possessionStatus?: string;
+    configuration?: string;
+    reraId?: string;
 }
 
 const projectsData: Project[] = [
@@ -79,17 +91,35 @@ const projectsData: Project[] = [
 ];
 
 export default function ProjectsLandingPage() {
+    const searchParams = useSearchParams();
+    const developerQuery = searchParams.get("developer");
+    
     const [selectedLocation, setSelectedLocation] = useState("All Locations");
+    const [selectedDeveloper, setSelectedDeveloper] = useState("All Developers");
+
+    useEffect(() => {
+        if (developerQuery) {
+            setSelectedDeveloper(developerQuery);
+        }
+    }, [developerQuery]);
 
     const locations = useMemo(() => {
         const uniqueCities = Array.from(new Set(projectsData.map(p => p.city)));
         return ["All Locations", ...uniqueCities.sort()];
     }, []);
 
+    const developers = useMemo(() => {
+        const uniqueDevs = Array.from(new Set(projectsData.map(p => p.developer)));
+        return ["All Developers", ...uniqueDevs.sort()];
+    }, []);
+
     const filteredProjects = useMemo(() => {
-        if (selectedLocation === "All Locations") return projectsData;
-        return projectsData.filter(p => p.city === selectedLocation);
-    }, [selectedLocation]);
+        return projectsData.filter(p => {
+            const matchesLocation = selectedLocation === "All Locations" || p.city === selectedLocation;
+            const matchesDeveloper = selectedDeveloper === "All Developers" || p.developer === selectedDeveloper;
+            return matchesLocation && matchesDeveloper;
+        });
+    }, [selectedLocation, selectedDeveloper]);
 
     return (
         <Layout headerStyle={4} footerStyle={4}>
@@ -116,12 +146,19 @@ export default function ProjectsLandingPage() {
                         border-radius: 20px;
                         box-shadow: 0 10px 30px rgba(0,0,0,0.08);
                         margin: 0 auto 50px;
-                        max-width: 800px;
+                        max-width: 900px;
                         position: relative;
                         z-index: 10;
                         display: flex;
                         align-items: center;
-                        gap: 20px;
+                        justify-content: center;
+                        gap: 40px;
+                    }
+                    .filter-group {
+                        display: flex;
+                        align-items: center;
+                        gap: 15px;
+                        flex: 1;
                     }
                     .filter-label {
                         font-weight: 700;
@@ -254,16 +291,30 @@ export default function ProjectsLandingPage() {
 
                 <div className="container">
                     <div className="filter-container">
-                        <span className="filter-label">Filter by Location:</span>
-                        <select 
-                            className="location-select" 
-                            value={selectedLocation} 
-                            onChange={(e) => setSelectedLocation(e.target.value)}
-                        >
-                            {locations.map(loc => (
-                                <option key={loc} value={loc}>{loc}</option>
-                            ))}
-                        </select>
+                        <div className="filter-group">
+                            <span className="filter-label">Location:</span>
+                            <select 
+                                className="location-select" 
+                                value={selectedLocation} 
+                                onChange={(e) => setSelectedLocation(e.target.value)}
+                            >
+                                {locations.map(loc => (
+                                    <option key={loc} value={loc}>{loc}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="filter-group">
+                            <span className="filter-label">Developer:</span>
+                            <select 
+                                className="location-select" 
+                                value={selectedDeveloper} 
+                                onChange={(e) => setSelectedDeveloper(e.target.value)}
+                            >
+                                {developers.map(dev => (
+                                    <option key={dev} value={dev}>{dev}</option>
+                                ))}
+                            </select>
+                        </div>
                     </div>
 
                     <div className="row g-4">
@@ -272,13 +323,13 @@ export default function ProjectsLandingPage() {
                                 <div key={project.id} className="col-lg-4 col-md-6">
                                     <div className="project-card">
                                         <div className="img-container">
-                                            <Link href="/property-details-v1">
+                                            <Link href={`/projects/${project.id}`}>
                                                 <img src={project.image} alt={project.title} />
                                             </Link>
                                             <span className="project-tag">{project.tag}</span>
                                         </div>
                                         <div className="project-content">
-                                            <Link href="/property-details-v1" className="project-title">{project.title}</Link>
+                                            <Link href={`/projects/${project.id}`} className="project-title">{project.title}</Link>
                                             <div className="project-loc">
                                                 <i className="fa-solid fa-location-dot"></i>
                                                 {project.location}
@@ -286,7 +337,7 @@ export default function ProjectsLandingPage() {
                                             <span className="dev-info">Developed by {project.developer}</span>
                                             <div className="project-footer">
                                                 <span className="project-price">{project.price}</span>
-                                                <Link href="/property-details-v1" className="details-link">
+                                                <Link href={`/projects/${project.id}`} className="details-link">
                                                     View Project
                                                     <i className="fa-solid fa-arrow-right"></i>
                                                 </Link>

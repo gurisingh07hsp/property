@@ -124,6 +124,12 @@ export default function Header5({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                         <Link href="/about-us">About Us</Link>
                                                     </li>
                                                     <li>
+                                                        <Link href="/developers">Developers</Link>
+                                                    </li>
+                                                    <li>
+                                                        <Link href="/projects">Projects</Link>
+                                                    </li>
+                                                    <li>
                                                         <Link href="/our-service">Our Services</Link>
                                                     </li>
                                                     <li>

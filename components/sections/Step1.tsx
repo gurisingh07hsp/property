@@ -8,8 +8,6 @@ export default function Step1() {
                     <div className="row">
                         <div className="col-lg-6 m-auto">
                             <div className="heading2 text-center space-margin60">
-                                <h5>Our Simple Steps</h5>
-                                <div className="space16" />
                                 <h2>Real Estate Made Easy</h2>
                             </div>
                         </div>

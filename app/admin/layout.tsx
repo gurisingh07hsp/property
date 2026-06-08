@@ -13,12 +13,14 @@ import {
   Menu,
   X,
   Home,
+  Building,
 } from "lucide-react";
 import axios from "axios";
 
 const navItems = [
   { title: "Dashboard", path: "/admin", icon: LayoutDashboard },
   { title: "Houses", path: "/admin/houses", icon: Home },
+  { title: "Projects", path: "/admin/projects", icon: Building },
   // { title: "Bookings", path: "/admin/bookings", icon: CalendarCheck },
   { title: "Blog Posts", path: "/admin/blogs", icon: FileText },
 ];

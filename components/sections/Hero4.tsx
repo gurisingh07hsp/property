@@ -182,10 +182,6 @@ export default function Hero4() {
                     <div className="row">
                         <div className="col-lg-7 col-md-10">
                             <div className="hero2-header heading2 hero-content-visible">
-                                <h5>
-                                    {houseIcon}
-                                    Your Trusted Real Estate Partner
-                                </h5>
                                 <h1>Start Your Property Journey With PROPUTY</h1>
                                 <HeroSearchPanel />
                             </div>

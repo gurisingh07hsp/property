@@ -17,8 +17,6 @@ export default function Team3() {
                     <div className="row">
                         <div className="col-lg-9 m-auto">
                             <div className="heading2 text-center space-margin60">
-                                <h5>Meet Our Expert Team</h5>
-                                <div className="space16" />
                                 <h2>Trusted Real Estate Professionals</h2>
                             </div>
                         </div>

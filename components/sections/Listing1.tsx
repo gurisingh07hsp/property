@@ -52,8 +52,6 @@ export default function Listing1() {
                     <div className="row align-items-lg-end">
                         <div className="col-lg-5">
                             <div className="heading2 space-margin60">
-                                <h5>Our Exclusive Listings</h5>
-                                <div className="space16" />
                                 <h2>Explore Our Top Picks</h2>
                             </div>
                         </div>
