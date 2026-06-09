@@ -17,8 +17,6 @@ export default function Category2() {
                     <div className="row">
                         <div className="col-lg-8 m-auto">
                             <div className="heading2 text-center space-margin60">
-                                <h5>Browse Our Gallery</h5>
-                                <div className="space16" />
                                 <h2>Explore Our Stunning Properties</h2>
                             </div>
                         </div>

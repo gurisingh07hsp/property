@@ -8,7 +8,7 @@ import React from "react";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useReducer } from "react";
-
+import { useParams } from "next/navigation";
 // Define interfaces for our data structures
 interface PropertyType {
     id?: number;
@@ -88,6 +88,19 @@ export default function PropertyFilter() {
     const { propertyFilter } = useSelector((state: RootState) => state.filter);
     const propertyState = useSelector((state: RootState) => state.property);
     const properties = propertyState.properties || [];
+
+        const {slug} = useParams();
+        const category = slug?.toString().split('_')[0].replace(/-/g, " ");
+        const location = slug?.toString().split('_').pop()?.replace(/-/g," ");
+        console.log('slug : ', slug);
+        console.log('category : ', category);
+        console.log('location : ', location);
+
+
+        // useEffect(()=> {
+        //     dispatch(addCity(location || ''));
+        //     dispatch(addPropertyType(category || ''));
+        // },[]);
 
     // Get unique property types from actual properties
     const propertyTypes: PropertyType[] = React.useMemo(() => {

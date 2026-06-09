@@ -40,6 +40,9 @@ export const metadata: Metadata = {
         ],
         shortcut: ['/assets/img/logo/favicon.png'],
     },
+    alternates:{
+        canonical: '/'
+    }
 };
 
 export default function RootLayout({

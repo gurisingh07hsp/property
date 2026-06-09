@@ -10,9 +10,7 @@ export default function PropertyLocation1() {
                     <div className="row">
                         <div className="col-lg-10 m-auto">
                             <div className="heading1 text-center space-margin60">
-                                <h5>Our Location</h5>
-                                <div className="space16" />
-                                <h2 className="text-anime-style-3">Find Your Properties In This Cities</h2>
+                                <h2 className="text-anime-style-3">Find Your Properties In These Cities</h2>
                             </div>
                         </div>
                     </div>

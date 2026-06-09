@@ -158,7 +158,7 @@ function HeroSearchPanel() {
                       const locationPath = location.toLowerCase().replace(/\s+/g, '-');
                       const categoryPath = searchQuery.toLowerCase().replace(/\s+/g, '-').replace('/', '-');
                       // window.location.href = `/sidebar-grid?${params.toString()}`;
-                      window.location.href = `/sidebar-grid/${categoryPath}-in-${locationPath}?type=${activeTab}`;
+                      window.location.href = `/sidebar-grid/${categoryPath}_in_${locationPath}?type=${activeTab}`;
                       }
                 }}
                 // onSubmit={handleSearch}
@@ -269,10 +269,6 @@ export default function Hero4() {
                     <div className="row">
                         <div className="col-lg-7 col-md-10">
                             <div className="hero2-header heading2 hero-content-visible">
-                                <h5>
-                                    {houseIcon}
-                                    Your Trusted Real Estate Partner
-                                </h5>
                                 <h1>Start Your Property Journey With PROPUTY</h1>
                                 <HeroSearchPanel />
                             </div>

@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 
 interface MessageBoxProps {
@@ -5,36 +6,66 @@ interface MessageBoxProps {
     name: string;
     message: string;
     daysAgo: number;
-    isLast?: boolean;
 }
 
-const MessageBox = ({ avatar, name, message, daysAgo, isLast = false }: MessageBoxProps) => {
+const MessageBox = ({ avatar, name, message, daysAgo }: MessageBoxProps) => {
     return (
-        <div className="col-lg-6">
-            <div className="message-boxarea px-2" style={isLast ? { borderBottom: "none", paddingBottom: 0 } : {}}>
-                <div className="space32"></div>
-                <div className="img1">
-                    <img src={avatar} alt="housa" />
-                </div>
-                <div className="conatent-area">
-                    <div className="content">
-                        <Link href="#">{name}</Link>
-                        <p>
-                            <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} viewBox="0 0 16 16" fill="none">
-                                <path
-                                    fillRule="evenodd"
-                                    clipRule="evenodd"
-                                    d="M14.8046 13.12C14.8046 14.1128 14.0034 14.914 13.0106 14.914H4.0792C3.0864 14.914 2.28516 14.1128 2.28516 13.12V4.18857C2.28516 3.19577 3.0864 2.39453 4.0792 2.39453H6.041V1.77481C6.04201 1.62752 6.09392 1.4851 6.18792 1.3717C6.28193 1.2583 6.41225 1.18089 6.5568 1.15259L6.66697 1.14258C7.01251 1.14258 7.29295 1.4105 7.29295 1.77481V2.39453H9.79684V1.77481C9.79785 1.62752 9.84976 1.4851 9.94377 1.3717C10.0378 1.2583 10.1681 1.18089 10.3126 1.15259L10.4228 1.14258C10.7684 1.14258 11.0488 1.4105 11.0488 1.77481V2.39453H13.0106C14.0034 2.39453 14.8046 3.19577 14.8046 4.18857V13.12ZM3.5371 6.15037V12.8233C3.5371 13.2865 3.91269 13.6621 4.37591 13.6621H12.7139C13.1771 13.6621 13.5527 13.2865 13.5527 12.8233V6.15037H3.5371Z"
-                                    fill="#424242"
-                                />
-                            </svg>
-                            {daysAgo} Days Ago
-                        </p>
+        <div className="col-12 mb-4">
+            <div className="message-card bg-white p-4 rounded-4 shadow-sm border border-light-subtle hover-shadow transition-all d-flex gap-4">
+                <div className="flex-shrink-0">
+                    <div className="position-relative">
+                        <img src={avatar} alt={name} className="rounded-circle border border-2 border-white shadow-sm" style={{width: '64px', height: '64px', objectFit: 'cover'}} />
+                        <span className="position-absolute bottom-0 end-0 p-1 bg-success border border-2 border-white rounded-circle"></span>
                     </div>
-                    <div className="space14" />
-                    <p>{message}</p>
+                </div>
+                <div className="flex-grow-1">
+                    <div className="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <Link href="#" className="h5 fw-bold text-dark text-decoration-none hover-primary mb-1 d-block">{name}</Link>
+                            <span className="badge bg-light text-muted fw-normal border">
+                                <i className="fa-regular fa-calendar-check me-1"></i>
+                                {daysAgo} Days Ago
+                            </span>
+                        </div>
+                        <div className="dropdown">
+                            <button className="btn btn-light btn-sm rounded-circle shadow-sm" type="button" data-bs-toggle="dropdown">
+                                <i className="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                            <ul className="dropdown-menu dropdown-menu-end shadow border-0 rounded-3">
+                                <li><Link className="dropdown-item py-2 px-3" href="#"><i className="fa-solid fa-reply me-2 text-primary"></i> Reply</Link></li>
+                                <li><Link className="dropdown-item py-2 px-3" href="#"><i className="fa-solid fa-trash-can me-2 text-danger"></i> Delete</Link></li>
+                                <li><hr className="dropdown-divider" /></li>
+                                <li><Link className="dropdown-item py-2 px-3" href="#"><i className="fa-solid fa-flag me-2 text-warning"></i> Report</Link></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p className="text-secondary mb-3 lh-base" style={{display: '-webkit-box', WebkitLineClamp: '2', WebkitBoxOrient: 'vertical', overflow: 'hidden'}}>
+                        {message}
+                    </p>
+                    <div className="d-flex gap-2">
+                        <button className="btn btn-primary btn-sm px-4 rounded-pill fw-bold shadow-sm">
+                            <i className="fa-solid fa-paper-plane me-2"></i>
+                            View Conversation
+                        </button>
+                        <button className="btn btn-outline-secondary btn-sm px-3 rounded-pill fw-bold">
+                            Mark as Read
+                        </button>
+                    </div>
                 </div>
             </div>
+            <style jsx>{`
+                .hover-shadow:hover {
+                    transform: translateY(-3px);
+                    box-shadow: 0 10px 20px rgba(0,0,0,0.05) !important;
+                    border-color: #1800ad !important;
+                }
+                .hover-primary:hover {
+                    color: #1800ad !important;
+                }
+                .transition-all {
+                    transition: all 0.3s ease;
+                }
+            `}</style>
         </div>
     );
 };
@@ -96,14 +127,13 @@ export default function DashboardMessage() {
                             <div className="dashboard-info-sider-deatils">
                                 <div className="dashboard-info-sider bg-white">
                                     <div className="row">
-                                        {messageData.map((message, index) => (
+                                        {messageData.map((message) => (
                                             <MessageBox
                                                 key={message.id}
                                                 avatar={message.avatar}
                                                 name={message.name}
                                                 message={message.message}
                                                 daysAgo={message.daysAgo}
-                                                isLast={index === messageData.length - 1}
                                             />
                                         ))}
                                     </div>

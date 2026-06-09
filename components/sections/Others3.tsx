@@ -10,8 +10,6 @@ export default function Others3() {
                     <div className="row">
                         <div className="col-lg-6 m-auto">
                             <div className="heading1 text-center space-margin60">
-                                <h5>Mission &amp; Vision</h5>
-                                <div className="space16" />
                                 <h2>Our Mission &amp; Vision</h2>
                             </div>
                         </div>

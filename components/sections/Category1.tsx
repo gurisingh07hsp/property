@@ -9,8 +9,6 @@ export default function Category1() {
                     <div className="row">
                         <div className="col-lg-7 m-auto">
                             <div className="heading1 text-center space-margin60">
-                                <h5>Category</h5>
-                                <div className="space16" />
                                 <h2 className="text-anime-style-3">Select The Home That Suits You</h2>
                             </div>
                         </div>

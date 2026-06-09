@@ -10,8 +10,6 @@ export default function Blog1() {
                     <div className="row">
                         <div className="col-lg-10 m-auto">
                             <div className="vl-blog-1-section-box heading1 text-center space-margin60">
-                                <h5 className="vl-section-subtitle"> Our Blog</h5>
-                                <div className="space16" />
                                 <h2 className="vl-section-title text-anime-style-3">Insights for Your Real Estate Journey</h2>
                             </div>
                         </div>

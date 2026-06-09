@@ -9,9 +9,7 @@ export default function Others4() {
                     <div className="row">
                         <div className="col-lg-5 m-auto">
                             <div className="heading1 text-center space-margin60">
-                                <h5>Why Choose Us</h5>
-                                <div className="space16" />
-                                <h2>Why Choose Housa</h2>
+                                <h2>Why Choose PROPUTY</h2>
                             </div>
                         </div>
                     </div>

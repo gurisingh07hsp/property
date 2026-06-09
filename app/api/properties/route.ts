@@ -15,6 +15,8 @@ export async function GET(req: NextRequest) {
       searchParams.get("filter") || "{}"
     );
 
+    console.log("filter : ", filter);
+
     const pagination = JSON.parse(
       searchParams.get("pagination") || "{}"
     );
@@ -47,7 +49,7 @@ export async function GET(req: NextRequest) {
     }
 
     if (filter.propertyType) {
-      query.propertyType = filter.propertyType;
+      query.category = filter.propertyType;
     }
 
     // -------------------------

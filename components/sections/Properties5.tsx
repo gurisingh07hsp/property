@@ -31,7 +31,7 @@ export default function Properties5() {
                         <div className="col-lg-3">
                             <div className="btn-area1 text-end">
                                 <div className="space20 d-lg-none d-block" />
-                                <Link href="/sidebar-grid" className="vl-btn1">
+                                <Link href="/sidebar-grid" className="vl-btn1" style={{ padding: '10px 24px', fontSize: '14px' }}>
                                     Explore Our Listings
                                     <span className="arrow1 ms-2">
                                         <i className="fa-solid fa-arrow-right" />
