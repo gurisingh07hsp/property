@@ -4,7 +4,7 @@ export default function Cta2() {
     return (
         <>
             {/*===== CTA AREA STARTS =======*/}
-            <div className="cat4-section-area ">
+            <div className="cat4-section-area mt-4">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-12">
