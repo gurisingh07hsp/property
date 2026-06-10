@@ -111,7 +111,7 @@ function HeroSearchPanel() {
     setShowSearchSuggestions(false);
   }
 
-    const Categories = ['Kothi', 'Villa', 'Luxury Homes', 'Farm House', 'Single Family', 'House', 'Apartment']
+    const Categories = ['Kothi', 'Villa', 'Luxury Homes', 'Farm House', 'Single Family', 'House', 'Apartment', '1 BHK', '2 BHK', '3 BHK', '4 BHK']
 
     const fetchSuggestions = async(value: string) => {
     try{
@@ -158,7 +158,7 @@ function HeroSearchPanel() {
                       const locationPath = location.toLowerCase().replace(/\s+/g, '-');
                       const categoryPath = searchQuery.toLowerCase().replace(/\s+/g, '-').replace('/', '-');
                       // window.location.href = `/sidebar-grid?${params.toString()}`;
-                      window.location.href = `/sidebar-grid/${categoryPath}_in_${locationPath}?type=${activeTab}`;
+                      window.location.href = `/properties/${categoryPath}_in_${locationPath}?type=${activeTab}`;
                       }
                 }}
                 // onSubmit={handleSearch}

@@ -3,8 +3,9 @@
 import { addBedrooms, addCity, addKeyword, addPrice, addPropertyType, addState, addStatus, resetFilters } from "@/features/filter/filterSlice";
 import { clearAmenityFilters } from "@/features/property/propertySlice";
 import type { RootState } from "@/features/store";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "next/navigation";
 
 export default function HorizontalPropertyFilter() {
     const dispatch = useDispatch();
@@ -12,10 +13,24 @@ export default function HorizontalPropertyFilter() {
     const propertyState = useSelector((state: RootState) => state.property);
     const properties = propertyState.properties || [];
 
+            const {slug} = useParams();
+            const category = slug?.toString().split('_')[0].replace(/-/g, " ");
+            const location = slug?.toString().split('_').pop()?.replace(/-/g," ");
+            // console.log('slug : ', slug);
+            // console.log('category : ', category);
+            // console.log('location : ', location);
+
+
+        useEffect(() => {
+    if (location) dispatch(addCity(location));
+    if (category) dispatch(addPropertyType(category));
+}, [location, category, dispatch]);
+
     // Get unique values for filters
-    const propertyTypes = React.useMemo(() => 
-        Array.from(new Set(properties.map(p => p.type))).filter(Boolean).sort(), 
-    [properties]);
+    // const propertyTypes = React.useMemo(() => 
+    //     Array.from(new Set(properties.map(p => p.type))).filter(Boolean).sort(), 
+    // [properties]);
+    const propertyTypes = ['Apartment','Kothi', 'Farm','House', 'Luxury Homes', 'Single Family', 'villa']
 
     const cities = React.useMemo(() => 
         Array.from(new Set(properties.map(p => p.city))).filter(Boolean).sort(), 
@@ -132,10 +147,10 @@ export default function HorizontalPropertyFilter() {
                 <div className="filter-item">
                     <select value={`${propertyFilter.price.min}-${propertyFilter.price.max}`} onChange={(e) => handleFilterChange('price', e.target.value)}>
                         <option value="0-5000000">Budget</option>
-                        <option value="0-500000">Under $500k</option>
-                        <option value="500000-1000000">$500k - $1M</option>
-                        <option value="1000000-2000000">$1M - $2M</option>
-                        <option value="2000000-5000000">$2M+</option>
+                        <option value="0-500000">Under 5Lac</option>
+                        <option value="500000-1000000">5Lac - 10Lac</option>
+                        <option value="1000000-2000000">10Lac - 20Lac</option>
+                        <option value="2000000-5000000">20Lac+</option>
                     </select>
                 </div>
                 <div className="filter-item">

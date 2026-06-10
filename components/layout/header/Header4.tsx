@@ -153,55 +153,15 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                 </ul>
                                             </li>
                                             <li>
-                                                <Link href="/sidebar-grid">
-                                                    Listing
-                                                    {/* <span>
-                                                        <i className="fa-solid fa-angle-down d-lg-inline d-none" />
-                                                    </span> */}
-                                                </Link>
-                                                {/* <ul className="sub-menu">
-                                                    <li>
-                                                        <Link href="/property-halfmap-grid">Property Half Grid</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/property-halfmap-list">Property Half Map List</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/topmap-grid">Property Top Map Grid</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/topmap-list">Property Top Map List</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/sidebar-grid">Find Sidebar Grid</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/sidebar-list">Find Sidebar List</Link>
-                                                    </li>
-                                                </ul> */}
+                                                <Link href="/properties">
+                                                    Listing                                                
+                                                </Link>                                     
                                             </li>
-                                            <li>
+                                            {/* <li>
                                                 <Link href="/property-details-v1">
                                                     Properties
-                                                    {/* <span>
-                                                        <i className="fa-solid fa-angle-down d-lg-inline d-none" />
-                                                    </span> */}
                                                 </Link>
-                                                {/* <ul className="sub-menu">
-                                                    <li>
-                                                        <Link href="/property-details-v1">Property Details 01</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/property-details-v2">Property Details 02</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/property-details-v3">Property Details 03</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/property-details-v4">Property Details 04</Link>
-                                                    </li>
-                                                </ul> */}
-                                            </li>
+                                            </li> */}
                                             {user && user.email && (
                                                 <>
                                                 <li>
@@ -239,58 +199,15 @@ export default function Header4({ scroll, isMobileMenu, handleMobileMenu }: any)
                                                     <li>
                                                         <Link href="/admin">
                                                             Admin
-                                                            {/* <span>
-                                                                <i className="fa-solid fa-angle-down d-lg-inline d-none" />
-                                                            </span> */}
-                                                        </Link>
-                                                        {/* <ul className="sub-menu">
-                                                            <li>
-                                                                <Link href="/dashboard">Dashboard</Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link href="/my-property">My Properties</Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link href="/message">Message</Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link href="/my-favorites">My Favourites</Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link href="/reviews">Reviews</Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link href="/my-profile">My Propfile</Link>
-                                                            </li>
-                                                            <li>
-                                                                <Link href="/add-property">Add Property</Link>
-                                                            </li>
-                                                        </ul> */}
+                                                        </Link>                                                 
                                                     </li>
                                                 )}
                                                 </>
                                             )}
                                             <li>
                                                 <Link href="/blog">
-                                                    Blogs
-                                                    {/* <span>
-                                                        <i className="fa-solid fa-angle-down d-lg-inline d-none" />
-                                                    </span> */}
+                                                    Blogs                                              
                                                 </Link>
-                                                {/* <ul className="sub-menu">
-                                                    <li>
-                                                        <Link href="/blog">Blog Default</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/blog-grid">Blog Grid</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/blog-detail">Blog Post Details</Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/blog-detail-2">Blog Post Details 2</Link>
-                                                    </li>
-                                                </ul> */}
                                             </li>
                                         </ul>
                                     </nav>

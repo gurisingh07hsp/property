@@ -151,7 +151,7 @@ export default function FeaturedProjectsSidebar() {
                             </div>
                             <div className="featured-price">
                                 <span className="price-prefix">$</span>
-                                {property.minPrice.toLocaleString()}
+                                {property.minPrice}
                             </div>
                         </div>
                     </Link>

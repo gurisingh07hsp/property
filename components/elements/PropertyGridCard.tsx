@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { PropertyListItem } from "@/types/types";
+import { IndianRupeeIcon } from "lucide-react";
 
 export interface PropertyGridCardData {
-    id: number;
-    keyword: string;
+    _id: number;
+    name: string;
     address: string;
     city: string;
     state: string;
@@ -19,39 +21,39 @@ export interface PropertyGridCardData {
 }
 
 interface PropertyGridCardProps {
-    property: PropertyGridCardData;
+    property: PropertyListItem;
     image: ReactNode;
-    isFavorite?: boolean;
-    onFavoriteToggle?: (e: React.MouseEvent) => void;
-    agentName?: string;
-    agentImage?: string;
+    // isFavorite?: boolean;
+    // onFavoriteToggle?: (e: React.MouseEvent) => void;
+    // agentName?: string;
+    // agentImage?: string;
     photoCount?: number;
 }
 
 export default function PropertyGridCard({
     property,
     image,
-    isFavorite = false,
-    onFavoriteToggle,
-    agentName = "Santiago Towne",
-    agentImage = "/assets/img/all-images/others/others-img1.png",
+    // isFavorite = false,
+    // onFavoriteToggle,
+    // agentName = "Santiago Towne",
+    // agentImage = "/assets/img/all-images/others/others-img1.png",
     photoCount = 3,
 }: PropertyGridCardProps) {
     const priceLabel =
-        property.status === "For Rent" || property.status === "rent"
-            ? `$${property.minPrice.toLocaleString()}`
-            : `$${property.minPrice.toLocaleString()}`;
+        property.for === "rent" || property.for === "sale"
+            ? `$${property.propertyPrices.propertyPrice.toLocaleString()}`
+            : `$${property.propertyPrices.propertyPrice.toLocaleString()}`;
 
     return (
         <article className="property-card-grid">
             <div className="property-card-grid__media">
                 <div className="property-card-grid__image">{image}</div>
                 <div className="property-card-grid__badges">
-                    <Link href={`/property-details/${property.id}`} className="property-card-grid__badge">
-                        {property.type}
+                    <Link href={`/property-details/${property._id}`} className="property-card-grid__badge">
+                        {property.category}
                     </Link>
-                    <Link href={`/property-details/${property.id}`} className="property-card-grid__badge property-card-grid__badge--status">
-                        {property.status}
+                    <Link href={`/property-details/${property._id}`} className="property-card-grid__badge property-card-grid__badge--status">
+                        {property.for}
                     </Link>
                 </div>
                 <span className="property-card-grid__photos">
@@ -67,14 +69,15 @@ export default function PropertyGridCard({
 
             <div className="property-card-grid__body">
                 <div className="property-card-grid__info">
-                    <Link href={`/property-details/${property.id}`} className="property-card-grid__title">
-                        {property.keyword}
+                    <Link href={`/property-details/${property._id}`} className="property-card-grid__title">
+                        {property.name}
                     </Link>
                     <p className="property-card-grid__address">
                         {property.address}, {property.city}, {property.state}
                     </p>
-                    <Link href={`/property-details/${property.id}`} className="property-card-grid__price">
-                        {priceLabel}
+                    <Link href={`/property-details/${property._id}`} className="property-card-grid__price flex items-center">
+                    <IndianRupeeIcon size={14}/>
+                        {property.propertyPrices.propertyPrice.toLocaleString()}
                     </Link>
                 </div>
 
@@ -85,7 +88,7 @@ export default function PropertyGridCard({
                             <path d="M3 21H21V3.00046L3 3V21Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
                         </svg>
                         <span>
-                            {property.minSize}-{property.maxSize} sqft
+                            {property.additionalInformation.propertySize} sqft
                         </span>
                     </li>
                     <li>
@@ -95,7 +98,7 @@ export default function PropertyGridCard({
                             <path d="M16 12V10.6178C16 10.1103 15.9085 9.94054 15.4396 9.7405C14.4631 9.32389 13.2778 9 12 9C10.7222 9 9.53688 9.32389 8.5604 9.7405C8.09154 9.94054 8 10.1103 8 10.6178V12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                             <path d="M20 12V7.36057C20 6.66893 20 6.32311 19.8292 5.99653C19.6584 5.66995 19.4151 5.50091 18.9284 5.16283C16.9661 3.79978 14.5772 3 12 3C9.42282 3 7.03391 3.79978 5.07163 5.16283C4.58492 5.50091 4.34157 5.66995 4.17079 5.99653C4 6.32311 4 6.66893 4 7.36057V12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                         </svg>
-                        <span>{property.bedrooms} Beds</span>
+                        <span>{property.additionalInformation.bedrooms} Beds</span>
                     </li>
                     <li>
                         <svg xmlns="http://www.w3.org/2000/svg" width={18} height={18} viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -105,19 +108,19 @@ export default function PropertyGridCard({
                             <path d="M4 12V5.5234C4 4.12977 5.12977 3 6.5234 3C7.64166 3 8.62654 3.73598 8.94339 4.80841L9 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                             <path d="M8 6L10.5 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                         </svg>
-                        <span>{property.bathrooms} Baths</span>
+                        <span>{property.additionalInformation.bathrooms} Baths</span>
                     </li>
                 </ul>
 
                 <div className="property-card-grid__footer">
-                    <div className="property-card-grid__agent">
+                    {/* <div className="property-card-grid__agent">
                         <img src={agentImage} alt="" className="property-card-grid__agent-img" />
                         <Link href="#" className="property-card-grid__agent-name">
                             {agentName}
                         </Link>
-                    </div>
+                    </div> */}
                     <div className="property-card-grid__actions">
-                        <button
+                        {/* <button
                             type="button"
                             className={`property-card-grid__action ${isFavorite ? "is-active" : ""}`}
                             aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
@@ -127,7 +130,7 @@ export default function PropertyGridCard({
                                 src={isFavorite ? "/assets/img/icons/heart2.svg" : "/assets/img/icons/heart1.svg"}
                                 alt=""
                             />
-                        </button>
+                        </button> */}
                         <button type="button" className="property-card-grid__action" aria-label="Share listing">
                             <svg xmlns="http://www.w3.org/2000/svg" width={18} height={18} viewBox="0 0 19 20" fill="none" aria-hidden>
                                 <path

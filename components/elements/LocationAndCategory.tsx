@@ -7,42 +7,46 @@ import { addSort } from "@/features/filter/filterSlice";
 import { toggleFavoriteProperty } from "@/features/property/propertySlice";
 import type { RootState } from "@/features/store";
 import type React from "react";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import dynamic from 'next/dynamic';
 import { usePropertyList } from "@/components/hooks/usePropertyList";
 import PropertyGridCard from "@/components/elements/PropertyGridCard";
 import axios from "axios";
+import HorizontalPropertyFilter from "./HorizontalPropertyFilter";
+import FeaturedProjectsSidebar from "./FeaturedProjectsSidebar";
+import { PropertyListItem } from "@/types/types";
+import { IndianRupeeIcon } from "lucide-react";
 // import { useParams } from "next/navigation";
 
 // Updated interface to match the JSON structure
-interface PropertyListItem {
-    id: number;
-    keyword: string;
-    images?: {
-        [key: string]: string;
-    };
-    address: string;
-    city: string;
-    state: string;
-    status: string;
-    label: string;
-    type: string;
-    bedrooms: number;
-    bathrooms: number;
-    garages: number;
-    rooms: number;
-    minPrice: number;
-    maxPrice: number;
-    minSize: number;
-    maxSize: number;
-    amenities: string[];
-    agent?: {
-        name: string;
-        image: string;
-    };
-}
+// interface PropertyListItem {
+//     id: number;
+//     keyword: string;
+//     images?: {
+//         [key: string]: string;
+//     };
+//     address: string;
+//     city: string;
+//     state: string;
+//     status: string;
+//     label: string;
+//     type: string;
+//     bedrooms: number;
+//     bathrooms: number;
+//     garages: number;
+//     rooms: number;
+//     minPrice: number;
+//     maxPrice: number;
+//     minSize: number;
+//     maxSize: number;
+//     amenities: string[];
+//     agent?: {
+//         name: string;
+//         image: string;
+//     };
+// }
 
 // Create dynamic import for Swiper component
 const DynamicSwiper = dynamic(() => import('swiper/react').then(mod => mod.Swiper), {
@@ -55,23 +59,18 @@ const LocationAndCategory = () => {
      const dispatch = useDispatch();
     const { properties, favoriteProperties } = useSelector((state: RootState) => state.property);
     const { propertyFilter } = useSelector((state: RootState) => state.filter);
-
-    // const {slug} = useParams();
-    // const category = slug?.toString().split('_')[0].replace(/-/g, " ");
-    // const location = slug?.toString().split('_').pop()?.replace(/-/g," ");
-    // console.log('slug : ', slug);
-    // console.log('category : ', category);
-    // console.log('location : ', location);
-    console.log("property filter: ", propertyFilter);
+    const [Properties, setProperties] = useState<PropertyListItem[]>([])
     const fetchProperties = async() => {
+        console.log("propertyFilter", propertyFilter);
         const response = await axios.get("/api/properties", {
             params: {
-                filter: JSON.stringify({filter: propertyFilter}),
+                filter: JSON.stringify(propertyFilter),
                 // pagination: JSON.stringify(pagination),
                 agentId: "",
             },
         });
         if(response.status == 200){
+            setProperties(response.data.properties);
             console.log("Response : ", response);
         }
     }
@@ -171,7 +170,7 @@ const LocationAndCategory = () => {
                     <div className="swiper-wrapper">
                         {Object.values(property.images).map((image, index) => (
                             <DynamicSwiperSlide key={index}>
-                                <img src={image || "/assets/img/all-images/properties/property-img1.png"} alt={property.keyword} />
+                                <img src={"/assets/img/all-images/properties/property-img1.png"} alt={property.name} />
                             </DynamicSwiperSlide>
                         ))}
                     </div>
@@ -277,12 +276,12 @@ const LocationAndCategory = () => {
         <PropertyGridCard
             property={property}
             image={renderPropertyImages(property) ?? (
-                <img src="/assets/img/all-images/properties/property-img1.png" alt={property.keyword} />
+                <img src="/assets/img/all-images/properties/property-img1.png" alt={property.name} />
             )}
-            isFavorite={favoriteProperties.includes(property.id)}
-            onFavoriteToggle={(e) => handleFavoriteToggle(e, property.id)}
-            agentName={property.agent?.name}
-            agentImage={property.agent?.image}
+            // isFavorite={favoriteProperties.includes(property._id)}
+            // onFavoriteToggle={(e) => handleFavoriteToggle(e, property._id)}
+            // agentName={property.agent?.name}
+            // agentImage={property.agent?.image}
             photoCount={property.images ? Object.keys(property.images).length : 1}
         />
     );
@@ -298,17 +297,17 @@ const LocationAndCategory = () => {
                         <div className="rent-sale-area">
                             <ul>
                                 <li>
-                                    <Link href={`/property-details/${property.id}`}>{property.type}</Link>
+                                    <Link href={`/property-details/${property._id}`}>{property.category}</Link>
                                 </li>
                                 <li>
-                                    <Link href={`/property-details/${property.id}`}>{property.status}</Link>
+                                    <Link href={`/property-details/${property._id}`}>{property.status}</Link>
                                 </li>
                             </ul>
                             <Link href="#" className="camera">
                                 <svg xmlns="http://www.w3.org/2000/svg" width={16} height={14} viewBox="0 0 16 14" fill="none">
                                     <path d="M12 7.39995C12 8.75995 10.96 9.79995 9.6 9.79995C8.24 9.79995 7.2 8.75995 7.2 7.39995C7.2 6.03995 8.24 4.99995 9.6 4.99995C10.96 4.99995 12 6.03995 12 7.39995ZM16 3.39995V12.2C16 13.08 15.28 13.8 14.4 13.8H1.6C0.72 13.8 0 13.08 0 12.2V3.39995C0 2.51995 0.72 1.79995 1.6 1.79995V0.999951H4.8V1.79995H6.4L7.2 0.199951H12L12.8 1.79995H14.4C15.28 1.79995 16 2.51995 16 3.39995ZM4.4 4.99995C4.4 4.35995 3.84 3.79995 3.2 3.79995C2.56 3.79995 2 4.35995 2 4.99995C2 5.63995 2.56 6.19995 3.2 6.19995C3.84 6.19995 4.4 5.63995 4.4 4.99995ZM13.6 7.39995C13.6 5.15995 11.84 3.39995 9.6 3.39995C7.36 3.39995 5.6 5.15995 5.6 7.39995C5.6 9.63995 7.36 11.4 9.6 11.4C11.84 11.4 13.6 9.63995 13.6 7.39995Z" fill="#1B1B1B" />
                                 </svg>
-                                3
+                                {property.images.length}
                             </Link>
                         </div>
                     </div>
@@ -316,15 +315,15 @@ const LocationAndCategory = () => {
                 <div className="col-lg-6 col-md-6">
                     <div className="property-price">
                         <div className="text">
-                            <Link href={`/property-details/${property.id}`}>{property.keyword}</Link>
+                            <Link href={`/property-details/${property._id}`}>{property.name}</Link>
                             <div className="space16" />
                             <p>
                                 {property.address}, {property.city}, {property.state}
                             </p>
                         </div>
-                        <Link href="#" className="price">
-                            ${property.minPrice.toLocaleString()}
-                            {property.status === "For Rent"}
+                       <Link href="#" style={{display: 'flex', alignItems: 'center'}} className="price">
+                            <IndianRupeeIcon size={17}/>
+                            {property.propertyPrices.propertyPrice.toLocaleString()}
                         </Link>
                     </div>
                     <div className="space20" />
@@ -338,7 +337,7 @@ const LocationAndCategory = () => {
                                             <path d="M3 21H21V3.00046L3 3V21Z" stroke="#1B1B1B" strokeWidth="1.5" strokeLinejoin="round" />
                                         </svg>
                                     </span>
-                                    {property.minSize}-{property.maxSize}sqft
+                                    {property.additionalInformation.propertySize} sqft
                                 </div>
                             </li>
                             <li>
@@ -351,7 +350,7 @@ const LocationAndCategory = () => {
                                             <path d="M20 12V7.36057C20 6.66893 20 6.32311 19.8292 5.99653C19.6584 5.66995 19.4151 5.50091 18.9284 5.16283C16.9661 3.79978 14.5772 3 12 3C9.42282 3 7.03391 3.79978 5.07163 5.16283C4.58492 5.50091 4.34157 5.66995 4.17079 5.99653C4 6.32311 4 6.66893 4 7.36057V12" stroke="#1B1B1B" strokeWidth="1.5" strokeLinecap="round" />
                                         </svg>
                                     </span>
-                                    {property.bathrooms}Beds
+                                    {property.additionalInformation.bathrooms}Beds
                                 </div>
                             </li>
                             <li>
@@ -365,7 +364,7 @@ const LocationAndCategory = () => {
                                             <path d="M8 6L10.5 4" stroke="#1B1B1B" strokeWidth="1.5" strokeLinecap="round" />
                                         </svg>
                                     </span>
-                                    {property.bedrooms} Baths
+                                    {property.additionalInformation.bedrooms} Baths
                                 </div>
                             </li>
                         </ul>
@@ -380,9 +379,9 @@ const LocationAndCategory = () => {
                                 </div>
                             </div>
                             <div className="love-share">
-                                <Link href="#" className="heart" onClick={(e) => handleFavoriteToggle(e, property.id)}>
+                                {/* <Link href="#" className="heart" onClick={(e) => handleFavoriteToggle(e, property.id)}>
                                     <img src={favoriteProperties.includes(property.id) ? "/assets/img/icons/heart2.svg" : "/assets/img/icons/heart1.svg"} alt="favorite" className={favoriteProperties.includes(property.id) ? "heart2" : "heart1"} />
-                                </Link>
+                                </Link> */}
                                 <Link href="#" className="share">
                                     <svg xmlns="http://www.w3.org/2000/svg" width={19} height={20} viewBox="0 0 19 20" fill="none">
                                         <path
@@ -400,118 +399,122 @@ const LocationAndCategory = () => {
     );
   return (
        <>
-             <Layout headerStyle={4} footerStyle={4}>
-                 <InnerHeader title="Find Sidebar Grid" currentpage="Find Sidebar Grid" />
-                 <>
-                     <div className="space30" />
-                     {/*===== PROPERTY AREA STARTS =======*/}
-                     <div className="property-inner-section-find">
-                         <div className="container">
-                             <div className="row">
-                                 <div className="col-lg-12">
-                                     <div className="property-mapgrid-area">
-                                         <div className="heading1 mb-3">
-                                             <h3>Properties ({filteredProperties.length})</h3>
-                                             <div className="tabs-btn">
-                                                 <ul className="nav nav-pills d-none d-lg-block" id="pills-tab" role="tablist">
-                                                     <li className="nav-item" role="presentation">
-                                                         <button
-                                                             className={`nav-link ${viewMode === 'grid' ? 'active' : ''}`}
-                                                             id="pills-home-tab"
-                                                             data-bs-toggle="pill"
-                                                             data-bs-target="#pills-home"
-                                                             type="button"
-                                                             role="tab"
-                                                             aria-controls="pills-home"
-                                                             aria-selected={viewMode === 'grid'}
-                                                             onClick={() => setViewMode('grid')}
-                                                         >
-                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                                                 <path d="M22 12.999V20C22 20.5523 21.5523 21 21 21H13V12.999H22ZM11 12.999V21H3C2.44772 21 2 20.5523 2 20V12.999H11ZM11 3V10.999H2V4C2 3.44772 2.44772 3 3 3H11ZM21 3C21.5523 3 22 3.44772 22 4V10.999H13V3H21Z" />
-                                                             </svg>
-                                                         </button>
-                                                     </li>
-                                                     <li className="nav-item" role="presentation">
-                                                         <button
-                                                             className={`nav-link ${viewMode === 'list' ? 'active' : ''}`}
-                                                             id="pills-profile-tab"
-                                                             data-bs-toggle="pill"
-                                                             data-bs-target="#pills-profile"
-                                                             type="button"
-                                                             role="tab"
-                                                             aria-controls="pills-profile"
-                                                             aria-selected={viewMode === 'list'}
-                                                             onClick={() => setViewMode('list')}
-                                                         >
-                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                                                 <path d="M8 4H21V6H8V4ZM3 3.5H6V6.5H3V3.5ZM3 10.5H6V13.5H3V10.5ZM3 17.5H6V20.5H3V17.5ZM8 11H21V13H8V11ZM8 18H21V20H8V18Z" />
-                                                             </svg>
-                                                         </button>
-                                                     </li>
-                                                 </ul>
-                                                 <div className="d-flex">
-                                                     <div className="filter-group me-3">
-                                                         <select onChange={handleItemsPerPageChange} value={itemsPerPage}>
-                                                             <option value="6">Show:(6)</option>
-                                                             <option value="12">Show:(12)</option>
-                                                             <option value="24">Show:(24)</option>
-                                                             <option value="48">Show:(48)</option>
-                                                         </select>
-                                                     </div>
-                                                     <div className="filter-group">
-                                                         <select onChange={handleSortOrderChange} value={sortOrder}>
-                                                             <option value="default">Sort by (Default)</option>
-                                                             <option value="oldest">Oldest</option>
-                                                             <option value="newest">Newest</option>
-                                                             <option value="price-low">Price (Low to High)</option>
-                                                             <option value="price-high">Price (High to Low)</option>
-                                                         </select>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                         </div>
-                                         <div className="space32" />
-                                         <div className="row">
-                                             <div className="col-lg-3">
-                                                 <PropertyFilter />
-                                             </div>
-                                             <div className="col-lg-9">
-                                                 <div className="tab-content">
-                                                     <div className={`tab-pane fade ${viewMode === 'grid' ? 'show active' : ''}`}>
-                                                         <div className="row g-3 property-listing-grid">
-                                                             {paginatedProperties.map((property) => (
-                                                                 <div
-                                                                     key={property.id}
-                                                                     className="col-xxl-3 col-lg-4 col-md-6 col-6 property-listing-grid__item"
-                                                                 >
-                                                                     {renderGridItem(property)}
-                                                                 </div>
-                                                             ))}
-                                                         </div>
-                                                     </div>
-                                                     <div className={`tab-pane fade ${viewMode === 'list' ? 'show active' : ''}`}>
-                                                         <div className="row g-4">
-                                                             {paginatedProperties.map((property) => (
-                                                                 <div key={property.id} className="col-12">
-                                                                     {renderListItem(property)}
-                                                                 </div>
-                                                             ))}
-                                                         </div>
-                                                     </div>
-                                                 </div>
-                                                 <div className="space32" />
-                                                 {renderPagination()}
-                                             </div>
-                                         </div>
-                                         <div className="space30"></div>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
-                     {/*===== PROPERTY AREA ENDS =======*/}
-                 </>
-             </Layout>
+                <Layout headerStyle={4} footerStyle={4}>
+                            <InnerHeader title="Find Sidebar Grid" currentpage="Find Sidebar Grid" />
+                            <>
+                                <div className="space30" />
+                                {/*===== PROPERTY AREA STARTS =======*/}
+                                <div className="property-inner-section-find">
+                                    <div className="container">
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <div className="property-mapgrid-area">
+                                                    <div className="heading1 mb-3">
+                                                        <h3>Properties ({Properties.length})</h3>
+                                                        <div className="tabs-btn">
+                                                            <ul className="nav nav-pills d-none d-lg-block" id="pills-tab" role="tablist">
+                                                                <li className="nav-item" role="presentation">
+                                                                    <button
+                                                                        className={`nav-link ${viewMode === 'grid' ? 'active' : ''}`}
+                                                                        id="pills-home-tab"
+                                                                        data-bs-toggle="pill"
+                                                                        data-bs-target="#pills-home"
+                                                                        type="button"
+                                                                        role="tab"
+                                                                        aria-controls="pills-home"
+                                                                        aria-selected={viewMode === 'grid'}
+                                                                        onClick={() => setViewMode('grid')}
+                                                                    >
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                                                            <path d="M22 12.999V20C22 20.5523 21.5523 21 21 21H13V12.999H22ZM11 12.999V21H3C2.44772 21 2 20.5523 2 20V12.999H11ZM11 3V10.999H2V4C2 3.44772 2.44772 3 3 3H11ZM21 3C21.5523 3 22 3.44772 22 4V10.999H13V3H21Z" />
+                                                                        </svg>
+                                                                    </button>
+                                                                </li>
+                                                                <li className="nav-item" role="presentation">
+                                                                    <button
+                                                                        className={`nav-link ${viewMode === 'list' ? 'active' : ''}`}
+                                                                        id="pills-profile-tab"
+                                                                        data-bs-toggle="pill"
+                                                                        data-bs-target="#pills-profile"
+                                                                        type="button"
+                                                                        role="tab"
+                                                                        aria-controls="pills-profile"
+                                                                        aria-selected={viewMode === 'list'}
+                                                                        onClick={() => setViewMode('list')}
+                                                                    >
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                                                            <path d="M8 4H21V6H8V4ZM3 3.5H6V6.5H3V3.5ZM3 10.5H6V13.5H3V10.5ZM3 17.5H6V20.5H3V17.5ZM8 11H21V13H8V11ZM8 18H21V20H8V18Z" />
+                                                                        </svg>
+                                                                    </button>
+                                                                </li>
+                                                            </ul>
+                                                            <div className="d-flex">
+                                                                <div className="filter-group me-3">
+                                                                    <select onChange={handleItemsPerPageChange} value={itemsPerPage}>
+                                                                        <option value="6">Show:(6)</option>
+                                                                        <option value="12">Show:(12)</option>
+                                                                        <option value="24">Show:(24)</option>
+                                                                        <option value="48">Show:(48)</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div className="filter-group">
+                                                                    <select onChange={handleSortOrderChange} value={sortOrder}>
+                                                                        <option value="default">Sort by (Default)</option>
+                                                                        <option value="oldest">Oldest</option>
+                                                                        <option value="newest">Newest</option>
+                                                                        <option value="price-low">Price (Low to High)</option>
+                                                                        <option value="price-high">Price (High to Low)</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="space32" />
+                                                    
+                                                    <HorizontalPropertyFilter />
+            
+                                                    <div className="row">
+                                                        <div className="col-lg-9 order-lg-1 order-2">
+                                                            <div className="tab-content">
+                                                                <div className={`tab-pane fade ${viewMode === 'grid' ? 'show active' : ''}`}>
+                                                                    <div className="row g-3 property-listing-grid">
+                                                                        {Properties.map((property) => (
+                                                                            <div
+                                                                                key={property._id}
+                                                                                className="col-xxl-4 col-lg-6 col-md-6 col-6 property-listing-grid__item"
+                                                                            >
+                                                                                {renderGridItem(property)}
+                                                                            </div>
+                                                                        ))}
+                                                                    </div>
+                                                                </div>
+                                                                <div className={`tab-pane fade ${viewMode === 'list' ? 'show active' : ''}`}>
+                                                                    <div className="row g-4">
+                                                                        {Properties.map((property) => (
+                                                                            <div key={property._id} className="col-12">
+                                                                                {renderListItem(property)}
+                                                                            </div>
+                                                                        ))}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="space32" />
+                                                            {renderPagination()}
+                                                        </div>
+            
+                                                        <div className="col-lg-3 order-lg-2 order-1 mb-4 mb-lg-0">
+                                                            <FeaturedProjectsSidebar />
+                                                        </div>
+                                                    </div>
+                                                    <div className="space30"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/*===== PROPERTY AREA ENDS =======*/}
+                            </>
+                        </Layout>
          </>
   )
 }

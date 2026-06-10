@@ -15,8 +15,6 @@ export async function GET(req: NextRequest) {
       searchParams.get("filter") || "{}"
     );
 
-    console.log("filter : ", filter);
-
     const pagination = JSON.parse(
       searchParams.get("pagination") || "{}"
     );
@@ -29,6 +27,16 @@ export async function GET(req: NextRequest) {
     // TEXT FILTERS
     // -------------------------
 
+  // query.city = {
+  //   $regex: "^ludhiana$",
+  //   $options: "i",
+  // }
+
+  // query.category = {
+  //   $regex: "^kothi$",
+  //   $options: "i",
+  // }
+
     if (filter.keyword) {
       query.name = {
         $regex: filter.keyword,
@@ -37,7 +45,10 @@ export async function GET(req: NextRequest) {
     }
 
     if (filter.city) {
-      query.city = filter.city;
+      query.city = {
+      $regex: `^${filter.city}$`,
+      $options: "i",
+    };
     }
 
     if (filter.state) {
@@ -49,50 +60,54 @@ export async function GET(req: NextRequest) {
     }
 
     if (filter.propertyType) {
-      query.category = filter.propertyType;
+      query.category = {
+        $regex: `^${filter.propertyType}$`,
+        $options: "i",
+      };
     }
+    
 
     // -------------------------
     // PRICE FILTER
     // -------------------------
 
-    query["propertyPrices.propertyPrice"] = {
-      $gte: filter.price?.min || 0,
-      $lte: filter.price?.max || 999999999,
-    };
+    // query["propertyPrices.propertyPrice"] = {
+    //   $gte: filter.price?.min || 0,
+    //   $lte: filter.price?.max || 999999999,
+    // };
 
     // -------------------------
     // ROOMS FILTER
     // -------------------------
 
-    query["additionalInformation.rooms"] = {
-      $gte: filter.rooms?.min || 0,
-      $lte: filter.rooms?.max || 100,
-    };
+    // query["additionalInformation.rooms"] = {
+    //   $gte: filter.rooms?.min || 0,
+    //   $lte: filter.rooms?.max || 100,
+    // };
 
-    query["additionalInformation.bedrooms"] = {
-      $gte: filter.bedrooms?.min || 0,
-      $lte: filter.bedrooms?.max || 100,
-    };
+    // query["additionalInformation.bedrooms"] = {
+    //   $gte: filter.bedrooms?.min || 0,
+    //   $lte: filter.bedrooms?.max || 100,
+    // };
 
-    query["additionalInformation.bathrooms"] = {
-      $gte: filter.bathrooms?.min || 0,
-      $lte: filter.bathrooms?.max || 100,
-    };
+    // query["additionalInformation.bathrooms"] = {
+    //   $gte: filter.bathrooms?.min || 0,
+    //   $lte: filter.bathrooms?.max || 100,
+    // };
 
-    query["additionalInformation.garages"] = {
-      $gte: filter.garages?.min || 0,
-      $lte: filter.garages?.max || 100,
-    };
+    // query["additionalInformation.garages"] = {
+    //   $gte: filter.garages?.min || 0,
+    //   $lte: filter.garages?.max || 100,
+    // };
 
     // -------------------------
     // SIZE FILTER
     // -------------------------
 
-    query["additionalInformation.propertySize"] = {
-      $gte: filter.size?.min || 0,
-      $lte: filter.size?.max || 999999,
-    };
+    // query["additionalInformation.propertySize"] = {
+    //   $gte: filter.size?.min || 0,
+    //   $lte: filter.size?.max || 999999,
+    // };
 
     // -------------------------
     // AMENITIES FILTER
@@ -162,6 +177,9 @@ export async function GET(req: NextRequest) {
     // FETCH
     // -------------------------
 
+  console.log("filter", filter);
+  console.log("query", query);
+
     const properties = await Property.find(query)
       .populate("agent")
       .sort(sortOption)
@@ -194,7 +212,6 @@ export async function POST(req: Request) {
   await connectDB();
 
   const data = await req.json();
-  console.log('data : ', data);
   const property = await Property.create(data);
 
   return NextResponse.json(property);

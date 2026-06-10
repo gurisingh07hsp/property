@@ -15,34 +15,7 @@ import dynamic from 'next/dynamic';
 
 import { usePropertyList } from "@/components/hooks/usePropertyList";
 import PropertyGridCard from "@/components/elements/PropertyGridCard";
-
-// Updated interface to match the JSON structure
-interface PropertyListItem {
-    id: number;
-    keyword: string;
-    images?: {
-        [key: string]: string;
-    };
-    address: string;
-    city: string;
-    state: string;
-    status: string;
-    label: string;
-    type: string;
-    bedrooms: number;
-    bathrooms: number;
-    garages: number;
-    rooms: number;
-    minPrice: number;
-    maxPrice: number;
-    minSize: number;
-    maxSize: number;
-    amenities: string[];
-    agent?: {
-        name: string;
-        image: string;
-    };
-}
+import { PropertyListItem } from "@/types/types";
 
 // Create dynamic import for Swiper component
 const DynamicSwiper = dynamic(() => import('swiper/react').then(mod => mod.Swiper), {
@@ -147,7 +120,7 @@ export default function SidebarGrid() {
                     <div className="swiper-wrapper">
                         {Object.values(property.images).map((image, index) => (
                             <DynamicSwiperSlide key={index}>
-                                <img src={image || "/assets/img/all-images/properties/property-img1.png"} alt={property.keyword} />
+                                <img src={image || "/assets/img/all-images/properties/property-img1.png"} alt={property.name} />
                             </DynamicSwiperSlide>
                         ))}
                     </div>
@@ -253,12 +226,12 @@ export default function SidebarGrid() {
         <PropertyGridCard
             property={property}
             image={renderPropertyImages(property) ?? (
-                <img src="/assets/img/all-images/properties/property-img1.png" alt={property.keyword} />
+                <img src="/assets/img/all-images/properties/property-img1.png" alt={property.name} />
             )}
-            isFavorite={favoriteProperties.includes(property.id)}
-            onFavoriteToggle={(e) => handleFavoriteToggle(e, property.id)}
-            agentName={property.agent?.name}
-            agentImage={property.agent?.image}
+            // isFavorite={favoriteProperties.includes(property.id)}
+            // onFavoriteToggle={(e) => handleFavoriteToggle(e, property.id)}
+            // agentName={property.agent?.name}
+            // agentImage={property.agent?.image}
             photoCount={property.images ? Object.keys(property.images).length : 1}
         />
     );
@@ -274,10 +247,10 @@ export default function SidebarGrid() {
                         <div className="rent-sale-area">
                             <ul>
                                 <li>
-                                    <Link href={`/property-details/${property.id}`}>{property.type}</Link>
+                                    <Link href={`/property-details/${property._id}`}>{property.category}</Link>
                                 </li>
                                 <li>
-                                    <Link href={`/property-details/${property.id}`}>{property.status}</Link>
+                                    <Link href={`/property-details/${property._id}`}>{property.for}</Link>
                                 </li>
                             </ul>
                             <Link href="#" className="camera">
@@ -292,14 +265,14 @@ export default function SidebarGrid() {
                 <div className="col-lg-6 col-md-6">
                     <div className="property-price">
                         <div className="text">
-                            <Link href={`/property-details/${property.id}`}>{property.keyword}</Link>
+                            <Link href={`/property-details/${property._id}`}>{property.name}</Link>
                             <div className="space16" />
                             <p>
                                 {property.address}, {property.city}, {property.state}
                             </p>
                         </div>
                         <Link href="#" className="price">
-                            ${property.minPrice.toLocaleString()}
+                            ${property.propertyPrices.propertyPrice.toLocaleString()}
                             {property.status === "For Rent"}
                         </Link>
                     </div>
@@ -314,7 +287,7 @@ export default function SidebarGrid() {
                                             <path d="M3 21H21V3.00046L3 3V21Z" stroke="#1B1B1B" strokeWidth="1.5" strokeLinejoin="round" />
                                         </svg>
                                     </span>
-                                    {property.minSize}-{property.maxSize}sqft
+                                    {property.additionalInformation.propertySize} sqft
                                 </div>
                             </li>
                             <li>
@@ -327,7 +300,7 @@ export default function SidebarGrid() {
                                             <path d="M20 12V7.36057C20 6.66893 20 6.32311 19.8292 5.99653C19.6584 5.66995 19.4151 5.50091 18.9284 5.16283C16.9661 3.79978 14.5772 3 12 3C9.42282 3 7.03391 3.79978 5.07163 5.16283C4.58492 5.50091 4.34157 5.66995 4.17079 5.99653C4 6.32311 4 6.66893 4 7.36057V12" stroke="#1B1B1B" strokeWidth="1.5" strokeLinecap="round" />
                                         </svg>
                                     </span>
-                                    {property.bathrooms}Beds
+                                    {property.additionalInformation.bedrooms} Beds
                                 </div>
                             </li>
                             <li>
@@ -341,7 +314,7 @@ export default function SidebarGrid() {
                                             <path d="M8 6L10.5 4" stroke="#1B1B1B" strokeWidth="1.5" strokeLinecap="round" />
                                         </svg>
                                     </span>
-                                    {property.bedrooms} Baths
+                                    {property.additionalInformation.bathrooms} Baths
                                 </div>
                             </li>
                         </ul>
@@ -356,9 +329,9 @@ export default function SidebarGrid() {
                                 </div>
                             </div>
                             <div className="love-share">
-                                <Link href="#" className="heart" onClick={(e) => handleFavoriteToggle(e, property.id)}>
+                                {/* <Link href="#" className="heart" onClick={(e) => handleFavoriteToggle(e, property.id)}>
                                     <img src={favoriteProperties.includes(property.id) ? "/assets/img/icons/heart2.svg" : "/assets/img/icons/heart1.svg"} alt="favorite" className={favoriteProperties.includes(property.id) ? "heart2" : "heart1"} />
-                                </Link>
+                                </Link> */}
                                 <Link href="#" className="share">
                                     <svg xmlns="http://www.w3.org/2000/svg" width={19} height={20} viewBox="0 0 19 20" fill="none">
                                         <path
@@ -454,16 +427,16 @@ export default function SidebarGrid() {
                                             <div className="col-lg-9 order-lg-1 order-2">
                                                 <div className="tab-content">
                                                     <div className={`tab-pane fade ${viewMode === 'list' ? 'show active' : ''}`}>
-                                                        <div className="row g-4">
+                                                        {/* <div className="row g-4">
                                                             {paginatedProperties.map((property) => (
                                                                 <div key={property.id} className="col-12">
                                                                     {renderListItem(property)}
                                                                 </div>
                                                             ))}
-                                                        </div>
+                                                        </div> */}
                                                     </div>
                                                     <div className={`tab-pane fade ${viewMode === 'grid' ? 'show active' : ''}`}>
-                                                        <div className="row g-3 property-listing-grid">
+                                                        {/* <div className="row g-3 property-listing-grid">
                                                             {paginatedProperties.map((property) => (
                                                                 <div
                                                                     key={property.id}
@@ -472,7 +445,7 @@ export default function SidebarGrid() {
                                                                     {renderGridItem(property)}
                                                                 </div>
                                                             ))}
-                                                        </div>
+                                                        </div> */}
                                                     </div>
                                                 </div>
                                                 <div className="space32" />

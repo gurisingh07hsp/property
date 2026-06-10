@@ -80,6 +80,7 @@ const initialState: PropertyState = {
   favoriteProperties: [],
   propertyTypes: [
     { id: 1, name: "House", value: "house" },
+    { id: 12, name: "Kothi", value: "kothi" },
     { id: 2, name: "Apartment", value: "apartment" },
     { id: 3, name: "Condo", value: "condo" },
     { id: 4, name: "Villa", value: "villa" },

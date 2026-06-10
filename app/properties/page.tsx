@@ -8,40 +8,15 @@ import { addSort } from "@/features/filter/filterSlice";
 import { toggleFavoriteProperty } from "@/features/property/propertySlice";
 import type { RootState } from "@/features/store";
 import type React from "react";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import dynamic from 'next/dynamic';
 import { usePropertyList } from "@/components/hooks/usePropertyList";
 import PropertyGridCard from "@/components/elements/PropertyGridCard";
-
-// Updated interface to match the JSON structure
-interface PropertyListItem {
-    id: number;
-    keyword: string;
-    images?: {
-        [key: string]: string;
-    };
-    address: string;
-    city: string;
-    state: string;
-    status: string;
-    label: string;
-    type: string;
-    bedrooms: number;
-    bathrooms: number;
-    garages: number;
-    rooms: number;
-    minPrice: number;
-    maxPrice: number;
-    minSize: number;
-    maxSize: number;
-    amenities: string[];
-    agent?: {
-        name: string;
-        image: string;
-    };
-}
+import axios from "axios";
+import { PropertyListItem } from "@/types/types";
+import { IndianRupeeIcon } from "lucide-react";
 
 // Create dynamic import for Swiper component
 const DynamicSwiper = dynamic(() => import('swiper/react').then(mod => mod.Swiper), {
@@ -55,6 +30,26 @@ export default function SidebarGrid() {
     const dispatch = useDispatch();
     const { properties, favoriteProperties } = useSelector((state: RootState) => state.property);
     const { propertyFilter } = useSelector((state: RootState) => state.filter);
+
+        const [Properties, setProperties] = useState<PropertyListItem[]>([])
+        const fetchProperties = async() => {
+            console.log("propertyFilter", propertyFilter);
+            const response = await axios.get("/api/properties", {
+                params: {
+                    filter: JSON.stringify(propertyFilter),
+                    // pagination: JSON.stringify(pagination),
+                    agentId: "",
+                },
+            });
+            if(response.status == 200){
+                setProperties(response.data.properties);
+                console.log("Response : ", response);
+            }
+        }
+    
+        useEffect(()=> {
+            fetchProperties();
+        },[propertyFilter]);
 
     // Map properties to PropertyListItem[]
     const propertyListItems = properties.map((p: any) => ({
@@ -146,7 +141,7 @@ export default function SidebarGrid() {
                     <div className="swiper-wrapper">
                         {Object.values(property.images).map((image, index) => (
                             <DynamicSwiperSlide key={index}>
-                                <img src={image || "/assets/img/all-images/properties/property-img1.png"} alt={property.keyword} />
+                                <img src={image || "/assets/img/all-images/properties/property-img1.png"} alt={property.name} />
                             </DynamicSwiperSlide>
                         ))}
                     </div>
@@ -252,12 +247,12 @@ export default function SidebarGrid() {
         <PropertyGridCard
             property={property}
             image={renderPropertyImages(property) ?? (
-                <img src="/assets/img/all-images/properties/property-img1.png" alt={property.keyword} />
+                <img src="/assets/img/all-images/properties/property-img1.png" alt={property.name} />
             )}
-            isFavorite={favoriteProperties.includes(property.id)}
-            onFavoriteToggle={(e) => handleFavoriteToggle(e, property.id)}
-            agentName={property.agent?.name}
-            agentImage={property.agent?.image}
+            // isFavorite={favoriteProperties.includes(property.id)}
+            // onFavoriteToggle={(e) => handleFavoriteToggle(e, property.id)}
+            // agentName={property.agent?.name}
+            // agentImage={property.agent?.image}
             photoCount={property.images ? Object.keys(property.images).length : 1}
         />
     );
@@ -273,17 +268,17 @@ export default function SidebarGrid() {
                         <div className="rent-sale-area">
                             <ul>
                                 <li>
-                                    <Link href={`/property-details/${property.id}`}>{property.type}</Link>
+                                    <Link href={`/property-details/${property._id}`}>{property.category}</Link>
                                 </li>
                                 <li>
-                                    <Link href={`/property-details/${property.id}`}>{property.status}</Link>
+                                    <Link href={`/property-details/${property._id}`}>{property.for}</Link>
                                 </li>
                             </ul>
                             <Link href="#" className="camera">
                                 <svg xmlns="http://www.w3.org/2000/svg" width={16} height={14} viewBox="0 0 16 14" fill="none">
                                     <path d="M12 7.39995C12 8.75995 10.96 9.79995 9.6 9.79995C8.24 9.79995 7.2 8.75995 7.2 7.39995C7.2 6.03995 8.24 4.99995 9.6 4.99995C10.96 4.99995 12 6.03995 12 7.39995ZM16 3.39995V12.2C16 13.08 15.28 13.8 14.4 13.8H1.6C0.72 13.8 0 13.08 0 12.2V3.39995C0 2.51995 0.72 1.79995 1.6 1.79995V0.999951H4.8V1.79995H6.4L7.2 0.199951H12L12.8 1.79995H14.4C15.28 1.79995 16 2.51995 16 3.39995ZM4.4 4.99995C4.4 4.35995 3.84 3.79995 3.2 3.79995C2.56 3.79995 2 4.35995 2 4.99995C2 5.63995 2.56 6.19995 3.2 6.19995C3.84 6.19995 4.4 5.63995 4.4 4.99995ZM13.6 7.39995C13.6 5.15995 11.84 3.39995 9.6 3.39995C7.36 3.39995 5.6 5.15995 5.6 7.39995C5.6 9.63995 7.36 11.4 9.6 11.4C11.84 11.4 13.6 9.63995 13.6 7.39995Z" fill="#1B1B1B" />
                                 </svg>
-                                3
+                                {property.images.length || 0}
                             </Link>
                         </div>
                     </div>
@@ -291,15 +286,15 @@ export default function SidebarGrid() {
                 <div className="col-lg-6 col-md-6">
                     <div className="property-price">
                         <div className="text">
-                            <Link href={`/property-details/${property.id}`}>{property.keyword}</Link>
+                            <Link href={`/property-details/${property._id}`}>{property.name}</Link>
                             <div className="space16" />
                             <p>
                                 {property.address}, {property.city}, {property.state}
                             </p>
                         </div>
-                        <Link href="#" className="price">
-                            ${property.minPrice.toLocaleString()}
-                            {property.status === "For Rent"}
+                        <Link href="#" style={{display: 'flex', alignItems: 'center'}} className="price">
+                            <IndianRupeeIcon size={17}/>
+                            {property.propertyPrices.propertyPrice.toLocaleString()}
                         </Link>
                     </div>
                     <div className="space20" />
@@ -313,7 +308,7 @@ export default function SidebarGrid() {
                                             <path d="M3 21H21V3.00046L3 3V21Z" stroke="#1B1B1B" strokeWidth="1.5" strokeLinejoin="round" />
                                         </svg>
                                     </span>
-                                    {property.minSize}-{property.maxSize}sqft
+                                    {property.additionalInformation.propertySize} sqft
                                 </div>
                             </li>
                             <li>
@@ -326,7 +321,7 @@ export default function SidebarGrid() {
                                             <path d="M20 12V7.36057C20 6.66893 20 6.32311 19.8292 5.99653C19.6584 5.66995 19.4151 5.50091 18.9284 5.16283C16.9661 3.79978 14.5772 3 12 3C9.42282 3 7.03391 3.79978 5.07163 5.16283C4.58492 5.50091 4.34157 5.66995 4.17079 5.99653C4 6.32311 4 6.66893 4 7.36057V12" stroke="#1B1B1B" strokeWidth="1.5" strokeLinecap="round" />
                                         </svg>
                                     </span>
-                                    {property.bathrooms}Beds
+                                    {property.additionalInformation.bathrooms} Beds
                                 </div>
                             </li>
                             <li>
@@ -340,7 +335,7 @@ export default function SidebarGrid() {
                                             <path d="M8 6L10.5 4" stroke="#1B1B1B" strokeWidth="1.5" strokeLinecap="round" />
                                         </svg>
                                     </span>
-                                    {property.bedrooms} Baths
+                                    {property.additionalInformation.bedrooms} Baths
                                 </div>
                             </li>
                         </ul>
@@ -355,9 +350,9 @@ export default function SidebarGrid() {
                                 </div>
                             </div>
                             <div className="love-share">
-                                <Link href="#" className="heart" onClick={(e) => handleFavoriteToggle(e, property.id)}>
+                                {/* <Link href="#" className="heart" onClick={(e) => handleFavoriteToggle(e, property.id)}>
                                     <img src={favoriteProperties.includes(property.id) ? "/assets/img/icons/heart2.svg" : "/assets/img/icons/heart1.svg"} alt="favorite" className={favoriteProperties.includes(property.id) ? "heart2" : "heart1"} />
-                                </Link>
+                                </Link> */}
                                 <Link href="#" className="share">
                                     <svg xmlns="http://www.w3.org/2000/svg" width={19} height={20} viewBox="0 0 19 20" fill="none">
                                         <path
@@ -386,7 +381,7 @@ export default function SidebarGrid() {
                                 <div className="col-lg-12">
                                     <div className="property-mapgrid-area">
                                         <div className="heading1 mb-3">
-                                            <h3>Properties ({filteredProperties.length})</h3>
+                                            <h3>Properties ({Properties.length})</h3>
                                             <div className="tabs-btn">
                                                 <ul className="nav nav-pills d-none d-lg-block" id="pills-tab" role="tablist">
                                                     <li className="nav-item" role="presentation">
@@ -454,9 +449,9 @@ export default function SidebarGrid() {
                                                 <div className="tab-content">
                                                     <div className={`tab-pane fade ${viewMode === 'grid' ? 'show active' : ''}`}>
                                                         <div className="row g-3 property-listing-grid">
-                                                            {paginatedProperties.map((property) => (
+                                                            {Properties.map((property) => (
                                                                 <div
-                                                                    key={property.id}
+                                                                    key={property._id}
                                                                     className="col-xxl-4 col-lg-6 col-md-6 col-6 property-listing-grid__item"
                                                                 >
                                                                     {renderGridItem(property)}
@@ -466,8 +461,8 @@ export default function SidebarGrid() {
                                                     </div>
                                                     <div className={`tab-pane fade ${viewMode === 'list' ? 'show active' : ''}`}>
                                                         <div className="row g-4">
-                                                            {paginatedProperties.map((property) => (
-                                                                <div key={property.id} className="col-12">
+                                                            {Properties.map((property) => (
+                                                                <div key={property._id} className="col-12">
                                                                     {renderListItem(property)}
                                                                 </div>
                                                             ))}
