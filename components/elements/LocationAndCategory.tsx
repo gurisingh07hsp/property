@@ -399,7 +399,7 @@ const LocationAndCategory = () => {
     );
   return (
        <>
-                <Layout headerStyle={4} footerStyle={4}>
+                {/* <Layout headerStyle={4} footerStyle={4}> */}
                             <InnerHeader title="Find Sidebar Grid" currentpage="Find Sidebar Grid" />
                             <>
                                 <div className="space30" />
@@ -514,7 +514,7 @@ const LocationAndCategory = () => {
                                 </div>
                                 {/*===== PROPERTY AREA ENDS =======*/}
                             </>
-                        </Layout>
+                        {/* </Layout> */}
          </>
   )
 }

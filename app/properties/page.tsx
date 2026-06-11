@@ -370,10 +370,10 @@ export default function SidebarGrid() {
     );
     return (
         <>
-            <Layout headerStyle={4} footerStyle={4}>
+            {/* <Layout headerStyle={4} footerStyle={4}> */}
                 <InnerHeader title="Find Sidebar Grid" currentpage="Find Sidebar Grid" />
                 <>
-                    <div className="space30" />
+                    {/* <div className="space30" /> */}
                     {/*===== PROPERTY AREA STARTS =======*/}
                     <div className="property-inner-section-find">
                         <div className="container">
@@ -444,7 +444,7 @@ export default function SidebarGrid() {
                                         
                                         <HorizontalPropertyFilter />
 
-                                        <div className="row">
+                                        <div className="row mt-4">
                                             <div className="col-lg-9 order-lg-1 order-2">
                                                 <div className="tab-content">
                                                     <div className={`tab-pane fade ${viewMode === 'grid' ? 'show active' : ''}`}>
@@ -485,7 +485,7 @@ export default function SidebarGrid() {
                     </div>
                     {/*===== PROPERTY AREA ENDS =======*/}
                 </>
-            </Layout>
+            {/* </Layout> */}
         </>
     );
 }

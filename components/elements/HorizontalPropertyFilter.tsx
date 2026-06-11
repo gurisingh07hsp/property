@@ -16,15 +16,10 @@ export default function HorizontalPropertyFilter() {
             const {slug} = useParams();
             const category = slug?.toString().split('_')[0].replace(/-/g, " ");
             const location = slug?.toString().split('_').pop()?.replace(/-/g," ");
-            // console.log('slug : ', slug);
-            // console.log('category : ', category);
-            // console.log('location : ', location);
-
-
         useEffect(() => {
     if (location) dispatch(addCity(location));
     if (category) dispatch(addPropertyType(category));
-}, [location, category, dispatch]);
+}, [location, category]);
 
     // Get unique values for filters
     // const propertyTypes = React.useMemo(() => 
@@ -160,10 +155,12 @@ export default function HorizontalPropertyFilter() {
                     </select>
                 </div>
                 <div className="filter-item">
-                    <select value={propertyFilter.city} onChange={(e) => handleFilterChange('city', e.target.value)}>
-                        <option value="">City</option>
-                        {cities.map(c => <option key={c} value={c}>{c}</option>)}
-                    </select>
+                    <input 
+                        type="text" 
+                        placeholder="enter city" 
+                        value={propertyFilter.city}
+                        onChange={(e) => handleFilterChange('city', e.target.value)}
+                    />
                 </div>
                 <div className="filter-item" style={{ flex: '2', minWidth: '200px' }}>
                     <input 

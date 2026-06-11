@@ -1,24 +1,25 @@
 'use client'
 import { Search, Plus, Edit, Trash2, Building, MapPin, Tag } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProjectForm from "./ProjectForm";
+import axios from "axios";
 
 interface ProjectData {
-    id: number;
+    _id: string;
     title: string;
-    developer: string;
+    developerName: string;
     city: string;
     price: string;
     reraId: string;
-    tag: string;
+    category: string;
     location?: string;
-    locality?: string;
+    address?: string;
     projectUnits?: string;
     areaUnit?: string;
     projectArea?: string;
     noOfTowers?: string;
     launchDate?: string;
-    possessionStatus?: string;
+    status?: string;
 }
 
 const ProjectManagement = () => {
@@ -28,24 +29,36 @@ const ProjectManagement = () => {
     const [selectedProject, setSelectedProject] = useState<Partial<ProjectData> | undefined>();
     
     const [projects, setProjects] = useState<ProjectData[]>([
-        {
-            id: 1,
-            title: "Azure Heights Villa",
-            developer: "Skyline Builders",
-            city: "Miami",
-            price: "$1,250,000",
-            reraId: "PBRERA-SAS81-PR0496",
-            tag: "Luxury",
-            location: "Florida",
-            locality: "Palm Coast",
-            projectUnits: "3084",
-            areaUnit: "sq.ft.",
-            projectArea: "25 Acres",
-            noOfTowers: "11",
-            launchDate: "Nov, 2021",
-            possessionStatus: "Ready to Move"
-        }
+        // {
+        //     id: 1,
+        //     title: "Azure Heights Villa",
+        //     developer: "Skyline Builders",
+        //     city: "Miami",
+        //     price: "$1,250,000",
+        //     reraId: "PBRERA-SAS81-PR0496",
+        //     tag: "Luxury",
+        //     location: "Florida",
+        //     locality: "Palm Coast",
+        //     projectUnits: "3084",
+        //     areaUnit: "sq.ft.",
+        //     projectArea: "25 Acres",
+        //     noOfTowers: "11",
+        //     launchDate: "Nov, 2021",
+        //     possessionStatus: "Ready to Move"
+        // }
     ]);
+
+
+    const fetchProjects = async() => {
+        const response = await axios.get('/api/projects');
+        if(response.status == 200){
+            setProjects(response.data);
+        }
+    }
+
+    useEffect(()=> {
+        fetchProjects();
+    },[]);
 
     const handleEditClick = (project: ProjectData) => {
         setMode('edit');
@@ -61,18 +74,44 @@ const ProjectManagement = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    const handleSubmit = (data: any) => {
+    const handleSubmit = async(data: any) => {
         if (mode === 'create') {
-            const newProject = {
-                id: projects.length + 1,
-                ...data
-            };
-            setProjects([...projects, newProject]);
+            // const newProject = {
+            //     id: projects.length + 1,
+            //     ...data
+            // };
+            const response = await axios.post('/api/projects', data, {withCredentials: true});
+            console.log(response.data);
+            if(response.status == 200){
+                const newProject = response.data.newProject;
+                setProjects([...projects, newProject]);
+                alert('Project Added!');
+            }
         } else {
-            setProjects(projects.map(p => p.id === selectedProject?.id ? { ...p, ...data } : p));
+            const respose = await axios.put(`/api/projects/${data._id}`, data);
+            if(respose.status == 200){
+                alert('Updated Successfully')
+                setProjects(projects.map(p => p._id === selectedProject?._id ? { ...p, ...data } : p));
+            }
         }
         setView('list');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const deleteProject = async (id: string) => {
+        const isConfirmed = confirm("you want to delete this?");
+
+        if (isConfirmed) {
+            try {
+            const response = await axios.delete(`/api/projects/${id}`);
+
+            if (response.status === 200) {
+                fetchProjects();
+            }
+            } catch (error) {
+            console.error("Delete error:", error);
+            }
+        }
     };
 
     if (view === 'form') {
@@ -127,7 +166,7 @@ const ProjectManagement = () => {
                         <div>
                             <p className="text-xs md:text-sm font-semibold text-slate-500">Luxury Tier</p>
                             <h3 className="text-xl md:text-2xl font-bold text-slate-900">
-                                {projects.filter(p => p.tag === 'Luxury').length}
+                                {projects.filter(p => p.category === 'Luxury').length}
                             </h3>
                         </div>
                     </div>
@@ -178,7 +217,7 @@ const ProjectManagement = () => {
                         </thead>
                         <tbody className="divide-y divide-slate-50 p-2">
                             {projects.map((project) => (
-                                <tr key={project.id} className="hover:bg-slate-50/80 transition-all group">
+                                <tr key={project._id} className="hover:bg-slate-50/80 transition-all group">
                                     <td className="px-4 py-4 md:py-5">
                                         <div className="flex items-center gap-3">
                                             <div className="shrink-0 w-9 h-9 md:w-10 md:h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 font-bold text-sm md:text-base">
@@ -186,12 +225,12 @@ const ProjectManagement = () => {
                                             </div>
                                             <div className="min-w-0">
                                                 <div className="font-bold text-slate-900 text-sm md:text-base truncate">{project.title}</div>
-                                                <div className="text-[10px] md:text-xs font-semibold text-[#1800ad] bg-blue-50 px-2 py-0.5 rounded inline-block mt-0.5 md:mt-1">{project.tag}</div>
+                                                <div className="text-[10px] md:text-xs font-semibold text-[#1800ad] bg-blue-50 px-2 py-0.5 rounded inline-block mt-0.5 md:mt-1">{project.category}</div>
                                             </div>
                                         </div>
                                     </td>
                                     <td className="px-4 py-4 md:py-5">
-                                        <div className="text-xs md:text-sm font-semibold text-slate-600">{project.developer}</div>
+                                        <div className="text-xs md:text-sm font-semibold text-slate-600">{project.developerName}</div>
                                     </td>
                                     <td className="px-4 md:px-6 py-4 md:py-5">
                                         <div className="flex items-center gap-1.5 text-xs md:text-sm font-medium text-slate-500">
@@ -210,7 +249,7 @@ const ProjectManagement = () => {
                                     <td className="px-4 py-4 md:py-5 text-right">
                                         <div className="flex justify-end gap-1 md:gap-2 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
                                             <button onClick={() => handleEditClick(project)} className="p-1.5 md:p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"><Edit className="w-4 h-4 md:w-4.5 md:h-4.5" /></button>
-                                            <button className="p-1.5 md:p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"><Trash2 className="w-4 h-4 md:w-4.5 md:h-4.5" /></button>
+                                            <button onClick={()=> deleteProject(project._id)}  className="p-1.5 md:p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"><Trash2 className="w-4 h-4 md:w-4.5 md:h-4.5" /></button>
                                         </div>
                                     </td>
                                 </tr>

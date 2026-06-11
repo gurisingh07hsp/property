@@ -9,8 +9,8 @@ interface ProjectFormData {
     location: string;
     city: string;
     price: string;
-    tag: string;
-    developer: string;
+    category: string;
+    developerName: string;
     description: string;
     projectUnits: string;
     areaUnit: string;
@@ -19,12 +19,12 @@ interface ProjectFormData {
     projectSize: string;
     launchDate: string;
     avgPrice: string;
-    possessionStatus: string;
+    status: string;
     configuration: string;
     reraId: string;
-    locality: string;
-    noOfTowers: string;
-    image: string;
+    address: string;
+    numOfTowers: string;
+    galleryImage: string;
     featuredImage: string;
     // SEO Fields
     metaTitle?: string;
@@ -45,8 +45,8 @@ const EMPTY_FORM: ProjectFormData = {
     location: '',
     city: '',
     price: '',
-    tag: 'Luxury',
-    developer: '',
+    category: 'Luxury',
+    developerName: '',
     description: '',
     projectUnits: '',
     areaUnit: 'sq.ft.',
@@ -55,12 +55,12 @@ const EMPTY_FORM: ProjectFormData = {
     projectSize: '',
     launchDate: '',
     avgPrice: '',
-    possessionStatus: 'Ready to Move',
+    status: 'Ready to Move',
     configuration: '',
     reraId: '',
-    locality: '',
-    noOfTowers: '',
-    image: '',
+    address: '',
+    numOfTowers: '',
+    galleryImage: '',
     featuredImage: '',
     metaTitle: '',
     metaDescription: '',
@@ -173,8 +173,8 @@ export default function ProjectForm({
                                 type="text" 
                                 placeholder="e.g. Skyline Builders" 
                                 className="w-full bg-white border border-slate-200 rounded-xl p-3 outline-none focus:ring-4 focus:ring-blue-100 focus:border-[#1800ad] transition-all font-medium"
-                                value={form.developer} 
-                                onChange={(e) => setForm({...form, developer: e.target.value})} 
+                                value={form.developerName} 
+                                onChange={(e) => setForm({...form, developerName: e.target.value})} 
                             />
                         </div>
                         <div>
@@ -193,8 +193,8 @@ export default function ProjectForm({
                             <div className="relative">
                                 <select 
                                     className="w-full bg-white border border-slate-200 rounded-xl p-3 outline-none focus:ring-4 focus:ring-blue-100 focus:border-[#1800ad] transition-all font-bold text-slate-600 appearance-none cursor-pointer"
-                                    value={form.tag} 
-                                    onChange={(e) => setForm({...form, tag: e.target.value})}
+                                    value={form.category} 
+                                    onChange={(e) => setForm({...form, category: e.target.value})}
                                 >
                                     <option>Luxury</option>
                                     <option>Premium</option>
@@ -245,15 +245,15 @@ export default function ProjectForm({
                                 type="text" 
                                 placeholder="https://example.com/gallery-image.jpg"
                                 className="w-full bg-white border border-slate-200 rounded-xl p-3 outline-none focus:ring-4 focus:ring-rose-100 focus:border-rose-400 transition-all font-medium mb-4"
-                                value={form.image}
-                                onChange={(e) => setForm({...form, image: e.target.value})}
+                                value={form.galleryImage}
+                                onChange={(e) => setForm({...form, galleryImage: e.target.value})}
                             />
-                            {form.image && (
+                            {form.featuredImage && (
                                 <div className="relative group rounded-2xl overflow-hidden aspect-video border-2 border-slate-100 shadow-sm">
-                                    <img src={form.image} alt="Gallery" className="w-full h-full object-cover" />
+                                    <img src={form.featuredImage} alt="Gallery" className="w-full h-full object-cover" />
                                     <button 
                                         type="button"
-                                        onClick={() => setForm({...form, image: ''})}
+                                        onClick={() => setForm({...form, featuredImage: ''})}
                                         className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm text-rose-600 p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all shadow-sm"
                                     >
                                         <Trash2 size={16} />
@@ -296,8 +296,8 @@ export default function ProjectForm({
                                 type="text" 
                                 className="w-full bg-white border border-slate-200 rounded-xl p-3 outline-none focus:ring-4 focus:ring-emerald-100 focus:border-emerald-400 transition-all font-medium" 
                                 placeholder="e.g. Sector 121, Mohali"
-                                value={form.locality} 
-                                onChange={(e) => setForm({...form, locality: e.target.value})} 
+                                value={form.address} 
+                                onChange={(e) => setForm({...form, address: e.target.value})} 
                             />
                         </div>
                         <div>
@@ -339,8 +339,8 @@ export default function ProjectForm({
                                 type="text" 
                                 className="w-full bg-white border border-slate-200 rounded-xl p-3 outline-none focus:ring-4 focus:ring-rose-100 focus:border-rose-400 transition-all font-medium" 
                                 placeholder="e.g. Ready to Move"
-                                value={form.possessionStatus} 
-                                onChange={(e) => setForm({...form, possessionStatus: e.target.value})} 
+                                value={form.status} 
+                                onChange={(e) => setForm({...form, status: e.target.value})} 
                             />
                         </div>
                         <div>
@@ -402,8 +402,8 @@ export default function ProjectForm({
                                 type="text" 
                                 className="w-full bg-white border border-slate-200 rounded-xl p-3 outline-none focus:ring-4 focus:ring-purple-100 focus:border-purple-400 transition-all font-medium" 
                                 placeholder="11"
-                                value={form.noOfTowers} 
-                                onChange={(e) => setForm({...form, noOfTowers: e.target.value})} 
+                                value={form.numOfTowers} 
+                                onChange={(e) => setForm({...form, numOfTowers: e.target.value})} 
                             />
                         </div>
                     </div>

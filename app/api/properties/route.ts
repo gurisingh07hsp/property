@@ -45,11 +45,22 @@ export async function GET(req: NextRequest) {
     }
 
     if (filter.city) {
-      query.city = {
-      $regex: `^${filter.city}$`,
-      $options: "i",
-    };
+      if (filter.city) {
+        query.city = {
+        $regex: filter.city,
+        $options: "i",
+        }
+      }
     }
+
+    // if (filter.city) {
+    //   if (filter.city) {
+    //     query.city = {
+    //     $regex: `^${filter.city}$`,
+    //     $options: "i",
+    //     }
+    //   }
+    // }
 
     if (filter.state) {
       query.state = filter.state;
@@ -60,10 +71,32 @@ export async function GET(req: NextRequest) {
     }
 
     if (filter.propertyType) {
-      query.category = {
-        $regex: `^${filter.propertyType}$`,
-        $options: "i",
-      };
+      if(filter.propertyType == '1 bhk'){
+        query["additionalInformation.bedrooms"] = {
+          $gte: 0,
+          $lte: 1,
+        };
+      }else if(filter.propertyType == '2 bhk'){
+          query["additionalInformation.bedrooms"] = {
+          $gte: 1,
+          $lte: 2,
+        };
+      }else if(filter.propertyType == '3 bhk'){
+          query["additionalInformation.bedrooms"] = {
+          $gte: 2,
+          $lte: 3,
+        };
+      }else if(filter.propertyType == '4 bhk'){
+          query["additionalInformation.bedrooms"] = {
+          $gte: 3,
+          $lte: 4,
+        };
+      }else{
+        query.category = {
+          $regex: `^${filter.propertyType}$`,
+          $options: "i",
+        };
+      }
     }
     
 
