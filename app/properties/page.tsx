@@ -30,26 +30,30 @@ export default function SidebarGrid() {
     const dispatch = useDispatch();
     const { properties, favoriteProperties } = useSelector((state: RootState) => state.property);
     const { propertyFilter } = useSelector((state: RootState) => state.filter);
-
+    const [loading, setLoading] = useState(false);
+    const [totalProperties, setTotalProperties] = useState(0);
         const [Properties, setProperties] = useState<PropertyListItem[]>([])
         const fetchProperties = async() => {
-            console.log("propertyFilter", propertyFilter);
+            setLoading(true);
             const response = await axios.get("/api/properties", {
                 params: {
                     filter: JSON.stringify(propertyFilter),
-                    // pagination: JSON.stringify(pagination),
+                       pagination: JSON.stringify({
+                        page: currentPage,
+                        perPage: itemsPerPage
+                    }),
                     agentId: "",
                 },
             });
             if(response.status == 200){
                 setProperties(response.data.properties);
+                setTotalProperties(response.data.total);
                 console.log("Response : ", response);
             }
+            setLoading(false);
         }
     
-        useEffect(()=> {
-            fetchProperties();
-        },[propertyFilter]);
+      
 
     // Map properties to PropertyListItem[]
     const propertyListItems = properties.map((p: any) => ({
@@ -91,6 +95,12 @@ export default function SidebarGrid() {
         paginatedProperties,
         totalPages
     } = usePropertyList(propertyListItems, propertyFilter, "grid", 12);
+
+      useEffect(()=> {
+            fetchProperties();
+        },[propertyFilter, currentPage, itemsPerPage]);
+
+    console.log('total Pages : ', totalPages, 'current Pages : ', currentPage);
 
     const handleFavoriteToggle = (e: React.MouseEvent, propertyId: number) => {
         e.preventDefault();
@@ -446,6 +456,10 @@ export default function SidebarGrid() {
 
                                         <div className="row mt-4">
                                             <div className="col-lg-9 order-lg-1 order-2">
+                                                {loading ? (
+                                                    <div className="text-center">Loading...</div>
+                                                ) : (
+                                                    properties.length > 0 ? (
                                                 <div className="tab-content">
                                                     <div className={`tab-pane fade ${viewMode === 'grid' ? 'show active' : ''}`}>
                                                         <div className="row g-3 property-listing-grid">
@@ -469,6 +483,10 @@ export default function SidebarGrid() {
                                                         </div>
                                                     </div>
                                                 </div>
+                                                    ) : (
+                                                        <div>No Property Found.</div>
+                                                    )
+                                                )}
                                                 <div className="space32" />
                                                 {renderPagination()}
                                             </div>

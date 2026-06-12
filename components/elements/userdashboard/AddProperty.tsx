@@ -16,14 +16,16 @@ interface PropertyForm {
     zipCode: string;
     country: string;
     state: string;
+    category: string;
     city: string;
     sold: boolean;
+    listedIn: string;
     status: string;
     agent: string;
+    for: string;
     propertyPrices: {
         propertyPrice: number;
-        unitPrice: number;
-        beforePriceLabel: number;
+        yearlyTaxRate: number;
         afterPriceLabel: number;
     };
     additionalInformation: {
@@ -35,6 +37,10 @@ interface PropertyForm {
         garages: number;
         garageSize: string;
         yearBuilt: string;
+        basement: string;
+        roofing: string;
+        exteriorMaterial: string;
+        structureType: string;
     };
     amenities: string[];
     floors: {
@@ -48,85 +54,61 @@ interface PropertyForm {
 }
 
 export default function AddPropertyPage() {
-    // const {user} = useUser();
-    // const [propertyForm, setPropertyForm] = useState<PropertyForm>({
-    //     name: '',
-    //     images: [],
-    //     video: '',
-    //     description: '',
-    //     address: '',
-    //     zipCode: '',
-    //     country: '',
-    //     state: '',
-    //     city: '',
-    //     sold: false,
-    //     status: '',
-    //     agent: user?._id || '',
-    //     propertyPrices: {
-    //         propertyPrice: 0,
-    //         unitPrice: 0,
-    //         beforePriceLabel: 0,
-    //         afterPriceLabel: 0,
-    //     },
-    //     additionalInformation: {
-    //         propertySize: '',
-    //         landArea: '',
-    //         rooms: 0,
-    //         bedrooms: 0,
-    //         bathrooms: 0,
-    //         garages: 0,
-    //         garageSize: '',
-    //         yearBuilt: ''
-    //     },
-    //     amenities: [],
-    //     floors: [{
-    //         floorNumber: 0,
-    //         floorImage: '',
-    //         floorPrice: 0,
-    //         floorSize: 0,
-    //         bedrooms: 0,
-    //         bathrooms: 0,
-    //     }],
-    // })
-
-    // useEffect(()=> {
-    //     if(user){
-    //         setPropertyForm({...propertyForm, agent: user._id || ""})
-    //     }
-    // },[user]);
-
-
-    // const postData = async()=> {
-    //     const response = await axios.post('/api/properties', propertyForm, {withCredentials: true});
-    //     if(response.status == 200){
-    //         alert('Property Added!')
-    //         console.log(response.data);
-    //     }
-    // }
-
-    const amenitiesList = [
-  "airCondition",
-  "windowType",
-  "petFriendly",
-  "floor",
-  "furnishing",
-  "sellingHeight",
-  "elevator",
-  "parking",
-  "renovation",
-  "garden",
-  "heating",
-  "firePlace",
-  "disabledAccess",
-  "cableTV",
-  "wifi",
-];
+    const [open, setOpen] = useState(false);
+      const [propertyForm, setPropertyForm] = useState<PropertyForm>({
+                    name: '',
+                    images: [],
+                    video: '',
+                    description: '',
+                    address: '',
+                    zipCode: '',
+                    country: '',
+                    state: '',
+                    city: '',
+                    category: '',
+                    sold: false,
+                    status: '',
+                    listedIn: '',
+                    agent: '',
+                    for: 'sale',
+                    propertyPrices: {
+                        propertyPrice: 0,
+                        yearlyTaxRate: 0,
+                        afterPriceLabel: 0,
+                    },
+                    additionalInformation: {
+                        propertySize: '',
+                        landArea: '',
+                        rooms: 0,
+                        bedrooms: 0,
+                        bathrooms: 0,
+                        garages: 0,
+                        garageSize: '',
+                        yearBuilt: '',
+                        basement: '',
+                        roofing: '',
+                        exteriorMaterial: '',
+                        structureType: '',
+                    },
+                    amenities: [],
+                    floors: [{
+                        floorNumber: 0,
+                        floorImage: '',
+                        floorPrice: 0,
+                        floorSize: 0,
+                        bedrooms: 0,
+                        bathrooms: 0,
+                    }],
+                })
 
     return (
         <>
               {/* <Layout headerStyle={5}> */}
             <InnerHeader title="Add New Property" currentpage="Add New Property" />
-            {/* <AddProperty /> */}
+            <button onClick={()=> setOpen(true)} style={{borderRadius: '10px'}} className="px-4 py-2 bg-[#1800ad] text-white">
+                Add Property
+            </button>
+            <AddProperty initialForm={propertyForm} mode={'edit'} open={open} setOpen={setOpen}/>
             <div className="space30"></div>
                         {/* </Layout> */}
         </>

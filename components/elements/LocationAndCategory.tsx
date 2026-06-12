@@ -60,24 +60,29 @@ const LocationAndCategory = () => {
     const { properties, favoriteProperties } = useSelector((state: RootState) => state.property);
     const { propertyFilter } = useSelector((state: RootState) => state.filter);
     const [Properties, setProperties] = useState<PropertyListItem[]>([])
+     const [totalProperties, setTotalProperties] = useState(0);
+     const [loading, setLoading] = useState(false);
+
     const fetchProperties = async() => {
-        console.log("propertyFilter", propertyFilter);
+
+         setLoading(true);
         const response = await axios.get("/api/properties", {
             params: {
                 filter: JSON.stringify(propertyFilter),
-                // pagination: JSON.stringify(pagination),
+                pagination: JSON.stringify({
+                    page: currentPage,
+                    perPage: itemsPerPage
+                }),
                 agentId: "",
             },
         });
         if(response.status == 200){
             setProperties(response.data.properties);
-            console.log("Response : ", response);
+            setTotalProperties(response.data.total);
         }
+        setLoading(false);
     }
 
-    useEffect(()=> {
-        fetchProperties();
-    },[propertyFilter]);
     
 
     // Map properties to PropertyListItem[]
@@ -120,6 +125,10 @@ const LocationAndCategory = () => {
         paginatedProperties,
         totalPages
     } = usePropertyList(propertyListItems, propertyFilter, "grid", 12);
+
+      useEffect(()=> {
+        fetchProperties();
+    },[propertyFilter,currentPage, itemsPerPage]);
 
     const handleFavoriteToggle = (e: React.MouseEvent, propertyId: number) => {
         e.preventDefault();
@@ -474,33 +483,41 @@ const LocationAndCategory = () => {
                                                     <HorizontalPropertyFilter />
             
                                                     <div className="row">
-                                                        <div className="col-lg-9 order-lg-1 order-2">
-                                                            <div className="tab-content">
-                                                                <div className={`tab-pane fade ${viewMode === 'grid' ? 'show active' : ''}`}>
-                                                                    <div className="row g-3 property-listing-grid">
-                                                                        {Properties.map((property) => (
-                                                                            <div
-                                                                                key={property._id}
-                                                                                className="col-xxl-4 col-lg-6 col-md-6 col-6 property-listing-grid__item"
-                                                                            >
-                                                                                {renderGridItem(property)}
-                                                                            </div>
-                                                                        ))}
-                                                                    </div>
+                                                           <div className="col-lg-9 order-lg-1 order-2">
+                                                {loading ? (
+                                                    <div className="text-center">Loading...</div>
+                                                ) : (
+                                                    properties.length > 0 ? (
+                                                <div className="tab-content">
+                                                    <div className={`tab-pane fade ${viewMode === 'grid' ? 'show active' : ''}`}>
+                                                        <div className="row g-3 property-listing-grid">
+                                                            {Properties.map((property) => (
+                                                                <div
+                                                                    key={property._id}
+                                                                    className="col-xxl-4 col-lg-6 col-md-6 col-6 property-listing-grid__item"
+                                                                >
+                                                                    {renderGridItem(property)}
                                                                 </div>
-                                                                <div className={`tab-pane fade ${viewMode === 'list' ? 'show active' : ''}`}>
-                                                                    <div className="row g-4">
-                                                                        {Properties.map((property) => (
-                                                                            <div key={property._id} className="col-12">
-                                                                                {renderListItem(property)}
-                                                                            </div>
-                                                                        ))}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="space32" />
-                                                            {renderPagination()}
+                                                            ))}
                                                         </div>
+                                                    </div>
+                                                    <div className={`tab-pane fade ${viewMode === 'list' ? 'show active' : ''}`}>
+                                                        <div className="row g-4">
+                                                            {Properties.map((property) => (
+                                                                <div key={property._id} className="col-12">
+                                                                    {renderListItem(property)}
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                    ) : (
+                                                        <div>No Property Found.</div>
+                                                    )
+                                                )}
+                                                <div className="space32" />
+                                                {renderPagination()}
+                                            </div>
             
                                                         <div className="col-lg-3 order-lg-2 order-1 mb-4 mb-lg-0">
                                                             <FeaturedProjectsSidebar />

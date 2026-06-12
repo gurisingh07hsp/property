@@ -201,10 +201,9 @@ export async function GET(req: NextRequest) {
     // PAGINATION
     // -------------------------
 
-    const start = pagination.perPage?.start || 0;
-
-    const limit =
-      (pagination.perPage?.end || 10) - start;
+    const page = Number(pagination.page || 1);
+    const perPage = Number(pagination.perPage || 12);
+    const skip = (page - 1) * perPage;
 
     // -------------------------
     // FETCH
@@ -216,8 +215,8 @@ export async function GET(req: NextRequest) {
     const properties = await Property.find(query)
       .populate("agent")
       .sort(sortOption)
-      .skip(start)
-      .limit(limit);
+      .skip(skip)
+      .limit(perPage);
 
     // Total count
     const total = await Property.countDocuments(query);
@@ -225,6 +224,9 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({
       properties,
       total,
+      page,
+      perPage,
+      totalPages: Math.ceil(total / perPage),
     });
 
   } catch (error) {

@@ -10,7 +10,7 @@ export default function Home() {
                 <InnerHeader title="Dashboard" currentpage="Dashboard" />
                 <DashboardArea />
                 <div className="space30"></div>
-                <DashboardMessage />
+                {/* <DashboardMessage /> */}
                 <div className="space30"></div>
                 <DashboardChat />
                 <div className="space30"></div>

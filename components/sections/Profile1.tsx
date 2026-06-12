@@ -1,6 +1,29 @@
+'use client';
 import Link from "next/link";
-
+import { useUser } from "@/context/UserContext";
+import axios from "axios";
+import { useEffect, useState } from "react";
 export default function Profile1() {
+    	const {user} = useUser();
+	const [form, setForm] = useState(user);
+    const [loading, setLoading] = useState(false);
+	const updateProfile = async() => {
+        setLoading(true);
+		try{
+			const response = await axios.put(`/api/auth/profile/${user?._id}`, form);
+			if(response.status === 200){
+				alert('Profile Updated!');
+			}
+		}catch(error){
+			console.log(error);
+		}
+        setLoading(false);
+	}
+
+	useEffect(()=> {
+		setForm(user);
+	},[user]);
+
     return (
         <>
             {/*===== DASHBOARD AREA STARTS =======*/}
@@ -40,7 +63,7 @@ export default function Profile1() {
                                             <div className="input-area">
                                                 <h5>Username*</h5>
                                                 <div className="space16" />
-                                                <input type="text" placeholder="Username" />
+                                                <input type="text" value={form?.name} onChange={(e)=> setForm(prev => prev ? { ...prev, name: e.target.value } : prev)} placeholder="Username" />
                                             </div>
                                         </div>
                                         <div className="col-lg-4 col-md-6">
@@ -48,7 +71,7 @@ export default function Profile1() {
                                             <div className="input-area">
                                                 <h5>Email*</h5>
                                                 <div className="space16" />
-                                                <input type="email" placeholder="Email*" />
+                                                <input type="email" value={form?.email} onChange={(e)=> setForm(prev => prev ? { ...prev, email: e.target.value } : prev)} placeholder="Email*" />
                                             </div>
                                         </div>
                                         <div className="col-lg-4 col-md-6">
@@ -56,92 +79,36 @@ export default function Profile1() {
                                             <div className="input-area">
                                                 <h5>Phone*</h5>
                                                 <div className="space16" />
-                                                <input type="number" placeholder="Phone*" />
+                                                <input type="text" value={form?.phone} onChange={(e)=> setForm(prev => prev ? { ...prev, phone: e.target.value } : prev)} placeholder="Phone*" />
                                             </div>
-                                        </div>
-                                        <div className="col-lg-4 col-md-6">
-                                            <div className="space28" />
-                                            <div className="input-area">
-                                                <h5>First Name*</h5>
-                                                <div className="space16" />
-                                                <input type="text" placeholder="First Name*" />
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-4 col-md-6">
-                                            <div className="space28" />
-                                            <div className="input-area">
-                                                <h5>Last Name*</h5>
-                                                <div className="space16" />
-                                                <input type="text" placeholder="Last Name*" />
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-4 col-md-6">
-                                            <div className="space28" />
-                                            <div className="input-area">
-                                                <h5>Position*</h5>
-                                                <div className="space16" />
-                                                <input type="text" placeholder="Position*" />
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-4 col-md-6">
-                                            <div className="space28" />
-                                            <div className="input-area">
-                                                <h5>Language*</h5>
-                                                <div className="space16" />
-                                                <input type="text" placeholder="Language*" />
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-4 col-md-6">
-                                            <div className="space28" />
-                                            <div className="input-area">
-                                                <h5>Company Name*</h5>
-                                                <div className="space16" />
-                                                <input type="text" placeholder="Company Name*" />
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-4 col-md-6">
-                                            <div className="space28" />
-                                            <div className="input-area">
-                                                <h5>Tax Number*</h5>
-                                                <div className="space16" />
-                                                <input type="text" placeholder="Tax Number*" />
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-12 col-md-12">
-                                            <div className="space28" />
-                                            <div className="input-area">
-                                                <h5>Address*</h5>
-                                                <div className="space16" />
-                                                <input type="text" placeholder="Address*" />
-                                            </div>
-                                        </div>
+                                        </div>              
                                         <div className="col-lg-12 col-md-12">
                                             <div className="space28" />
                                             <div className="input-area">
                                                 <h5>About Me*</h5>
                                                 <div className="space16" />
-                                                <textarea placeholder="Your Message" defaultValue={""} />
+                                                <textarea placeholder="Your Message" value={form?.description} onChange={(e)=> setForm(prev => prev ? { ...prev, description: e.target.value } : prev)} defaultValue={""} />
                                             </div>
                                         </div>
                                         <div className="col-lg-12">
                                             <div className="space32" />
                                             <div className="btn-area1 text-end">
-                                                <Link href="/" className="vl-btn1">
-                                                    Update Profile
+                                                <button onClick={updateProfile} className="vl-btn1">
+                                                    {loading ? 'Updating...' : 'Update Profile'}
                                                     <span className="arrow1 ms-2">
                                                         <i className="fa-solid fa-arrow-right" />
                                                     </span>
                                                     <span className="arrow2 ms-2">
                                                         <i className="fa-solid fa-arrow-right" />
                                                     </span>
-                                                </Link>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="space30" />
-                            <div className="password-info-area">
+                            {/* <div className="password-info-area">
                                 <h2>Change Your Password</h2>
                                 <div className="box">
                                     <div className="row">
@@ -219,7 +186,7 @@ export default function Profile1() {
                                         </span>
                                     </Link>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
