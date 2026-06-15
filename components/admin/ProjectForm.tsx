@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Info, MapPin, Layers, Calendar, ChevronLeft, Building, Tag, CheckCircle, Globe, Search, Image as ImageIcon, Trash2 } from "lucide-react";
 import TiptapEditor from "../TipTapEditor";
+import { useUser } from "@/context/UserContext";
 
 interface ProjectFormData {
     title: string;
@@ -11,6 +12,7 @@ interface ProjectFormData {
     price: string;
     category: string;
     developerName: string;
+    developerId: string;
     description: string;
     projectUnits: string;
     areaUnit: string;
@@ -47,6 +49,7 @@ const EMPTY_FORM: ProjectFormData = {
     price: '',
     category: 'Luxury',
     developerName: '',
+    developerId: '',
     description: '',
     projectUnits: '',
     areaUnit: 'sq.ft.',
@@ -76,12 +79,19 @@ export default function ProjectForm({
 }: ProjectFormProps) {
     const [form, setForm] = useState<ProjectFormData>({ ...EMPTY_FORM, ...initialData });
     const [submitted, setSubmitted] = useState(false);
+    const {user} = useUser();
 
     useEffect(() => {
         if (initialData) {
             setForm({ ...EMPTY_FORM, ...initialData });
         }
     }, [initialData]);
+
+    useEffect(()=> {
+        if(user && mode === 'create'){
+            setForm({...form, developerId: user._id || ""})
+        }
+    },[user]);
 
     const generateSlug = (title: string) => {
         return title

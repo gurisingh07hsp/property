@@ -5,23 +5,30 @@ import Properties1Details from "@/components/sections/Properties1Details";
 import PropertyInner from "@/components/sections/PropertyInner";
 import PropertyBottom from "@/components/sections/PropertyBottom";
 import propertyData from '@/data/property.json';
+import axios from 'axios';
 
-interface PageProps {
-    params: Promise<{
-        id: string;
-    }>;
-}
+// interface PageProps {
+//     params: Promise<{
+//         slug: string;
+//     }>;
+// }
 
-async function validateProperty(params: { id: string }) {
-    const property = propertyData.find(p => p.id === parseInt(params.id));
-    if (!property) {
-        notFound();
-    }
-}
+// async function validateProperty(params: { slug: string }) {
+//     const id = params.slug?.toString().split('-').pop();
+//     const response = await axios.get(`/api/properties/${id}`);
+//     let property = null;
+//     if(response.status == 200){
+//         console.log("Property : ", property);
+//         property = response.data
+//     }
+//     if (!property) {
+//         notFound();
+//     }
+// }
 
-export default async function PropertyDetails({ params }: PageProps) {
-    const resolvedParams = await params;
-    await validateProperty(resolvedParams);
+export default async function PropertyDetails() {
+    // const resolvedParams = await params;
+    // await validateProperty(resolvedParams);
 
     return (
         <>

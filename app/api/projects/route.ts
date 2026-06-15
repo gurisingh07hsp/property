@@ -2,9 +2,18 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import Project from "@/models/Project";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   await connectDB();
-  const projects = await Project.find();
+  const searchParams = req.nextUrl.searchParams;
+  const developerId = searchParams.get("developerId");
+
+    const query: any = {};
+
+    if (developerId) {
+      query.developerId = developerId;
+    }
+
+  const projects = await Project.find(query);
 
   return NextResponse.json(projects);
 }

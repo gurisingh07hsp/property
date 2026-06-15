@@ -9,6 +9,10 @@ const ProjectSchema = new mongoose.Schema(
     developerName: {
         type: String
     },
+    developerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    },
     price: {type: String},
     category: {type: String},
     featuredImage: {type: String},
@@ -25,7 +29,7 @@ const ProjectSchema = new mongoose.Schema(
     numOfTowers: {type: String},
     metaTitle: {type: String},
     slug: {type: String},
-    metaDescription: {type: String}
+    metaDescription: {type: String},
   },
   { timestamps: true }
 );

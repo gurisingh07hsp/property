@@ -8,7 +8,7 @@ export async function POST(req: Request) {
   await connectDB();
 
   try {
-    const { name, email, password } = await req.json();
+    const { name, email, password, role } = await req.json();
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -23,6 +23,7 @@ export async function POST(req: Request) {
     const user = await User.create({
       name,
       email,
+      role,
       password: hashedPassword,
     });
 

@@ -18,6 +18,7 @@ import HorizontalPropertyFilter from "./HorizontalPropertyFilter";
 import FeaturedProjectsSidebar from "./FeaturedProjectsSidebar";
 import { PropertyListItem } from "@/types/types";
 import { IndianRupeeIcon } from "lucide-react";
+import { PropertySlugify } from "@/utils/functions-utils";
 // import { useParams } from "next/navigation";
 
 // Updated interface to match the JSON structure
@@ -324,13 +325,13 @@ const LocationAndCategory = () => {
                 <div className="col-lg-6 col-md-6">
                     <div className="property-price">
                         <div className="text">
-                            <Link href={`/property-details/${property._id}`}>{property.name}</Link>
+                            <Link href={`/property-details/${PropertySlugify(property)}`}>{property.name}</Link>
                             <div className="space16" />
                             <p>
                                 {property.address}, {property.city}, {property.state}
                             </p>
                         </div>
-                       <Link href="#" style={{display: 'flex', alignItems: 'center'}} className="price">
+                       <Link href={`/property-details/${PropertySlugify(property)}`} style={{display: 'flex', alignItems: 'center'}} className="price">
                             <IndianRupeeIcon size={17}/>
                             {property.propertyPrices.propertyPrice.toLocaleString()}
                         </Link>

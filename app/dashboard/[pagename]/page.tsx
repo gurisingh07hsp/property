@@ -6,6 +6,7 @@ import MyFavorites from "@/components/elements/userdashboard/MyFavouties";
 import Reviews from "@/components/elements/userdashboard/Reviews";
 import MyProfile from "@/components/elements/userdashboard/MyProfile";
 import AddPropertyPage from "@/components/elements/userdashboard/AddProperty";
+import ProjectManagement from "@/components/admin/ProjectManagement";
 export default function Page() {
     const {pagename} = useParams();
     console.log("dashborad page: ", pagename);
@@ -18,6 +19,7 @@ export default function Page() {
       {pagename == 'reviews' && <Reviews/>}
       {pagename == 'my-profile' && <MyProfile/>}
       {pagename == 'add-property' && <AddPropertyPage/>}
+      {pagename == 'add-project' && <ProjectManagement/>}
     </>
   );
 }

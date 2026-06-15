@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { PropertyListItem } from "@/types/types";
 import { IndianRupeeIcon } from "lucide-react";
+import { PropertySlugify } from "@/utils/functions-utils";
 
 export interface PropertyGridCardData {
     _id: number;
@@ -49,10 +50,10 @@ export default function PropertyGridCard({
             <div className="property-card-grid__media">
                 <div className="property-card-grid__image">{image}</div>
                 <div className="property-card-grid__badges">
-                    <Link href={`/property-details/${property._id}`} className="property-card-grid__badge">
+                    <Link href={`/property-details/${PropertySlugify(property)}`} className="property-card-grid__badge">
                         {property.category}
                     </Link>
-                    <Link href={`/property-details/${property._id}`} className="property-card-grid__badge property-card-grid__badge--status">
+                    <Link href={`/property-details/${PropertySlugify(property)}`} className="property-card-grid__badge property-card-grid__badge--status">
                         {property.for}
                     </Link>
                 </div>
@@ -69,13 +70,13 @@ export default function PropertyGridCard({
 
             <div className="property-card-grid__body">
                 <div className="property-card-grid__info">
-                    <Link href={`/property-details/${property._id}`} className="property-card-grid__title">
+                    <Link href={`/property-details/${PropertySlugify(property)}`} className="property-card-grid__title">
                         {property.name}
                     </Link>
                     <p className="property-card-grid__address">
                         {property.address}, {property.city}, {property.state}
                     </p>
-                    <Link href={`/property-details/${property._id}`} className="property-card-grid__price flex items-center">
+                    <Link href={`/property-details/${PropertySlugify(property)}`} className="property-card-grid__price flex items-center">
                     <IndianRupeeIcon size={14}/>
                         {property.propertyPrices.propertyPrice.toLocaleString()}
                     </Link>

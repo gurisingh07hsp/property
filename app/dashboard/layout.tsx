@@ -17,19 +17,13 @@ import {
   Heart,
   StarIcon,
   User,
+  Building2Icon,
 } from "lucide-react";
 import axios from "axios";
+import user from "@/models/user";
 // import axios from "axios";
 
-const navItems = [
-  { title: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
-  { title: "My Properties", path: "/dashboard/my-property", icon: Home },
-  { title: "Message", path: "/dashboard/message", icon: MessageCircle },
-  { title: "My Favourities", path: "/dashboard/my-favorites", icon: Heart },
-  { title: "Reviews", path: "/dashboard/reviews", icon: StarIcon },
-  { title: "My Profile", path: "/dashboard/my-profile", icon: User },
-  { title: "Add Property", path: "/dashboard/add-property", icon: FileText },
-];
+
 
 const SIDEBAR_WIDTH = 256;
 const SIDEBAR_COLLAPSED_WIDTH = 80;
@@ -46,6 +40,20 @@ export default function UserLayout({
   const pathname = usePathname();
   const router = useRouter();
   const { user } = useUser();
+
+
+  const navItems = [
+  { title: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
+  { title: "My Properties", path: "/dashboard/my-property", icon: Home },
+  { title: "Message", path: "/dashboard/message", icon: MessageCircle },
+  { title: "My Favourities", path: "/dashboard/my-favorites", icon: Heart },
+  { title: "Reviews", path: "/dashboard/reviews", icon: StarIcon },
+  { title: "My Profile", path: "/dashboard/my-profile", icon: User },
+  { title: "Add Property", path: "/dashboard/add-property", icon: FileText },
+  ...(user?.role === "developer"
+    ? [{ title: "Add Projects", path: "/dashboard/add-project", icon: Building2Icon }]
+    : []),
+];
 
   useEffect(()=> {
     const isLogin = async() => {

@@ -13,7 +13,6 @@ export default function AddProperty({initialForm , mode, open, setOpen}:{initial
   const [propertyForm, setPropertyForm] = useState<PropertyListItem>(initialForm);
   const [loading, setLoading] = useState(false);
   const pathname = usePathname();
-  console.log("pathname : ", pathname);
   useEffect(()=> {
     if(mode === 'edit'){
         setPropertyForm(initialForm);
@@ -47,8 +46,6 @@ export default function AddProperty({initialForm , mode, open, setOpen}:{initial
             setPropertyForm({...propertyForm, agent: user._id || ""})
         }
     },[user]);
-
-    console.log("form fiejf : ", propertyForm);
 
       const amenitiesList = [
         "airCondition",

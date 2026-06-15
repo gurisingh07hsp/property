@@ -1,14 +1,16 @@
 "use client";
 
-import { useReducer, useEffect } from "react";
+import { useReducer, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Thumbs } from "swiper/modules";
 import SwiperCore from "swiper";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { getPropertyById } from "@/services/propertyService";
 import { PropertyDetail } from "@/types/property";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
+import { useParams } from "next/navigation";
+import axios from "axios";
+import { PropertyListItem } from "@/types/types";
 
 // Define reducer state and actions
 interface Properties1DetailsState {
@@ -47,23 +49,27 @@ function properties1DetailsReducer(state: Properties1DetailsState, action: Prope
 
 export default function Properties1Details() {
     const [state, dispatch] = useReducer(properties1DetailsReducer, initialState);
-    const { thumbsSwiper, property, loading, error } = state;
+    const { thumbsSwiper, error } = state;
+    const [loading, setLoading] = useState(true);
+    const [property, setProperty] = useState<PropertyListItem | null>(null);
 
     const params = useParams();
-    const propertyId = params.id as string;
+    const propertyId = params.slug?.toString().split('-').pop();
+    console.log('Property Id : ', propertyId);
 
     useEffect(() => {
         const fetchPropertyData = async () => {
             try {
-                dispatch({ type: 'SET_LOADING', payload: true });
-                const response = await getPropertyById(propertyId);
-                dispatch({ type: 'SET_PROPERTY', payload: response.data });
-                dispatch({ type: 'SET_ERROR', payload: null });
+                const response = await axios.get(`/api/properties/${propertyId}`);
+                if(response.status == 200){
+                    console.log("proerty : ", response.data);
+                    setProperty(response.data.property);
+                }
+
             } catch (err) {
-                dispatch({ type: 'SET_ERROR', payload: 'Failed to load property details' });
                 console.error(err);
             } finally {
-                dispatch({ type: 'SET_LOADING', payload: false });
+                setLoading(false);
             }
         };
 
@@ -107,7 +113,7 @@ export default function Properties1Details() {
                             >
                                 {imageArray.map((image, index) => (
                                     <SwiperSlide key={index} className="big-img">
-                                        <img src={image} alt={property.keyword} />
+                                        <img src={image} alt={property.name} />
                                     </SwiperSlide>
                                 ))}
                             </Swiper>
@@ -125,7 +131,7 @@ export default function Properties1Details() {
                             >
                                 {imageArray.map((image, index) => (
                                     <SwiperSlide key={index} className="small-img">
-                                        <img src={image} alt={property.keyword} />
+                                        <img src={image} alt={property.name} />
                                     </SwiperSlide>
                                 ))}
                                 <div className="swiper-pagination"></div>
@@ -135,7 +141,7 @@ export default function Properties1Details() {
                             <div className="heading1">
                                 <div className="content-area">
                                     <h2 className="title">
-                                        {property.keyword}
+                                        {property.name}
                                     </h2>
                                     <div className="space32" />
                                     <p>
@@ -155,7 +161,7 @@ export default function Properties1Details() {
                                                         <path d="M3 21H21V3.00046L3 3V21Z" stroke="#1B1B1B" strokeWidth="1.5" strokeLinejoin="round" />
                                                     </svg>
                                                 </span>
-                                                {property.minSize}-{property.maxSize} sqft
+                                                {property.additionalInformation.propertySize} sqft
                                             </li>
                                             <li>
                                                 <span>
@@ -164,7 +170,7 @@ export default function Properties1Details() {
                                                         <path d="M22 21V16C22 14.1144 22 13.1716 21.4142 12.5858C20.8284 12 19.8856 12 18 12H6C4.11438 12 3.17157 12 2.58579 12.5858C2 13.1716 2 14.1144 2 16V21" stroke="#1B1B1B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                                     </svg>
                                                 </span>
-                                                {property.bedrooms} Beds
+                                                {property.additionalInformation.bedrooms} Beds
                                             </li>
                                             <li>
                                                 <span>
@@ -173,14 +179,14 @@ export default function Properties1Details() {
                                                         <path d="M3 12V13C3 16.2998 3 17.9497 4.02513 18.9749C5.05025 20 6.70017 20 10 20H14C17.2998 20 18.9497 20 19.9749 18.9749C21 17.9497 21 16.2998 21 13V12" stroke="#1B1B1B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                                     </svg>
                                                 </span>
-                                                {property.bathrooms} Baths
+                                                {property.additionalInformation.bathrooms} Baths
                                             </li>
                                         </ul>
                                         <div className="space32" />
                                         <div className="btn-area">
                                             <div className="nm-btn">
                                                 <p>
-                                                    <Link href="#">${property.minPrice.toLocaleString()}</Link> - For {property.status}
+                                                    <Link href="#">${property.propertyPrices.propertyPrice.toLocaleString()}</Link> - For {property.for}
                                                 </p>
                                             </div>
                                             <div className="love-share">
