@@ -1,42 +1,57 @@
 "use client";
-
+import { PropertyListItem } from "@/types/types";
+import axios from "axios";
+import { IndianRupeeIcon } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function FeaturedProjects() {
-    const projects = [
-        {
-            id: 1,
-            title: "Azure Heights Villa",
-            location: "Palm Coast Villas, Miami",
-            price: "$1,250,000",
-            image: "/assets/img/all-images/properties/property-img20.png",
-            tag: "Luxury",
-        },
-        {
-            id: 2,
-            title: "Skyline Skyline Villa",
-            location: "Downtown Heights, New York",
-            price: "$820,000",
-            image: "/assets/img/all-images/properties/property-img19.png",
-            tag: "Premium",
-        },
-        {
-            id: 3,
-            title: "Mountain View Residences",
-            location: "Aspen, Colorado",
-            price: "$950,000",
-            image: "/assets/img/all-images/properties/property-img21.png",
-            tag: "Modern",
-        },
-        {
-            id: 4,
-            title: "Oceanfront Condo",
-            location: "Malibu, California",
-            price: "$2,100,000",
-            image: "/assets/img/all-images/properties/property-img22.png",
-            tag: "Exclusive",
+    const [properties, setProperties] = useState<PropertyListItem[]>([]);
+
+    const fetchProperties = async() => {
+        const response = await axios.get('/api/properties');
+          if(response.status == 200){
+            setProperties(response.data.properties);
         }
-    ];
+    }
+
+    useEffect(()=>{
+        fetchProperties();
+    },[])
+    // const projects = [
+    //     {
+    //         id: 1,
+    //         title: "Azure Heights Villa",
+    //         location: "Palm Coast Villas, Miami",
+    //         price: "$1,250,000",
+    //         image: "/assets/img/all-images/properties/property-img20.png",
+    //         tag: "Luxury",
+    //     },
+    //     {
+    //         id: 2,
+    //         title: "Skyline Skyline Villa",
+    //         location: "Downtown Heights, New York",
+    //         price: "$820,000",
+    //         image: "/assets/img/all-images/properties/property-img19.png",
+    //         tag: "Premium",
+    //     },
+    //     {
+    //         id: 3,
+    //         title: "Mountain View Residences",
+    //         location: "Aspen, Colorado",
+    //         price: "$950,000",
+    //         image: "/assets/img/all-images/properties/property-img21.png",
+    //         tag: "Modern",
+    //     },
+    //     {
+    //         id: 4,
+    //         title: "Oceanfront Condo",
+    //         location: "Malibu, California",
+    //         price: "$2,100,000",
+    //         image: "/assets/img/all-images/properties/property-img22.png",
+    //         tag: "Exclusive",
+    //     }
+    // ];
 
     return (
         <div className="featured-projects mt-4" style={{ backgroundColor: "#fff" }}>
@@ -157,23 +172,27 @@ export default function FeaturedProjects() {
                     </div>
                 </div>
                 <div className="row g-4">
-                    {projects.map((project) => (
-                        <div key={project.id} className="col-lg-3 col-md-6">
+                    {properties.map((property) => (
+                        <div key={property._id} className="col-lg-3 col-md-6">
                             <div className="project-card">
                                 <div className="img-container">
                                     <Link href="/property-details-v1">
-                                        <img src={project.image} alt={project.title} />
+                                        <img src={property.images[0]} alt={property.name} />
                                     </Link>
-                                    <span className="project-tag">{project.tag}</span>
+                                    <span className="project-tag">{property.category}</span>
                                 </div>
                                 <div className="project-content">
-                                    <Link href="/property-details-v1" className="project-title">{project.title}</Link>
+                                    <Link href="/property-details-v1" className="project-title">{property.name}</Link>
                                     <div className="project-loc">
                                         <i className="fa-solid fa-location-dot"></i>
-                                        {project.location}
+                                        {property.address}
                                     </div>
                                     <div className="project-footer">
-                                        <span className="project-price">{project.price}</span>
+
+                                        <span style={{display: 'flex', alignItems: 'center'}} className="project-price">
+                                            <IndianRupeeIcon size={18}/>
+                                            {property.propertyPrices.propertyPrice}
+                                        </span>
                                         <Link href="/property-details-v1" className="details-link">
                                             Details
                                             <i className="fa-solid fa-arrow-right"></i>

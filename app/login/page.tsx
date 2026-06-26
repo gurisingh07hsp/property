@@ -474,44 +474,46 @@ export default function Login() {
           <h2 className="form-title">Login to your account</h2>
 
           {/* Role selector */}
-          <div className="role-tabs">
-            <button
-              type="button"
-              onClick={() => handleRoleSelect("agent")}
-              className={`role-tab ${selectedRole === "agent" ? "active" : ""}`}
-            >
-              <span className="role-icon">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M4 21V8.4L12 3l8 5.4V21M9 21v-6h6v6M4 21h16"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-              Owner
-            </button>
-            <button
-              type="button"
-              onClick={() => handleRoleSelect("developer")}
-              className={`role-tab ${selectedRole === "developer" ? "active" : ""}`}
-            >
-              <span className="role-icon">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M4 19h16M5 19v-3a7 7 0 0114 0v3M12 6V3M9.5 19l1-4.5h3l1 4.5"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-              Broker / Builder
-            </button>
-          </div>
+          {!isLogin && (
+            <div className="role-tabs">
+              <button
+                type="button"
+                onClick={() => handleRoleSelect("agent")}
+                className={`role-tab ${selectedRole === "agent" ? "active" : ""}`}
+              >
+                <span className="role-icon">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M4 21V8.4L12 3l8 5.4V21M9 21v-6h6v6M4 21h16"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+                Owner
+              </button>
+              <button
+                type="button"
+                onClick={() => handleRoleSelect("developer")}
+                className={`role-tab ${selectedRole === "developer" ? "active" : ""}`}
+              >
+                <span className="role-icon">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M4 19h16M5 19v-3a7 7 0 0114 0v3M12 6V3M9.5 19l1-4.5h3l1 4.5"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+                Broker / Builder
+              </button>
+            </div>
+          )}
 
           {/* Fields */}
           <div className="fields">
